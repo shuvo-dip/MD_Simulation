@@ -1,8 +1,7 @@
 # Welcome 
 
-This is a small sample book to give you a feel for how book content is
-structured.
-It shows off a few of the major file types, as well as some sample content.
-It does not go in-depth into any particular topic - check out [the Jupyter Book documentation](https://jupyterbook.org) for more information.
+In this simple interactive seassion we are going to learn few basics of computer simulations: How to use LAMMPS packages. Intent to creat an ablitiy to write your won post processing codes so that one would have better idea about the background of the simplae packages. 
+
+
 
 Check out the content pages bundled with this sample book to see more.
