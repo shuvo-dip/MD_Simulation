@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
@@ -397,17 +397,44 @@ document.write(`
 <p>This chapter provides an overview of LAMMPS packages and guides you through the installation process.</p>
 <section id="what-is-lammps">
 <h2>What is LAMMPS?<a class="headerlink" href="#what-is-lammps" title="Link to this heading">#</a></h2>
-<p>LAMMPS (Large-scale Atomic/Molecular Massively Parallel Simulator) is a widely used software package for molecular dynamics simulations.</p>
+<p><a class="reference external" href="https://lammps.org">LAMMPS</a> (Large-scale Atomic/Molecular Massively Parallel Simulator) is a widely used software package for molecular dynamics simulations.</p>
 </section>
 <section id="installation-steps">
 <h2>Installation Steps<a class="headerlink" href="#installation-steps" title="Link to this heading">#</a></h2>
 <p>Follow these steps to install LAMMPS on your system:</p>
 <ul class="simple">
-<li><p>Step 1: Download LAMMPS from the official website.</p></li>
-<li><p>Step 2: Extract the downloaded files.</p></li>
-<li><p>Step 3: Compile LAMMPS using the provided instructions.</p></li>
-<li><p>Step 4: Verify the installation.</p></li>
+<li><p>Step 1: Download the LAMMPS source with <a class="reference external" href="https://docs.lammps.org/Install_git.html">git</a></p></li>
 </ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="o">-</span><span class="n">b</span> <span class="n">release</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">lammps</span><span class="o">/</span><span class="n">lammps</span><span class="o">.</span><span class="n">git</span> <span class="n">mylammps</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Step 2: Extract the downloaded files.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">checkout</span> <span class="n">release</span>      <span class="c1"># not needed if you always stay in this branch</span>
+<span class="n">git</span> <span class="n">checkout</span> <span class="n">stable</span>       <span class="c1"># use one of these 4 checkout commands</span>
+<span class="n">git</span> <span class="n">checkout</span> <span class="n">develop</span>      <span class="c1"># to choose the branch to follow</span>
+<span class="n">git</span> <span class="n">checkout</span> <span class="n">maintenance</span>
+<span class="n">git</span> <span class="n">pull</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Step 3: Build LAMMPS with <a class="reference external" href="https://docs.lammps.org/Build_make.html">make</a></p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">lammps</span><span class="o">/</span><span class="n">src</span>   <span class="c1"># change to main LAMMPS source folder</span>
+<span class="n">make</span> <span class="n">serial</span>     <span class="c1"># build a serial LAMMPS executable using GNU g++</span>
+<span class="n">make</span> <span class="n">mpi</span>        <span class="c1"># build a parallel LAMMPS executable with MPI</span>
+<span class="n">make</span>            <span class="c1"># see a variety of make options</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Step 4: Install required lammps packages: <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">ps</span></code> <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">yes-all</span></code></p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">yes</span><span class="o">-</span><span class="n">asphere</span>
+<span class="n">make</span> <span class="n">yes</span><span class="o">-</span><span class="n">rigid</span>
+<span class="n">make</span> <span class="n">yes</span><span class="o">-</span><span class="n">molecule</span>
+</pre></div>
+</div>
 </section>
 </section>
 
