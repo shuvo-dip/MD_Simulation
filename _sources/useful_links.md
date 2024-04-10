@@ -15,11 +15,8 @@
 
 ## Journals
 
--[Living Journal of Computational Molecular Science](https://livecomsjournal.org/)
+- [Living Journal of Computational Molecular Science](https://livecomsjournal.org/)
 
-- [Journal of Chemical Theory and Computation](https://pubs.acs.org/journal/jctcce)
-- [Journal of Molecular Modeling](https://www.springer.com/journal/894)
-- [Journal of Computational Chemistry](https://onlinelibrary.wiley.com/journal/1096987x)
 
 ## Online Repositories
 
