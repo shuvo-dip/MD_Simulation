@@ -15,6 +15,8 @@
 
 ## Journals
 
+-[Living Journal of Computational Molecular Science](https://livecomsjournal.org/)
+
 - [Journal of Chemical Theory and Computation](https://pubs.acs.org/journal/jctcce)
 - [Journal of Molecular Modeling](https://www.springer.com/journal/894)
 - [Journal of Computational Chemistry](https://onlinelibrary.wiley.com/journal/1096987x)
@@ -23,4 +25,9 @@
 
 - [LAMMPS](https://www.lammps.org/)
 - [GROMACS](https://www.gromacs.org/)
+- [OpenMM](https://openmm.org/)
+- [ESPResSo](https://espressomd.org/wordpress/)
+- [hoomdblue](https://glotzerlab.engin.umich.edu/hoomd-blue/)
 - [NAMD](https://www.ks.uiuc.edu/Research/namd/)
+- [OVITO](https://ovito.org/)
+- [VMD](https://www.ks.uiuc.edu/Research/vmd/)
