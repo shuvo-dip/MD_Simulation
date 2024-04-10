@@ -186,11 +186,8 @@ run             1000000
 
 `````
 
-![movie](abc.mp4)
-
 
 ![movie](abc.gif)
-
 
 `````{admonition} log file
 :class: tip
