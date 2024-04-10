@@ -1,9 +1,9 @@
-# A Brief Overview of Molecular Dynamics Simulations
+## A Brief Overview of Molecular Dynamics Simulations
 
 This chapter provides an overview of the essential components required for conducting molecular dynamics simulations, with a specific focus on macromolecular systems. We explore the structure of intermolecular potentials for atomically composed or coarse grained molecules and (if possible we go after sytems consisting of non-spherical, sub-units), illustrating methods for computing forces and torques. Additionally, we discuss several widely used molecular dynamics algorithms. Lastly, we touch upon factors influencing the scale of systems and duration of simulations necessary for computing statistical properties.
 
 (section-label-1)=
-## Primary Ideas of Molecular Dynamics
+### Primary Ideas of Molecular Dynamics
 **Brief Discussion:**
 
 Computer simulations play a crucial role in understanding molecular assemblies by revealing their structural properties and microscopic interactions. They complement conventional experiments by offering insights that may be otherwise inaccessible. Molecular dynamics (MD) and Monte Carlo (MC) simulations are the main techniques used, with MD being the focus of this lecture due to its ability to predict dynamical properties such as transport coefficients and rheological properties.
@@ -122,8 +122,24 @@ where $Q_1,Q_2$ are the charges and $\epsilon_0$ is the permittivity of free spa
 ![interaction_potential](md_interaction_potential.jpg)
 
 ### Periodic Boundary Conditions
+![pbc](md_pbc.png)
 
 Due to limitations in system size and the number of degrees of freedom in computer simulations, periodic boundary conditions (PBC) are often implemented. PBC set boundaries allowing particles to interact across the barrier, exiting and re-entering the box. They are crucial for representing an indefinite bulk around the model system. Without PBC, interfacial and finite-size effects introduce significant errors, dominating system behavior. In certain scenarios where studying confinement effects is essential, relactive or repulsive boundary conditions are considered.
+
+```{note}
+If the box is too small: particles would encounter its self image.
+- Consider 1000 atoms arranged in a $10^3$ cube. Nearly `24%` the atoms are on the outer faces these will have a large effect on the measured properties.
+- Consider 10000 atoms arranged in a $21.54^3$ cube (keeping the density fixed). Nearly `5.1%` the atoms are on the outer faces.
+- Consider 50000 atoms arranged in a $36.84^3$ cube (keeping the density fixed). Nearly `1.7%` the atoms are on the outer faces.
+```
+### Neighbour Lists
+
+1. **Efficiency:** Neighbor lists enhance computational efficiency by reducing the number of pairwise interactions (which goes as $\sim N^2$ over i and j loop: consume large time) that need to be calculated, particularly in simulations with large numbers of particles.
+
+2. **Construction:** Neighbor lists are typically constructed based on a cutoff distance $r_{cut}$, with particles within this distance of each other considered neighbors. Various algorithms such as `Verlet lists` (spherical) or `cell lists` (cubic) are commonly employed for efficient construction.
+![NeighbourLists](md_neighbour_list.png)Fig. 4: The Verlet list on its construction, later, and too late. The potential cutoff range (solid circle), and the list range (dashed circle), are indicated. The list must be reconstructed before particles originally outside the list range (black) have penetrated the potential cutoff sphere.
+
+3. **Different Lists** This approach is very efficient for large systems with short-range forces. A certain amount of unnecessary work is done because the search region is cubic,not (as for the Verlet list) spherical.
 
 
 ### How Long & How Large MD should run?
@@ -154,9 +170,20 @@ units lj or real or metal or si or cgs or electron or micro or nano
   - Within time periods $\tau_a$, values of the property are highly correlated.
   
 - **Spatial Averages Over Simulation Box Volume ($L^3$):**
-  - Properties which are effectively spatial averages over the simulation box volume ( $L^3$ ) exhibit root-mean-square variations proportional to $\sqrt{(\zeta_a/L)^3}$.
+  - Properties which are effectively spatial averages over the simulation box $L^3$ exhibit root-mean-square variations proportional to $\sqrt{(\zeta_a/L)^3}$.
   - Collective, system-wide properties deviate by only a relatively small amount from their thermodynamic, large-system, limiting values.
   - The deviation becomes smaller as the averaging volume increases and is determined by the correlation length.
 
+```{tip}
+Now that you have an idea, there is no point in taking position snapshots at each step. Instead, it is important to find the sweet spot for how frequently one needs to write output dumps, depending on the objectives.
+```
 
+### Why do we need multiscale modelling?
 
+![multiscale](multiscale.webp) image from: [link](https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fs43246-023-00391-2/MediaObjects/43246_2023_391_Fig1_HTML.png?as=webp)
+- **Multiscale bridges the gap:** We can't simulate everything at the atomic level, so multiscale links detailed atomistic models to coarser models that capture larger scales relevant to experiments.
+
+    <mark>If 1ns atomistic simulation takes 10hs to run, 1$\mu$s would take more than 400 days.</mark>
+
+- **Efficiency boost:** Multiscale lets us use faster, coarser models for large-scale features while relying on atomistic simulations only for crucial, detailed processes.
+- **From atoms to experiments:** By connecting atomic details to larger scales, multiscale modeling helps us understand how microscopic interactions influence the material properties we observe in experiments.

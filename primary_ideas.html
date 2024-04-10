@@ -381,13 +381,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-ideas-of-molecular-dynamics">Primary Ideas of Molecular Dynamics</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#thermostats">Thermostats</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interaction-potentials">Interaction Potentials</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#periodic-boundary-conditions">Periodic Boundary Conditions</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-long-how-large-md-should-run">How Long &amp; How Large MD should run?</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-ideas-of-molecular-dynamics">Primary Ideas of Molecular Dynamics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#thermostats">Thermostats</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interaction-potentials">Interaction Potentials</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#periodic-boundary-conditions">Periodic Boundary Conditions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#neighbour-lists">Neighbour Lists</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-long-how-large-md-should-run">How Long &amp; How Large MD should run?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-do-we-need-multiscale-modelling">Why do we need multiscale modelling?</a></li>
 </ul>
             </nav>
         </div>
@@ -399,7 +399,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="a-brief-overview-of-molecular-dynamics-simulations">
+  <section id="a-brief-overview-of-molecular-dynamics-simulations">
 <h1>A Brief Overview of Molecular Dynamics Simulations<a class="headerlink" href="#a-brief-overview-of-molecular-dynamics-simulations" title="Link to this heading">#</a></h1>
 <p>This chapter provides an overview of the essential components required for conducting molecular dynamics simulations, with a specific focus on macromolecular systems. We explore the structure of intermolecular potentials for atomically composed or coarse grained molecules and (if possible we go after sytems consisting of non-spherical, sub-units), illustrating methods for computing forces and torques. Additionally, we discuss several widely used molecular dynamics algorithms. Lastly, we touch upon factors influencing the scale of systems and duration of simulations necessary for computing statistical properties.</p>
 <section id="primary-ideas-of-molecular-dynamics">
@@ -427,8 +427,9 @@ Molecular dynamics (MD) is a widely employed computational technique to compute 
 <p>where force <span class="math notranslate nohighlight">\(\mathbf{F}_i\)</span> acting on particle <span class="math notranslate nohighlight">\(i\)</span>, and <span class="math notranslate nohighlight">\(t\)</span> denotes the time. By numerically solving Newton’s equation of motion (using <em>e.g.</em> velocity-verlet algorithm), one computes the position of every particle after a given time step. In standard MD simulation, typical timesteps <span class="math notranslate nohighlight">\(\sim 10^{-15}\)</span>s (however, vary by the requirements of the system property) compared to the real time scale. A simplified flowchart of a typical MD simulation is shown in the Fig. <code class="docutils literal notranslate"><span class="pre">Flowchart</span></code>.</p>
 <p><img alt="Flowchart" src="_images/md_flowchart.jpg" /></p>
 <p>Once the system acquires an equilibrium state, the total potential energy is independent of subsequent iterations. If the system is at equilibrium state, <em>i.e.</em> time evolution is equivalent to the configuration, as the thermodynamics state is considered to be ergodic. Since the positions, velocities are known, one can calculate pair correlation distributions, structure factor, which are essentially calculated by taking an average of over different realisations. In order to get a statistical average of a system with a thermally excited state to reach equilibrium state by dynamical phase transitions, needs to average over different configurations emerge from different initial states. A major problem sometimes arises in MD simulations, while small numerical errors arise from the numerical integration of the equation of motion. Which could piles up over many steps and invoke the kinetic energy, hence change the average temperature. This temperature drift can be circumvented by occasionally rescaling the velocity of the particles.</p>
+</section>
 <section id="thermostats">
-<h3>Thermostats<a class="headerlink" href="#thermostats" title="Link to this heading">#</a></h3>
+<h2>Thermostats<a class="headerlink" href="#thermostats" title="Link to this heading">#</a></h2>
 <p>Distinct types of ensembles arise from various macroscopic environmental constraints related to specific statistical properties.</p>
 <ul class="simple">
 <li><p><strong>Langevin Thermostat</strong>: Adds a stochastic force to the equations of motion to mimic the effect of a heat bath. It maintains a constant temperature by balancing the energy exchange between the system and the surrounding heat bath.</p></li>
@@ -476,7 +477,7 @@ m_i \frac{d^2\vec{r_i}}{dt^2} = \vec{F_i}-\zeta m_i \vec{v_i},\\
 <p>In our MD simulation, we employ a canonical (<span class="math notranslate nohighlight">\(NVT\)</span>) ensemble that integrates time on non-Hamiltonian equations of motion in the Nos’e-Hoover style, designed to generate positions and velocities of each particle.</p>
 </section>
 <section id="interaction-potentials">
-<h3>Interaction Potentials<a class="headerlink" href="#interaction-potentials" title="Link to this heading">#</a></h3>
+<h2>Interaction Potentials<a class="headerlink" href="#interaction-potentials" title="Link to this heading">#</a></h2>
 <p>We primarily focus on coarse-grained molecular dynamics simulations of the Kremer-Grest bead-spring polymer model. Nature of the nonbonded interactions may distinguished the distinct nature of the polymer chain or monomaric solvent. Depending on the system, inter-atomic non-bonded soft attractive Lennard-Jones potential or truncated LJ (WCA) potential is utilized to impose good or bad solvent conditions.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -509,11 +510,30 @@ U_{\text{coulomb}}(r) = \frac{Q_1 Q_2}{4 \pi \epsilon_0 r},
 <img alt="interaction_potential" src="_images/md_interaction_potential.jpg" /></p>
 </section>
 <section id="periodic-boundary-conditions">
-<h3>Periodic Boundary Conditions<a class="headerlink" href="#periodic-boundary-conditions" title="Link to this heading">#</a></h3>
+<h2>Periodic Boundary Conditions<a class="headerlink" href="#periodic-boundary-conditions" title="Link to this heading">#</a></h2>
+<p><img alt="pbc" src="_images/md_pbc.png" /></p>
 <p>Due to limitations in system size and the number of degrees of freedom in computer simulations, periodic boundary conditions (PBC) are often implemented. PBC set boundaries allowing particles to interact across the barrier, exiting and re-entering the box. They are crucial for representing an indefinite bulk around the model system. Without PBC, interfacial and finite-size effects introduce significant errors, dominating system behavior. In certain scenarios where studying confinement effects is essential, relactive or repulsive boundary conditions are considered.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the box is too small: particles would encounter its self image.</p>
+<ul class="simple">
+<li><p>Consider 1000 atoms arranged in a <span class="math notranslate nohighlight">\(10^3\)</span> cube. Nearly <code class="docutils literal notranslate"><span class="pre">24%</span></code> the atoms are on the outer faces these will have a large effect on the measured properties.</p></li>
+<li><p>Consider 10000 atoms arranged in a <span class="math notranslate nohighlight">\(21.54^3\)</span> cube (keeping the density fixed). Nearly <code class="docutils literal notranslate"><span class="pre">5.1%</span></code> the atoms are on the outer faces.</p></li>
+<li><p>Consider 50000 atoms arranged in a <span class="math notranslate nohighlight">\(36.84^3\)</span> cube (keeping the density fixed). Nearly <code class="docutils literal notranslate"><span class="pre">1.7%</span></code> the atoms are on the outer faces.</p></li>
+</ul>
+</div>
+</section>
+<section id="neighbour-lists">
+<h2>Neighbour Lists<a class="headerlink" href="#neighbour-lists" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Efficiency:</strong> Neighbor lists enhance computational efficiency by reducing the number of pairwise interactions (which goes as <span class="math notranslate nohighlight">\(\sim N^2\)</span> over i and j loop: consume large time) that need to be calculated, particularly in simulations with large numbers of particles.</p></li>
+<li><p><strong>Construction:</strong> Neighbor lists are typically constructed based on a cutoff distance <span class="math notranslate nohighlight">\(r_{cut}\)</span>, with particles within this distance of each other considered neighbors. Various algorithms such as <code class="docutils literal notranslate"><span class="pre">Verlet</span> <span class="pre">lists</span></code> (spherical) or <code class="docutils literal notranslate"><span class="pre">cell</span> <span class="pre">lists</span></code> (cubic) are commonly employed for efficient construction.
+<img alt="NeighbourLists" src="_images/md_neighbour_list.png" />Fig. 4: The Verlet list on its construction, later, and too late. The potential cutoff range (solid circle), and the list range (dashed circle), are indicated. The list must be reconstructed before particles originally outside the list range (black) have penetrated the potential cutoff sphere.</p></li>
+<li><p><strong>Different Lists</strong> This approach is very efficient for large systems with short-range forces. A certain amount of unnecessary work is done because the search region is cubic,not (as for the Verlet list) spherical.</p></li>
+</ol>
 </section>
 <section id="how-long-how-large-md-should-run">
-<h3>How Long &amp; How Large MD should run?<a class="headerlink" href="#how-long-how-large-md-should-run" title="Link to this heading">#</a></h3>
+<h2>How Long &amp; How Large MD should run?<a class="headerlink" href="#how-long-how-large-md-should-run" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Molecular dynamics involves the incremental evolution of molecular configurations through time in discrete steps <span class="math notranslate nohighlight">\(\delta t\)</span>.</p></li>
 <li><p>Time steps typically <span class="math notranslate nohighlight">\(\delta t \approx 0.001 - 0.005\)</span> in LJ unit, 10fs in real units.</p></li>
@@ -554,13 +574,27 @@ There are three basic units distance:<span class="math notranslate nohighlight">
 </li>
 <li><p><strong>Spatial Averages Over Simulation Box Volume (<span class="math notranslate nohighlight">\(L^3\)</span>):</strong></p>
 <ul>
-<li><p>Properties which are effectively spatial averages over the simulation box volume ( <span class="math notranslate nohighlight">\(L^3\)</span> ) exhibit root-mean-square variations proportional to <span class="math notranslate nohighlight">\(\sqrt{(\zeta_a/L)^3}\)</span>.</p></li>
+<li><p>Properties which are effectively spatial averages over the simulation box <span class="math notranslate nohighlight">\(L^3\)</span> exhibit root-mean-square variations proportional to <span class="math notranslate nohighlight">\(\sqrt{(\zeta_a/L)^3}\)</span>.</p></li>
 <li><p>Collective, system-wide properties deviate by only a relatively small amount from their thermodynamic, large-system, limiting values.</p></li>
 <li><p>The deviation becomes smaller as the averaging volume increases and is determined by the correlation length.</p></li>
 </ul>
 </li>
 </ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Now that you have an idea, there is no point in taking position snapshots at each step. Instead, it is important to find the sweet spot for how frequently one needs to write output dumps, depending on the objectives.</p>
+</div>
 </section>
+<section id="why-do-we-need-multiscale-modelling">
+<h2>Why do we need multiscale modelling?<a class="headerlink" href="#why-do-we-need-multiscale-modelling" title="Link to this heading">#</a></h2>
+<p><img alt="multiscale" src="_images/multiscale.webp" /> image from: <a class="reference external" href="https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fs43246-023-00391-2/MediaObjects/43246_2023_391_Fig1_HTML.png?as=webp">link</a></p>
+<ul>
+<li><p><strong>Multiscale bridges the gap:</strong> We can’t simulate everything at the atomic level, so multiscale links detailed atomistic models to coarser models that capture larger scales relevant to experiments.</p>
+<p><mark>If 1ns atomistic simulation takes 10hs to run, 1<span class="math notranslate nohighlight">\(\mu\)</span>s would take more than 400 days.</mark></p>
+</li>
+<li><p><strong>Efficiency boost:</strong> Multiscale lets us use faster, coarser models for large-scale features while relying on atomistic simulations only for crucial, detailed processes.</p></li>
+<li><p><strong>From atoms to experiments:</strong> By connecting atomic details to larger scales, multiscale modeling helps us understand how microscopic interactions influence the material properties we observe in experiments.</p></li>
+</ul>
 </section>
 </section>
 
@@ -628,13 +662,13 @@ There are three basic units distance:<span class="math notranslate nohighlight">
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-ideas-of-molecular-dynamics">Primary Ideas of Molecular Dynamics</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#thermostats">Thermostats</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interaction-potentials">Interaction Potentials</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#periodic-boundary-conditions">Periodic Boundary Conditions</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-long-how-large-md-should-run">How Long &amp; How Large MD should run?</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-ideas-of-molecular-dynamics">Primary Ideas of Molecular Dynamics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#thermostats">Thermostats</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interaction-potentials">Interaction Potentials</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#periodic-boundary-conditions">Periodic Boundary Conditions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#neighbour-lists">Neighbour Lists</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-long-how-large-md-should-run">How Long &amp; How Large MD should run?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-do-we-need-multiscale-modelling">Why do we need multiscale modelling?</a></li>
 </ul>
   </nav></div>
 
