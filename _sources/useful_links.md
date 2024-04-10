@@ -10,10 +10,12 @@
 - [Soft Matter: Concepts, Phenomena, and Applications](https://softmatterbook.online/soft-matter-community/)
 
 ## General Resources
-- KITP Program: 
+
+- KITP Program:
   - [Physical Principles Shaping Biomolecular Condensates](https://www.kitp.ucsb.edu/activities/biomol25)
   - [The Physics of Elastic Films: from Biological Membranes to Extreme Mechanics](https://online.kitp.ucsb.edu/online/films21/)
   - [Topics: Biomolecular Simulation Group Christine Peter, MPIPR & KITP](https://online.kitp.ucsb.edu//online/multiscale12/peter/)
+
 - Boulder Summer School:
   - [2024: Self-Organizing Matter: From Inanimate to the Animate](https://boulderschool.yale.edu/2024/boulder-school-2024)
   - [2015: Soft Matter In and Out of Equilibrium](https://boulderschool.yale.edu/2015/boulder-school-2015)
