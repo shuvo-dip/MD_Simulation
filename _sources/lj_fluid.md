@@ -180,8 +180,54 @@ timestep        0.005
 fix             mynve all nve
 fix             mylgv all langevin 1.0 1.0 0.1 1530917
 run             10000
-reset_timesteps 0
+reset_timestep 0
 dump            mydmp all atom 1000 dump.lammpstrj
 run             1000000
 
+`````
+
+
+
+`````{admonition} log file
+:class: tip
+```
+    999100   1.3074207      0              1.765018       1.765018       0.0014708483
+    999200   1.4026846      0              1.8936242      1.8936242      0.0015780201
+    999300   0.72046866     0              0.9726327      0.9726327      0.00081052725
+    999400   0.78655881     0              1.0618544      1.0618544      0.00088487866
+    999500   1.0822006      0              1.4609708      1.4609708      0.0012174757
+    999600   0.90615892     0              1.2233145      1.2233145      0.0010194288
+    999700   0.985891       0              1.3309528      1.3309528      0.0011091274
+    999800   1.2901643      0              1.7417218      1.7417218      0.0014514348
+    999900   0.67689256     0              0.91380495     0.91380495     0.00076150413
+   1000000   0.78634406     0              1.0615645      1.0615645      0.00088463707
+Loop time of 19.87 on 8 procs for 1000000 steps with 10 atoms
+
+Performance: 21741277.904 tau/day, 50327.032 timesteps/s, 503.270 katom-step/s
+80.1% CPU use with 8 MPI tasks x no OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.054741   | 0.057883   | 0.064233   |   1.2 |  0.29
+Bond    | 0.04021    | 0.042227   | 0.044459   |   0.8 |  0.21
+Neigh   | 0.34606    | 0.35955    | 0.37062    |   1.3 |  1.81
+Comm    | 7.498      | 8.0589     | 8.8711     |  16.4 | 40.56
+Output  | 0.57603    | 0.61785    | 0.73808    |   6.0 |  3.11
+Modify  | 0.16301    | 0.17659    | 0.1904     |   2.4 |  0.89
+Other   |            | 10.56      |            |       | 53.13
+
+Nlocal:           1.25 ave           4 max           0 min
+Histogram: 4 0 1 0 0 1 0 1 0 1
+Nghost:          2.125 ave           4 max           0 min
+Histogram: 2 0 0 0 0 2 0 3 0 1
+Neighs:              0 ave           0 max           0 min
+Histogram: 8 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 0
+Ave neighs/atom = 0
+Ave special neighs/atom = 0
+Neighbor list builds = 78413
+Dangerous builds = 0
+Total wall time: 0:00:20
 `````

@@ -571,9 +571,53 @@ No space between different segements might leads to syntax error</p>
 <span class="n">fix</span>             <span class="n">mynve</span> <span class="nb">all</span> <span class="n">nve</span>
 <span class="n">fix</span>             <span class="n">mylgv</span> <span class="nb">all</span> <span class="n">langevin</span> <span class="mf">1.0</span> <span class="mf">1.0</span> <span class="mf">0.1</span> <span class="mi">1530917</span>
 <span class="n">run</span>             <span class="mi">10000</span>
-<span class="n">reset_timesteps</span> <span class="mi">0</span>
+<span class="n">reset_timestep</span> <span class="mi">0</span>
 <span class="n">dump</span>            <span class="n">mydmp</span> <span class="nb">all</span> <span class="n">atom</span> <span class="mi">1000</span> <span class="n">dump</span><span class="o">.</span><span class="n">lammpstrj</span>
 <span class="n">run</span>             <span class="mi">1000000</span>
+</pre></div>
+</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">log file</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="mi">999100</span>   <span class="mf">1.3074207</span>      <span class="mi">0</span>              <span class="mf">1.765018</span>       <span class="mf">1.765018</span>       <span class="mf">0.0014708483</span>
+    <span class="mi">999200</span>   <span class="mf">1.4026846</span>      <span class="mi">0</span>              <span class="mf">1.8936242</span>      <span class="mf">1.8936242</span>      <span class="mf">0.0015780201</span>
+    <span class="mi">999300</span>   <span class="mf">0.72046866</span>     <span class="mi">0</span>              <span class="mf">0.9726327</span>      <span class="mf">0.9726327</span>      <span class="mf">0.00081052725</span>
+    <span class="mi">999400</span>   <span class="mf">0.78655881</span>     <span class="mi">0</span>              <span class="mf">1.0618544</span>      <span class="mf">1.0618544</span>      <span class="mf">0.00088487866</span>
+    <span class="mi">999500</span>   <span class="mf">1.0822006</span>      <span class="mi">0</span>              <span class="mf">1.4609708</span>      <span class="mf">1.4609708</span>      <span class="mf">0.0012174757</span>
+    <span class="mi">999600</span>   <span class="mf">0.90615892</span>     <span class="mi">0</span>              <span class="mf">1.2233145</span>      <span class="mf">1.2233145</span>      <span class="mf">0.0010194288</span>
+    <span class="mi">999700</span>   <span class="mf">0.985891</span>       <span class="mi">0</span>              <span class="mf">1.3309528</span>      <span class="mf">1.3309528</span>      <span class="mf">0.0011091274</span>
+    <span class="mi">999800</span>   <span class="mf">1.2901643</span>      <span class="mi">0</span>              <span class="mf">1.7417218</span>      <span class="mf">1.7417218</span>      <span class="mf">0.0014514348</span>
+    <span class="mi">999900</span>   <span class="mf">0.67689256</span>     <span class="mi">0</span>              <span class="mf">0.91380495</span>     <span class="mf">0.91380495</span>     <span class="mf">0.00076150413</span>
+   <span class="mi">1000000</span>   <span class="mf">0.78634406</span>     <span class="mi">0</span>              <span class="mf">1.0615645</span>      <span class="mf">1.0615645</span>      <span class="mf">0.00088463707</span>
+<span class="n">Loop</span> <span class="n">time</span> <span class="n">of</span> <span class="mf">19.87</span> <span class="n">on</span> <span class="mi">8</span> <span class="n">procs</span> <span class="k">for</span> <span class="mi">1000000</span> <span class="n">steps</span> <span class="k">with</span> <span class="mi">10</span> <span class="n">atoms</span>
+
+<span class="n">Performance</span><span class="p">:</span> <span class="mf">21741277.904</span> <span class="n">tau</span><span class="o">/</span><span class="n">day</span><span class="p">,</span> <span class="mf">50327.032</span> <span class="n">timesteps</span><span class="o">/</span><span class="n">s</span><span class="p">,</span> <span class="mf">503.270</span> <span class="n">katom</span><span class="o">-</span><span class="n">step</span><span class="o">/</span><span class="n">s</span>
+<span class="mf">80.1</span><span class="o">%</span> <span class="n">CPU</span> <span class="n">use</span> <span class="k">with</span> <span class="mi">8</span> <span class="n">MPI</span> <span class="n">tasks</span> <span class="n">x</span> <span class="n">no</span> <span class="n">OpenMP</span> <span class="n">threads</span>
+
+<span class="n">MPI</span> <span class="n">task</span> <span class="n">timing</span> <span class="n">breakdown</span><span class="p">:</span>
+<span class="n">Section</span> <span class="o">|</span>  <span class="nb">min</span> <span class="n">time</span>  <span class="o">|</span>  <span class="n">avg</span> <span class="n">time</span>  <span class="o">|</span>  <span class="nb">max</span> <span class="n">time</span>  <span class="o">|%</span><span class="n">varavg</span><span class="o">|</span> <span class="o">%</span><span class="n">total</span>
+<span class="o">---------------------------------------------------------------</span>
+<span class="n">Pair</span>    <span class="o">|</span> <span class="mf">0.054741</span>   <span class="o">|</span> <span class="mf">0.057883</span>   <span class="o">|</span> <span class="mf">0.064233</span>   <span class="o">|</span>   <span class="mf">1.2</span> <span class="o">|</span>  <span class="mf">0.29</span>
+<span class="n">Bond</span>    <span class="o">|</span> <span class="mf">0.04021</span>    <span class="o">|</span> <span class="mf">0.042227</span>   <span class="o">|</span> <span class="mf">0.044459</span>   <span class="o">|</span>   <span class="mf">0.8</span> <span class="o">|</span>  <span class="mf">0.21</span>
+<span class="n">Neigh</span>   <span class="o">|</span> <span class="mf">0.34606</span>    <span class="o">|</span> <span class="mf">0.35955</span>    <span class="o">|</span> <span class="mf">0.37062</span>    <span class="o">|</span>   <span class="mf">1.3</span> <span class="o">|</span>  <span class="mf">1.81</span>
+<span class="n">Comm</span>    <span class="o">|</span> <span class="mf">7.498</span>      <span class="o">|</span> <span class="mf">8.0589</span>     <span class="o">|</span> <span class="mf">8.8711</span>     <span class="o">|</span>  <span class="mf">16.4</span> <span class="o">|</span> <span class="mf">40.56</span>
+<span class="n">Output</span>  <span class="o">|</span> <span class="mf">0.57603</span>    <span class="o">|</span> <span class="mf">0.61785</span>    <span class="o">|</span> <span class="mf">0.73808</span>    <span class="o">|</span>   <span class="mf">6.0</span> <span class="o">|</span>  <span class="mf">3.11</span>
+<span class="n">Modify</span>  <span class="o">|</span> <span class="mf">0.16301</span>    <span class="o">|</span> <span class="mf">0.17659</span>    <span class="o">|</span> <span class="mf">0.1904</span>     <span class="o">|</span>   <span class="mf">2.4</span> <span class="o">|</span>  <span class="mf">0.89</span>
+<span class="n">Other</span>   <span class="o">|</span>            <span class="o">|</span> <span class="mf">10.56</span>      <span class="o">|</span>            <span class="o">|</span>       <span class="o">|</span> <span class="mf">53.13</span>
+
+<span class="n">Nlocal</span><span class="p">:</span>           <span class="mf">1.25</span> <span class="n">ave</span>           <span class="mi">4</span> <span class="nb">max</span>           <span class="mi">0</span> <span class="nb">min</span>
+<span class="n">Histogram</span><span class="p">:</span> <span class="mi">4</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="n">Nghost</span><span class="p">:</span>          <span class="mf">2.125</span> <span class="n">ave</span>           <span class="mi">4</span> <span class="nb">max</span>           <span class="mi">0</span> <span class="nb">min</span>
+<span class="n">Histogram</span><span class="p">:</span> <span class="mi">2</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">2</span> <span class="mi">0</span> <span class="mi">3</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="n">Neighs</span><span class="p">:</span>              <span class="mi">0</span> <span class="n">ave</span>           <span class="mi">0</span> <span class="nb">max</span>           <span class="mi">0</span> <span class="nb">min</span>
+<span class="n">Histogram</span><span class="p">:</span> <span class="mi">8</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span>
+
+<span class="n">Total</span> <span class="c1"># of neighbors = 0</span>
+<span class="n">Ave</span> <span class="n">neighs</span><span class="o">/</span><span class="n">atom</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">Ave</span> <span class="n">special</span> <span class="n">neighs</span><span class="o">/</span><span class="n">atom</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">Neighbor</span> <span class="nb">list</span> <span class="n">builds</span> <span class="o">=</span> <span class="mi">78413</span>
+<span class="n">Dangerous</span> <span class="n">builds</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">Total</span> <span class="n">wall</span> <span class="n">time</span><span class="p">:</span> <span class="mi">0</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">20</span>
 </pre></div>
 </div>
 </div>
