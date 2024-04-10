@@ -22,8 +22,9 @@ In order to go through step by step lets consider the simulation framework. Simu
 
 
 
-`````{admonition} system.data
+`````{admonition} [system.data:]() an example of lammps generated system file
 :class: tip
+```
 LAMMPS data file via write_data, version 3 Mar 2020, timestep = 0
 
 200 atoms
@@ -68,9 +69,6 @@ Velocities
 200 1.1303805073183029e+00 6.5838908974304966e-01 1.6455895349853347e+00
 166 -2.1711562280283929e+00 5.5739576720902884e-01 -2.4101260924931348e-01
 168 3.9698835008419225e-02 5.8955871401596471e-01 2.3171435957398314e+00
-167 1.1210694805028598e+00 2.2967410452123471e-01 1.1415963916362859e+00
-50 7.9271203803838197e-01 5.2144074400222978e-02 -2.1826621527013681e+00
-31 3.1320430241342573e-01 -5.6207253417123559e-01 3.9776612633406822e-01
 .
 .
 .
@@ -81,24 +79,11 @@ Velocities
 
 Bonds
 
-1 1 35 36
+1 1 35 36 
 2 1 24 25
 3 1 166 167
 4 1 168 169
 5 1 167 168
-6 1 50 51
-7 1 31 32
-8 1 30 31
-9 1 29 30
-10 1 169 170
-11 1 170 171
-12 1 171 172
-13 1 172 173
-14 1 173 174
-15 1 51 52
-16 1 23 24
-17 1 199 200
-.
 .
 .
 198 1 89 90
@@ -110,13 +95,98 @@ Angles
 2 1 23 24 25
 3 1 165 166 167
 4 1 167 168 169
-5 1 166 167 168
-6 1 49 50 51
-7 1 30 31 32
 .
 .
+```
+`````
+
+
+### What are these numbers mean?
+`````{admonition} [system.data:]() an example of lammps generated system file
+:class: tip
+```
+LAMMPS data file via write_data, version 3 Mar 2020, timestep = 0
+
+200 atoms
+5 atom types
+199 bonds
+1 bond types
+198 angles
+1 angle types
+
+X_low X_high xlo xhi :box dimension along x
+Y_low Y_high ylo yhi :box dimension along y
+Z_low Z_high zlo zhi :box dimension along z
+
+Masses
+
+atom_type mass
+1 1
+2 1
+
+Atoms # full
+
+atom_ID molecular_ID atom_type charge x y z ix iy iz(image in the periodic boundary)  
+1 1 1 0 2 3 4 0 0 0
+2 1 2 0 3 5 1 0 0 0
+
+Velocities
+
+atom_ID vx vy vz
+1 0.5 0.4 0.33
+
+Bonds
+
+ID Bond_type atom1 atom2 (atom1 atom2 are sequentially connected via a bond)
+1 1 1 2
+2 1 2 3
+
+Angles
+
+ID Angle_type atom1 atom2 atom3 (atom1 atom2 and atom3 are sequentially connected)
+1 1 1 2 3
+2 1 2 3 4
+```
+
+:::{important}
+Please make sure you always keep the format fixed
+No space between different segements might leads to syntax error
+:::
 
 `````
-### 
 
 
+
+`````{admonition} [run.in:]() LAMMPS script for a 10-particle LJ fluid
+:class: tip
+```
+units lj           
+pair_style lj/cut 2.5  
+atom_type lj     
+variable boxlength equal 10.0
+
+create box box  x 0 ${boxlength} y 0 ${boxlength} z 0 ${boxlength}
+
+
+variable natoms equal 10
+
+lattice fcc ${natoms} 1.0 {boxlength}
+
+mass 1 1.0  
+pair_coeff * * 1.0 1.0
+
+velocity all set 0 0 0 1.0  
+
+
+fix langevin all temp/langevin 1.0 0.1  # Set desired temperature (T) and damping time (tau_t)
+
+# Run the simulation for 1000 steps
+run 1000
+
+
+thermo_style custom pe ke
+thermo 100
+
+dump mydump all atom every 100 xyz
+
+`````
