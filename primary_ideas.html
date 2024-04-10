@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
@@ -57,6 +57,8 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'primary_ideas';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -380,7 +382,6 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-ideas-of-molecular-dynamics">Primary Ideas of Molecular Dynamics</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-molecular-dynamics">What is Molecular Dynamics?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importance-of-molecular-simulations">Importance of Molecular Simulations</a></li>
 </ul>
             </nav>
@@ -398,10 +399,29 @@ document.write(`
 <p>This chapter provides an overview of the essential components required for conducting molecular dynamics simulations, with a specific focus on macromolecular systems. We explore the structure of intermolecular potentials for atomically composed or coarse grained molecules and (if possible we go after sytems consisting of non-spherical, sub-units), illustrating methods for computing forces and torques. Additionally, we discuss several widely used molecular dynamics algorithms. Lastly, we touch upon factors influencing the scale of systems and duration of simulations necessary for computing statistical properties.</p>
 <section id="primary-ideas-of-molecular-dynamics">
 <span id="section-label-1"></span><h2>Primary Ideas of Molecular Dynamics<a class="headerlink" href="#primary-ideas-of-molecular-dynamics" title="Link to this heading">#</a></h2>
-</section>
-<section id="what-is-molecular-dynamics">
-<h2>What is Molecular Dynamics?<a class="headerlink" href="#what-is-molecular-dynamics" title="Link to this heading">#</a></h2>
-<p>Molecular simulation is a computational technique used to study the behavior of molecules and materials at the atomic level.</p>
+<p><strong>Brief Discussion:</strong></p>
+<p>Computer simulations play a crucial role in understanding molecular assemblies by revealing their structural properties and microscopic interactions. They complement conventional experiments by offering insights that may be otherwise inaccessible. Molecular dynamics (MD) and Monte Carlo (MC) simulations are the main techniques used, with MD being the focus of this lecture due to its ability to predict dynamical properties such as transport coefficients and rheological properties.</p>
+<p>Simulations act as a bridge between microscopic and macroscopic scales, providing accurate predictions of bulk properties while revealing hidden details. They also serve as a connection between theory and experiment, enabling testing of theories and models. Additionally, simulations allow exploration of conditions that may be difficult or impossible to replicate in the laboratory.</p>
+<blockquote style="background-color: #f8f8f8; border-left: 5px solid #007bff; padding: 10px;">
+    <strong style="color: #007bff;">Key Ideas:</strong>
+    <ul>
+        <li><strong>Role of Simulations:</strong> Simulations complement experiments by providing insights into molecular assemblies that may not be accessible experimentally.</li>
+        <li><strong>Main Simulation Techniques:</strong> Molecular dynamics (MD) and Monte Carlo (MC) are the primary simulation techniques, with MD focusing on dynamical properties.</li>
+        <li><strong>Bridge between Scales:</strong> Simulations bridge the gap between microscopic and macroscopic scales, offering accurate predictions of bulk properties while revealing hidden details.</li>
+        <li><strong>Connection between Theory and Experiment:</strong> Simulations enable testing of theories and models, as well as comparisons with experimental results.</li>
+        <li><strong>Exploration of Conditions:</strong> Simulations allow exploration of conditions that may be difficult or impossible to replicate in the laboratory.</li>
+        <li><strong>Importance of Molecular Models:</strong> Accurate molecular models are essential for making direct comparisons with experimental measurements, but models containing essential physics may suffice for certain aims.</li>
+    </ul>
+</blockquote>
+<p><strong>Molecular Dynamics:</strong></p>
+<p>Molecular dynamics (MD) is a widely employed computational technique to compute the equilibrium, dynamical, and transport properties of classical many-body systems. As the quantum effects are neglected for heavier molecules and atoms, the motion of the constituent particles follows laws of classical mechanics obeying the Newtonian equations of motion. For classical many-body systems, the average kinetic energy per degree of freedom is related to the thermal energy via equipartition theorem, <span class="math notranslate nohighlight">\(\langle \frac{1}{2}mv_i^2\rangle =\frac{1}{2}k_B T\)</span>. The trajectory of individual particles from the MD can be obtained by solving Newton’s second laws of motion,</p>
+<p>\begin{equation}
+\frac{\mathrm{d}^2 \mathbf{r}_i}{\mathrm{d}t^2}\equiv \frac{\mathbf{F}<em>i}{m}=-\frac{1}{m}\sum</em>{i\neq j}^N \nabla U(|\mathbf{r}_i -\mathbf{r}_j|),
+\end{equation}</p>
+<p>where force <span class="math notranslate nohighlight">\(\mathbf{F}_i\)</span> acting on particle <span class="math notranslate nohighlight">\(i\)</span>, and <span class="math notranslate nohighlight">\(t\)</span> denotes the time. By numerically solving Newton’s equation of motion (using <em>e.g.</em> velocity-verlet algorithm), one computes the position of every particle after a given time step. In standard MD simulation, typical timesteps <span class="math notranslate nohighlight">\(\sim 10^{-15}\)</span>s (however, vary by the requirements of the system property) compared to the real time scale. A simplified flowchart of a typical MD simulation is shown in the Fig.~\eqref{flowchart01}.</p>
+<p><img alt="Flowchart" src="md_flowchart.jpg" /></p>
+<p>Once the system acquires an equilibrium state, the total potential energy is independent of subsequent iterations. If the system is at equilibrium state, <em>i.e.</em> time evolution is equivalent to the configuration, as the thermodynamics state is considered to be ergodic. Since the positions, velocities are known, one can calculate pair correlation distributions, structure factor, which are essentially calculated by taking an average of over different realisations. In order to get a statistical average of a system with a thermally excited state to reach equilibrium state by dynamical phase transitions, needs to average over different configurations emerge from different initial states. A major problem sometimes arises in MD simulations, while small numerical errors arise from the numerical integration of the equation of motion. Which could piles up over many steps and invoke the kinetic energy, hence change the average temperature. This temperature drift can be circumvented by occasionally rescaling the velocity of the particles.</p>
+<p>We use <code class="docutils literal notranslate"><span class="pre">LAMMPS</span></code> [&#64;p:plimpton1995], in order to perform MD simulations in every complex system that we discuss over the thesis. For the visualization purpose we use <code class="docutils literal notranslate"><span class="pre">OVITO</span></code> [&#64;p:stukowski2010] molecules viewer. However, to perform post-processing data analysis from the trajectory files and figure generation, we use <code class="docutils literal notranslate"><span class="pre">MATLAB</span></code> programming language.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>Here is some helpful tips</p>
@@ -478,7 +498,6 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-ideas-of-molecular-dynamics">Primary Ideas of Molecular Dynamics</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-molecular-dynamics">What is Molecular Dynamics?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importance-of-molecular-simulations">Importance of Molecular Simulations</a></li>
 </ul>
   </nav></div>
