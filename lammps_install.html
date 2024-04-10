@@ -422,7 +422,6 @@ document.write(`
 <li><p>Step 3: Build LAMMPS with <a class="reference external" href="https://docs.lammps.org/Build_make.html">make</a></p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">lammps</span><span class="o">/</span><span class="n">src</span>   <span class="c1"># change to main LAMMPS source folder</span>
-<span class="n">make</span> <span class="n">serial</span>     <span class="c1"># build a serial LAMMPS executable using GNU g++</span>
 <span class="n">make</span> <span class="n">mpi</span>        <span class="c1"># build a parallel LAMMPS executable with MPI</span>
 <span class="n">make</span>            <span class="c1"># see a variety of make options</span>
 </pre></div>
@@ -433,6 +432,12 @@ document.write(`
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">yes</span><span class="o">-</span><span class="n">asphere</span>
 <span class="n">make</span> <span class="n">yes</span><span class="o">-</span><span class="n">rigid</span>
 <span class="n">make</span> <span class="n">yes</span><span class="o">-</span><span class="n">molecule</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Step 5: After installing required lammps packages then</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">mpi</span>
 </pre></div>
 </div>
 </section>

@@ -514,10 +514,52 @@ U_{\text{coulomb}}(r) = \frac{Q_1 Q_2}{4 \pi \epsilon_0 r},
 </section>
 <section id="how-long-how-large-md-should-run">
 <h3>How Long &amp; How Large MD should run?<a class="headerlink" href="#how-long-how-large-md-should-run" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Molecular dynamics involves the incremental evolution of molecular configurations through time in discrete steps <span class="math notranslate nohighlight">\(\delta t\)</span>.</p></li>
+<li><p>Time steps typically <span class="math notranslate nohighlight">\(\delta t \approx 0.001 - 0.005\)</span> in LJ unit, 10fs in real units.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Units:</strong> <a class="reference external" href="https://docs.lammps.org/units.html">unit style</a>
+There are three basic units distance:<span class="math notranslate nohighlight">\(\sigma\)</span>, mass: <span class="math notranslate nohighlight">\(m\)</span>, energy: <span class="math notranslate nohighlight">\(\epsilon\)</span>, time: <span class="math notranslate nohighlight">\(\tau = \sqrt{m\sigma^2/\epsilon}\)</span></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">units</span> <span class="n">lj</span> <span class="ow">or</span> <span class="n">real</span> <span class="ow">or</span> <span class="n">metal</span> <span class="ow">or</span> <span class="n">si</span> <span class="ow">or</span> <span class="n">cgs</span> <span class="ow">or</span> <span class="n">electron</span> <span class="ow">or</span> <span class="n">micro</span> <span class="ow">or</span> <span class="n">nano</span>
+</pre></div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Equilibrium attainment in simulations must be confirmed (ergodic) before relying on calculated averages.</p></li>
+<li><p>The optimal duration of simulation runs depends on the characteristics of the system and the relevant physical properties.</p></li>
+<li><p>Simulation durations are typically short, spanning <span class="math notranslate nohighlight">\(10^3\)</span> to <span class="math notranslate nohighlight">\(10^6\)</span> (sometimes more than that <span class="math notranslate nohighlight">\(\sim 10^9\)</span> depending on objectives) MD steps, equivalent to a few nanoseconds of real time, and occasionally extending to microseconds.</p></li>
+</ul>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>Here is some helpful tips</p>
+<ul class="simple">
+<li><p>Equilibrium attainment in simulations must be confirmed (ergodic) before relying on calculated averages.</p></li>
+<li><p>The optimal duration of simulation runs depends on the characteristics of the system and the relevant physical properties.</p></li>
+</ul>
 </div>
+<ul class="simple">
+<li><p><strong>Simulation Box Sizes (<span class="math notranslate nohighlight">\(L\)</span>) and Simulation Run Lengths (<span class="math notranslate nohighlight">\(\tau\)</span>):</strong></p>
+<ul>
+<li><p>It is crucial for simulation box sizes (<span class="math notranslate nohighlight">\(L\)</span>) to be significantly larger than the characteristic length scale <span class="math notranslate nohighlight">\(\zeta_a\)</span>.</p></li>
+<li><p>Similarly, simulation run lengths <span class="math notranslate nohighlight">\(\tau\)</span> should be much larger than the characteristic time scale <span class="math notranslate nohighlight">\(\tau_a\)</span> for all properties of interest <span class="math notranslate nohighlight">\(a\)</span>.</p></li>
+</ul>
+</li>
+<li><p><strong>Statistical Error in Property Calculation:</strong></p>
+<ul>
+<li><p>The statistical error in a property calculated as an average over a simulation run of length <span class="math notranslate nohighlight">\(\tau\)</span> is proportional to <span class="math notranslate nohighlight">\(\tau_a\)</span>/<span class="math notranslate nohighlight">\(\tau\)</span>.</p></li>
+<li><p>The time average is essentially a sum of approximately <span class="math notranslate nohighlight">\(\tau\)</span>/<span class="math notranslate nohighlight">\(\tau_a\)</span> independent quantities, each an average over time <span class="math notranslate nohighlight">\(\tau\)</span>a.</p></li>
+<li><p>Within time periods <span class="math notranslate nohighlight">\(\tau_a\)</span>, values of the property are highly correlated.</p></li>
+</ul>
+</li>
+<li><p><strong>Spatial Averages Over Simulation Box Volume (<span class="math notranslate nohighlight">\(L^3\)</span>):</strong></p>
+<ul>
+<li><p>Properties which are effectively spatial averages over the simulation box volume ( <span class="math notranslate nohighlight">\(L^3\)</span> ) exhibit root-mean-square variations proportional to <span class="math notranslate nohighlight">\(\sqrt{(\zeta_a/L)^3}\)</span>.</p></li>
+<li><p>Collective, system-wide properties deviate by only a relatively small amount from their thermodynamic, large-system, limiting values.</p></li>
+<li><p>The deviation becomes smaller as the averaging volume increases and is determined by the correlation length.</p></li>
+</ul>
+</li>
+</ul>
 </section>
 </section>
 </section>

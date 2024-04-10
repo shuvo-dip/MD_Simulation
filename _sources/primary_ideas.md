@@ -127,10 +127,36 @@ Due to limitations in system size and the number of degrees of freedom in comput
 
 
 ### How Long & How Large MD should run?
-
-```{tip}
-Here is some helpful tips
+- Molecular dynamics involves the incremental evolution of molecular configurations through time in discrete steps $\delta t$.
+- Time steps typically $\delta t \approx 0.001 - 0.005$ in LJ unit, 10fs in real units.
+:::{note}
+**Units:** [unit style](https://docs.lammps.org/units.html)
+There are three basic units distance:$\sigma$, mass: $m$, energy: $\epsilon$, time: $\tau = \sqrt{m\sigma^2/\epsilon}$
 ```
+units lj or real or metal or si or cgs or electron or micro or nano
+```
+:::
+- Equilibrium attainment in simulations must be confirmed (ergodic) before relying on calculated averages.
+- The optimal duration of simulation runs depends on the characteristics of the system and the relevant physical properties.
+
+- Simulation durations are typically short, spanning $10^3$ to $10^6$ (sometimes more than that $\sim 10^9$ depending on objectives) MD steps, equivalent to a few nanoseconds of real time, and occasionally extending to microseconds.
+```{tip}
+- Equilibrium attainment in simulations must be confirmed (ergodic) before relying on calculated averages.
+- The optimal duration of simulation runs depends on the characteristics of the system and the relevant physical properties.
+```
+- **Simulation Box Sizes ($L$) and Simulation Run Lengths ($\tau$):**
+  - It is crucial for simulation box sizes ($L$) to be significantly larger than the characteristic length scale $\zeta_a$.
+  - Similarly, simulation run lengths $\tau$ should be much larger than the characteristic time scale $\tau_a$ for all properties of interest $a$.
+  
+- **Statistical Error in Property Calculation:**
+  - The statistical error in a property calculated as an average over a simulation run of length $\tau$ is proportional to $\tau_a$/$\tau$.
+  - The time average is essentially a sum of approximately $\tau$/$\tau_a$ independent quantities, each an average over time $\tau$a.
+  - Within time periods $\tau_a$, values of the property are highly correlated.
+  
+- **Spatial Averages Over Simulation Box Volume ($L^3$):**
+  - Properties which are effectively spatial averages over the simulation box volume ( $L^3$ ) exhibit root-mean-square variations proportional to $\sqrt{(\zeta_a/L)^3}$.
+  - Collective, system-wide properties deviate by only a relatively small amount from their thermodynamic, large-system, limiting values.
+  - The deviation becomes smaller as the averaging volume increases and is determined by the correlation length.
 
 
 

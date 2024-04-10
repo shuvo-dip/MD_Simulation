@@ -27,7 +27,6 @@ git pull
 
 ```
 cd lammps/src   # change to main LAMMPS source folder
-make serial     # build a serial LAMMPS executable using GNU g++
 make mpi        # build a parallel LAMMPS executable with MPI
 make            # see a variety of make options
 ```
@@ -36,5 +35,9 @@ make            # see a variety of make options
 make yes-asphere
 make yes-rigid
 make yes-molecule
+```
+- Step 5: After installing required lammps packages then
+```
+make mpi
 ```
 
