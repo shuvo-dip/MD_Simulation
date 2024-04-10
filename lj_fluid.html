@@ -557,22 +557,23 @@ No space between different segements might leads to syntax error</p>
 <span class="n">pair_style</span> <span class="n">lj</span><span class="o">/</span><span class="n">cut</span> <span class="mf">1.112</span>
 <span class="n">boundary</span> <span class="n">p</span> <span class="n">p</span> <span class="n">p</span>
 
-<span class="n">region</span> <span class="n">simulation_box</span> <span class="n">block</span> <span class="mi">0</span> <span class="mi">20</span> <span class="mi">0</span> <span class="mi">20</span> <span class="mi">0</span> <span class="mi">20</span>
-<span class="n">create_box</span>   <span class="mi">1</span> <span class="n">simulation_box</span>
-<span class="n">create_atoms</span> <span class="mi">1</span> <span class="n">random</span> <span class="mi">10</span> <span class="mi">12345</span> <span class="n">NULL</span> <span class="n">overlap</span> <span class="mf">2.0</span> <span class="n">maxtry</span> <span class="mi">50</span>
+<span class="n">region</span>          <span class="n">simulation_box</span> <span class="n">block</span> <span class="mi">0</span> <span class="mi">20</span> <span class="mi">0</span> <span class="mi">20</span> <span class="mi">0</span> <span class="mi">20</span>
+<span class="n">create_box</span>      <span class="mi">1</span> <span class="n">simulation_box</span>
+<span class="n">create_atoms</span>    <span class="mi">1</span> <span class="n">random</span> <span class="mi">10</span> <span class="mi">12345</span> <span class="n">NULL</span> <span class="n">overlap</span> <span class="mf">2.0</span> <span class="n">maxtry</span> <span class="mi">50</span>
 
-<span class="n">mass</span> <span class="mi">1</span> <span class="mi">1</span>
-<span class="n">pair_coeff</span> <span class="o">*</span> <span class="o">*</span> <span class="mf">1.0</span> <span class="mf">1.0</span>
+<span class="n">mass</span>            <span class="mi">1</span> <span class="mi">1</span>
+<span class="n">pair_coeff</span>      <span class="o">*</span> <span class="o">*</span> <span class="mf">1.0</span> <span class="mf">1.0</span>
 
-<span class="n">dump</span> <span class="n">mydmp</span> <span class="nb">all</span> <span class="n">atom</span> <span class="mi">100</span> <span class="n">dump</span><span class="o">.</span><span class="n">lammpstrj</span>
-<span class="n">thermo</span> <span class="mi">100</span>
-<span class="n">thermo_style</span> <span class="n">custom</span> <span class="n">step</span> <span class="n">temp</span> <span class="n">pe</span> <span class="n">ke</span> <span class="n">etotal</span> <span class="n">press</span>
 
-<span class="n">fix</span> <span class="n">mynve</span> <span class="nb">all</span> <span class="n">nve</span>
-<span class="n">fix</span> <span class="n">mylgv</span> <span class="nb">all</span> <span class="n">langevin</span> <span class="mf">1.0</span> <span class="mf">1.0</span> <span class="mf">0.1</span> <span class="mi">1530917</span>
-<span class="n">timestep</span> <span class="mf">0.005</span>
-
-<span class="n">run</span> <span class="mi">10000</span>
+<span class="n">thermo</span>          <span class="mi">100</span>
+<span class="n">thermo_style</span>    <span class="n">custom</span> <span class="n">step</span> <span class="n">temp</span> <span class="n">pe</span> <span class="n">ke</span> <span class="n">etotal</span> <span class="n">press</span>
+<span class="n">timestep</span>        <span class="mf">0.005</span>
+<span class="n">fix</span>             <span class="n">mynve</span> <span class="nb">all</span> <span class="n">nve</span>
+<span class="n">fix</span>             <span class="n">mylgv</span> <span class="nb">all</span> <span class="n">langevin</span> <span class="mf">1.0</span> <span class="mf">1.0</span> <span class="mf">0.1</span> <span class="mi">1530917</span>
+<span class="n">run</span>             <span class="mi">10000</span>
+<span class="n">reset_timesteps</span> <span class="mi">0</span>
+<span class="n">dump</span>            <span class="n">mydmp</span> <span class="nb">all</span> <span class="n">atom</span> <span class="mi">1000</span> <span class="n">dump</span><span class="o">.</span><span class="n">lammpstrj</span>
+<span class="n">run</span>             <span class="mi">1000000</span>
 </pre></div>
 </div>
 </div>

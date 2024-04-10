@@ -166,21 +166,22 @@ atom_style full
 pair_style lj/cut 1.112
 boundary p p p
 
-region simulation_box block 0 20 0 20 0 20
-create_box   1 simulation_box
-create_atoms 1 random 10 12345 NULL overlap 2.0 maxtry 50
+region          simulation_box block 0 20 0 20 0 20
+create_box      1 simulation_box
+create_atoms    1 random 10 12345 NULL overlap 2.0 maxtry 50
 
-mass 1 1
-pair_coeff * * 1.0 1.0
+mass            1 1
+pair_coeff      * * 1.0 1.0
 
-dump mydmp all atom 100 dump.lammpstrj
-thermo 100
-thermo_style custom step temp pe ke etotal press
 
-fix mynve all nve
-fix mylgv all langevin 1.0 1.0 0.1 1530917
-timestep 0.005
-
-run 10000
+thermo          100
+thermo_style    custom step temp pe ke etotal press
+timestep        0.005
+fix             mynve all nve
+fix             mylgv all langevin 1.0 1.0 0.1 1530917
+run             10000
+reset_timesteps 0
+dump            mydmp all atom 1000 dump.lammpstrj
+run             1000000
 
 `````
