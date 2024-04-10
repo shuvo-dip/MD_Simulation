@@ -160,33 +160,27 @@ No space between different segements might leads to syntax error
 `````{admonition} [run.in:]() LAMMPS script for a 10-particle LJ fluid
 :class: tip
 ```
-units lj           
-pair_style lj/cut 2.5  
-atom_type lj     
-variable boxlength equal 10.0
+units lj
+dimension 3
+atom_style full
+pair_style lj/cut 1.112
+boundary p p p
 
-create box box  x 0 ${boxlength} y 0 ${boxlength} z 0 ${boxlength}
+region simulation_box block 0 20 0 20 0 20
+create_box   1 simulation_box
+create_atoms 1 random 10 12345 NULL overlap 2.0 maxtry 50
 
-
-variable natoms equal 10
-
-lattice fcc ${natoms} 1.0 {boxlength}
-
-mass 1 1.0  
+mass 1 1
 pair_coeff * * 1.0 1.0
 
-velocity all set 0 0 0 1.0  
-
-
-fix langevin all temp/langevin 1.0 0.1  # Set desired temperature (T) and damping time (tau_t)
-
-# Run the simulation for 1000 steps
-run 1000
-
-
-thermo_style custom pe ke
+dump mydmp all atom 100 dump.lammpstrj
 thermo 100
+thermo_style custom step temp pe ke etotal press
 
-dump mydump all atom every 100 xyz
+fix mynve all nve
+fix mylgv all langevin 1.0 1.0 0.1 1530917
+timestep 0.005
+
+run 10000
 
 `````

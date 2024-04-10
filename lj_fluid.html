@@ -551,34 +551,28 @@ No space between different segements might leads to syntax error</p>
 </div>
 <div class="tip admonition">
 <p class="admonition-title"><a class="reference internal" href="#"><span class="xref myst">run.in:</span></a> LAMMPS script for a 10-particle LJ fluid</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>units lj           
-pair_style lj/cut 2.5  
-atom_type lj     
-variable boxlength equal 10.0
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">units</span> <span class="n">lj</span>
+<span class="n">dimension</span> <span class="mi">3</span>
+<span class="n">atom_style</span> <span class="n">full</span>
+<span class="n">pair_style</span> <span class="n">lj</span><span class="o">/</span><span class="n">cut</span> <span class="mf">1.112</span>
+<span class="n">boundary</span> <span class="n">p</span> <span class="n">p</span> <span class="n">p</span>
 
-create box box  x 0 ${boxlength} y 0 ${boxlength} z 0 ${boxlength}
+<span class="n">region</span> <span class="n">simulation_box</span> <span class="n">block</span> <span class="mi">0</span> <span class="mi">20</span> <span class="mi">0</span> <span class="mi">20</span> <span class="mi">0</span> <span class="mi">20</span>
+<span class="n">create_box</span>   <span class="mi">1</span> <span class="n">simulation_box</span>
+<span class="n">create_atoms</span> <span class="mi">1</span> <span class="n">random</span> <span class="mi">10</span> <span class="mi">12345</span> <span class="n">NULL</span> <span class="n">overlap</span> <span class="mf">2.0</span> <span class="n">maxtry</span> <span class="mi">50</span>
 
+<span class="n">mass</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="n">pair_coeff</span> <span class="o">*</span> <span class="o">*</span> <span class="mf">1.0</span> <span class="mf">1.0</span>
 
-variable natoms equal 10
+<span class="n">dump</span> <span class="n">mydmp</span> <span class="nb">all</span> <span class="n">atom</span> <span class="mi">100</span> <span class="n">dump</span><span class="o">.</span><span class="n">lammpstrj</span>
+<span class="n">thermo</span> <span class="mi">100</span>
+<span class="n">thermo_style</span> <span class="n">custom</span> <span class="n">step</span> <span class="n">temp</span> <span class="n">pe</span> <span class="n">ke</span> <span class="n">etotal</span> <span class="n">press</span>
 
-lattice fcc ${natoms} 1.0 {boxlength}
+<span class="n">fix</span> <span class="n">mynve</span> <span class="nb">all</span> <span class="n">nve</span>
+<span class="n">fix</span> <span class="n">mylgv</span> <span class="nb">all</span> <span class="n">langevin</span> <span class="mf">1.0</span> <span class="mf">1.0</span> <span class="mf">0.1</span> <span class="mi">1530917</span>
+<span class="n">timestep</span> <span class="mf">0.005</span>
 
-mass 1 1.0  
-pair_coeff * * 1.0 1.0
-
-velocity all set 0 0 0 1.0  
-
-
-fix langevin all temp/langevin 1.0 0.1  # Set desired temperature (T) and damping time (tau_t)
-
-# Run the simulation for 1000 steps
-run 1000
-
-
-thermo_style custom pe ke
-thermo 100
-
-dump mydump all atom every 100 xyz
+<span class="n">run</span> <span class="mi">10000</span>
 </pre></div>
 </div>
 </div>
