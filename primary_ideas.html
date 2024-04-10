@@ -381,8 +381,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-ideas-of-molecular-dynamics">Primary Ideas of Molecular Dynamics</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importance-of-molecular-simulations">Importance of Molecular Simulations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-ideas-of-molecular-dynamics">Primary Ideas of Molecular Dynamics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#thermostats">Thermostats</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interaction-potentials">Interaction Potentials</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#periodic-boundary-conditions">Periodic Boundary Conditions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-long-how-large-md-should-run">How Long &amp; How Large MD should run?</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -406,30 +411,114 @@ document.write(`
     <strong style="color: #007bff;">Key Ideas:</strong>
     <ul>
         <li><strong>Role of Simulations:</strong> Simulations complement experiments by providing insights into molecular assemblies that may not be accessible experimentally.</li>
-        <li><strong>Main Simulation Techniques:</strong> Molecular dynamics (MD) and Monte Carlo (MC) are the primary simulation techniques, with MD focusing on dynamical properties.</li>
+        <li><strong>Main Simulation Techniques:</strong> Molecular dynamics (MD) and Monte Carlo (MC) are the primary simulation techniques (there are other techniques such as Brownian Dynamics, Dissipative Particle Dynamics, Multiparticle Collision Dynamics, and Lattice Boltzmann, among others), with MD focusing on dynamical properties.</li>
         <li><strong>Bridge between Scales:</strong> Simulations bridge the gap between microscopic and macroscopic scales, offering accurate predictions of bulk properties while revealing hidden details.</li>
         <li><strong>Connection between Theory and Experiment:</strong> Simulations enable testing of theories and models, as well as comparisons with experimental results.</li>
         <li><strong>Exploration of Conditions:</strong> Simulations allow exploration of conditions that may be difficult or impossible to replicate in the laboratory.</li>
         <li><strong>Importance of Molecular Models:</strong> Accurate molecular models are essential for making direct comparisons with experimental measurements, but models containing essential physics may suffice for certain aims.</li>
     </ul>
 </blockquote>
-<p><strong>Molecular Dynamics:</strong></p>
-<p>Molecular dynamics (MD) is a widely employed computational technique to compute the equilibrium, dynamical, and transport properties of classical many-body systems. As the quantum effects are neglected for heavier molecules and atoms, the motion of the constituent particles follows laws of classical mechanics obeying the Newtonian equations of motion. For classical many-body systems, the average kinetic energy per degree of freedom is related to the thermal energy via equipartition theorem, <span class="math notranslate nohighlight">\(\langle \frac{1}{2}mv_i^2\rangle =\frac{1}{2}k_B T\)</span>. The trajectory of individual particles from the MD can be obtained by solving Newton’s second laws of motion,</p>
-<p>\begin{equation}
-\frac{\mathrm{d}^2 \mathbf{r}_i}{\mathrm{d}t^2}\equiv \frac{\mathbf{F}<em>i}{m}=-\frac{1}{m}\sum</em>{i\neq j}^N \nabla U(|\mathbf{r}_i -\mathbf{r}_j|),
-\end{equation}</p>
-<p>where force <span class="math notranslate nohighlight">\(\mathbf{F}_i\)</span> acting on particle <span class="math notranslate nohighlight">\(i\)</span>, and <span class="math notranslate nohighlight">\(t\)</span> denotes the time. By numerically solving Newton’s equation of motion (using <em>e.g.</em> velocity-verlet algorithm), one computes the position of every particle after a given time step. In standard MD simulation, typical timesteps <span class="math notranslate nohighlight">\(\sim 10^{-15}\)</span>s (however, vary by the requirements of the system property) compared to the real time scale. A simplified flowchart of a typical MD simulation is shown in the Fig.~\eqref{flowchart01}.</p>
-<p><img alt="Flowchart" src="md_flowchart.jpg" /></p>
+<p><strong>Molecular Dynamics:</strong>
+Molecular dynamics (MD) is a widely employed computational technique to compute the equilibrium, dynamical, and transport properties of classical many-body systems. As the quantum effects are neglected for heavier molecules and atoms, the motion of the constituent particles follows laws of classical mechanics obeying the Newtonian equations of motion. For classical many-body systems, the average kinetic energy per degree of freedom is related to the thermal energy via equipartition theorem, <span class="math notranslate nohighlight">\(\langle \frac{1}{2}mv_i^2\rangle =\frac{1}{2}k_B T\)</span>. The trajectory of individual particles from the MD can be obtained by solving Newton’s second laws of motion,</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\mathrm{d}^2 \mathbf{r}_i}{\mathrm{d}t^2}\equiv \frac{\mathbf{F}_i}{m}=-\frac{1}{m}\sum_{i\neq j}^N \nabla U(|\mathbf{r}_i -\mathbf{r}_j|),
+\]</div>
+<p>where force <span class="math notranslate nohighlight">\(\mathbf{F}_i\)</span> acting on particle <span class="math notranslate nohighlight">\(i\)</span>, and <span class="math notranslate nohighlight">\(t\)</span> denotes the time. By numerically solving Newton’s equation of motion (using <em>e.g.</em> velocity-verlet algorithm), one computes the position of every particle after a given time step. In standard MD simulation, typical timesteps <span class="math notranslate nohighlight">\(\sim 10^{-15}\)</span>s (however, vary by the requirements of the system property) compared to the real time scale. A simplified flowchart of a typical MD simulation is shown in the Fig. <code class="docutils literal notranslate"><span class="pre">Flowchart</span></code>.</p>
+<p><img alt="Flowchart" src="_images/md_flowchart.jpg" /></p>
 <p>Once the system acquires an equilibrium state, the total potential energy is independent of subsequent iterations. If the system is at equilibrium state, <em>i.e.</em> time evolution is equivalent to the configuration, as the thermodynamics state is considered to be ergodic. Since the positions, velocities are known, one can calculate pair correlation distributions, structure factor, which are essentially calculated by taking an average of over different realisations. In order to get a statistical average of a system with a thermally excited state to reach equilibrium state by dynamical phase transitions, needs to average over different configurations emerge from different initial states. A major problem sometimes arises in MD simulations, while small numerical errors arise from the numerical integration of the equation of motion. Which could piles up over many steps and invoke the kinetic energy, hence change the average temperature. This temperature drift can be circumvented by occasionally rescaling the velocity of the particles.</p>
-<p>We use <code class="docutils literal notranslate"><span class="pre">LAMMPS</span></code> [&#64;p:plimpton1995], in order to perform MD simulations in every complex system that we discuss over the thesis. For the visualization purpose we use <code class="docutils literal notranslate"><span class="pre">OVITO</span></code> [&#64;p:stukowski2010] molecules viewer. However, to perform post-processing data analysis from the trajectory files and figure generation, we use <code class="docutils literal notranslate"><span class="pre">MATLAB</span></code> programming language.</p>
+<section id="thermostats">
+<h3>Thermostats<a class="headerlink" href="#thermostats" title="Link to this heading">#</a></h3>
+<p>Distinct types of ensembles arise from various macroscopic environmental constraints related to specific statistical properties.</p>
+<ul class="simple">
+<li><p><strong>Langevin Thermostat</strong>: Adds a stochastic force to the equations of motion to mimic the effect of a heat bath. It maintains a constant temperature by balancing the energy exchange between the system and the surrounding heat bath.</p></li>
+<li><p><strong>Berendsen Thermostat</strong>: Scales the velocities of particles to achieve the desired temperature. It’s simpler than the Langevin thermostat but can lead to nonphysical behavior in some cases.</p></li>
+<li><p><strong>Nosé-Hoover Thermostat</strong>: Introduces additional degrees of freedom to the system to control its temperature. It adjusts the particle velocities to match the desired temperature while conserving energy.</p></li>
+<li><p><strong>Anderson Thermostat</strong>: Randomly rescales particle velocities to control the temperature. It’s computationally efficient but may not accurately model the dynamics of real systems due to the abrupt velocity changes.</p></li>
+<li><p><strong>Velocity Rescaling</strong>: Directly rescales the velocities of particles to achieve the desired temperature. It’s straightforward but may lead to energy drift over long simulation times.</p></li>
+<li><p><strong>NVT (Canonical ensemble) &amp; NVE (microcanonical ensemble) :</strong></p>
+<ul>
+<li><p>Description: In the canonical ensemble, the number of particles (N), volume (V), and temperature (T) are fixed.</p></li>
+<li><p>Thermostat: Berendsen thermostat, Langevin thermostat, Nosé-Hoover thermostat, Velocity rescaling thermostat.</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.lammps.org/fix_nh.html">fix nvt</a></p></li>
+<li><p><a class="reference external" href="https://docs.lammps.org/fix_nve.html">fix nve</a></p></li>
+<li><p><a class="reference external" href="https://docs.lammps.org/fix_nvt_sllod.html">fix nvt/sllod</a></p></li>
+<li><p><a class="reference external" href="https://docs.lammps.org/fix_langevin.html">fix langevin</a></p></li>
+</ul>
+</div>
+<ul class="simple">
+<li><p><strong>NPT (Isothermal-isobaric ensemble):</strong></p>
+<ul>
+<li><p>Description: In the isothermal-isobaric ensemble, the number of particles (N), pressure (P), and temperature (T) are fixed.</p></li>
+<li><p>Thermostat: Nosé-Hoover thermostat (coupled with Parrinello-Rahman barostat), Martyna-Tobias-Klein (MTK) thermostat (coupled with Parrinello-Rahman barostat), Parrinello-Rahman barostat.</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.lammps.org/fix_nh.html">fix npt</a></p></li>
+</ul>
+</div>
+<p>Typically, canonical <code class="docutils literal notranslate"><span class="pre">NVT</span></code> or isothermal-isobaric <code class="docutils literal notranslate"><span class="pre">NPT</span></code> ensembles are employed to compare systems with experimental data. In scenarios where the system interacts with a heat bath, the <code class="docutils literal notranslate"><span class="pre">NVT</span></code> ensemble proves beneficial. The Nosé-Hoover thermostat offers a deterministic algorithm for simulating a system within the constant temperature <code class="docutils literal notranslate"><span class="pre">NVT</span></code> ensemble. An additional fictitious dynamic variable, friction (<span class="math notranslate nohighlight">\(\zeta\)</span>), is introduced to accelerate or decelerate until the temperature matches the heat bath temperature <span class="math notranslate nohighlight">\(T\)</span>. Thus, the equations of motion are:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+m_i \frac{d^2\vec{r_i}}{dt^2} = \vec{F_i}-\zeta m_i \vec{v_i},\\
+ \frac{d\zeta}{dt} =\frac{1}{Q}\left[ \frac{1}{2}\sum_{i=1}^N m_i v_i^2 -\frac{3N+1}{2}k_B T \right],
+\end{split}\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(Q\)</span> denotes the mass determining the relaxation of friction dynamics, <span class="math notranslate nohighlight">\(\zeta(t)\)</span>. Notably, in steady state (<span class="math notranslate nohighlight">\(\frac{d\zeta}{dt}=0\)</span>), kinetic energy follows equipartition <span class="math notranslate nohighlight">\(\frac{3N+1}{2}k_B T\)</span> (with an additional degree of freedom from <span class="math notranslate nohighlight">\(\zeta\)</span>), and <span class="math notranslate nohighlight">\(T\)</span> tends toward the specified value, although it is not fixed.</p>
+<p>In our MD simulation, we employ a canonical (<span class="math notranslate nohighlight">\(NVT\)</span>) ensemble that integrates time on non-Hamiltonian equations of motion in the Nos’e-Hoover style, designed to generate positions and velocities of each particle.</p>
+</section>
+<section id="interaction-potentials">
+<h3>Interaction Potentials<a class="headerlink" href="#interaction-potentials" title="Link to this heading">#</a></h3>
+<p>We primarily focus on coarse-grained molecular dynamics simulations of the Kremer-Grest bead-spring polymer model. Nature of the nonbonded interactions may distinguished the distinct nature of the polymer chain or monomaric solvent. Depending on the system, inter-atomic non-bonded soft attractive Lennard-Jones potential or truncated LJ (WCA) potential is utilized to impose good or bad solvent conditions.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+U_{\text{wca}}(r) =  
+\begin{cases}
+4 \epsilon  \left[\left(\frac{b}{r}\right)^{12} -\left(\frac{b}{r}\right)^{6} +\frac{1}{4}\right],~~~~~r_c \geq r ,\\
+0, ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ r &gt; r_c,
+\end{cases}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[
+U_{lj}(r)=  4 \epsilon  \left[\left(\frac{b}{r}\right)^{12} -\left(\frac{b}{r}\right)^{6} \right],
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\sigma\)</span> is the bead diameter and <span class="math notranslate nohighlight">\(\epsilon\)</span> is the well depth.
+Another typical example to set up the CG three beads membrane, one may utilize a modified attractive potential well to mimic hydrophobic interactions. Therefore, the membrane assembles within a range of well depth and width <span class="math notranslate nohighlight">\(w_c\)</span> parameters, given by:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+U_{\text{cos}}(r) =  
+\begin{cases}
+-\epsilon \cos ^2 \left(\frac{\pi(r-r_c)}{2 w_c}\right),~~~~~r_c +w_c \geq r \geq r_{c},\\
+0, ~~~~~~~~~~~~~~~~~~~~~~~~~~~r &gt; r_{c} + w_{c},
+\end{cases}
+\end{split}\]</div>
+<p>If electrostatic charges are present, we add the appropriate Coulomb potentials:</p>
+<div class="math notranslate nohighlight">
+\[
+U_{\text{coulomb}}(r) = \frac{Q_1 Q_2}{4 \pi \epsilon_0 r},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(Q_1,Q_2\)</span> are the charges and <span class="math notranslate nohighlight">\(\epsilon_0\)</span> is the permittivity of free space.
+<img alt="interaction_potential" src="_images/md_interaction_potential.jpg" /></p>
+</section>
+<section id="periodic-boundary-conditions">
+<h3>Periodic Boundary Conditions<a class="headerlink" href="#periodic-boundary-conditions" title="Link to this heading">#</a></h3>
+<p>Due to limitations in system size and the number of degrees of freedom in computer simulations, periodic boundary conditions (PBC) are often implemented. PBC set boundaries allowing particles to interact across the barrier, exiting and re-entering the box. They are crucial for representing an indefinite bulk around the model system. Without PBC, interfacial and finite-size effects introduce significant errors, dominating system behavior. In certain scenarios where studying confinement effects is essential, relactive or repulsive boundary conditions are considered.</p>
+</section>
+<section id="how-long-how-large-md-should-run">
+<h3>How Long &amp; How Large MD should run?<a class="headerlink" href="#how-long-how-large-md-should-run" title="Link to this heading">#</a></h3>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>Here is some helpful tips</p>
 </div>
 </section>
-<section id="importance-of-molecular-simulations">
-<h2>Importance of Molecular Simulations<a class="headerlink" href="#importance-of-molecular-simulations" title="Link to this heading">#</a></h2>
-<p>Molecular simulations play a crucial role in various fields such as chemistry, physics, materials science, and biology.</p>
 </section>
 </section>
 
@@ -497,8 +586,13 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-ideas-of-molecular-dynamics">Primary Ideas of Molecular Dynamics</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importance-of-molecular-simulations">Importance of Molecular Simulations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#primary-ideas-of-molecular-dynamics">Primary Ideas of Molecular Dynamics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#thermostats">Thermostats</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interaction-potentials">Interaction Potentials</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#periodic-boundary-conditions">Periodic Boundary Conditions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-long-how-large-md-should-run">How Long &amp; How Large MD should run?</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
