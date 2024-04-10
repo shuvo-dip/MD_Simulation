@@ -22,7 +22,7 @@ In order to go through step by step lets consider the simulation framework. Simu
 
 
 
-`````{admonition} [system.data:]() an example of lammps generated system file
+`````{admonition} [system.data:](https://shuvo-dip.github.io/MD_Simulation/lj_fluid.html) an example of lammps generated system file
 :class: tip
 ```
 LAMMPS data file via write_data, version 3 Mar 2020, timestep = 0
@@ -102,7 +102,7 @@ Angles
 
 
 ### What are these numbers mean?
-`````{admonition} [system.data:]() an example of lammps generated system file
+`````{admonition} [system.data:](https://shuvo-dip.github.io/MD_Simulation/lj_fluid.html) an example of lammps generated system file
 :class: tip
 ```
 LAMMPS data file via write_data, version 3 Mar 2020, timestep = 0
@@ -157,7 +157,7 @@ No space between different segements might leads to syntax error
 
 
 
-`````{admonition} [run.in:]() LAMMPS script for a 10-particle LJ fluid
+`````{admonition} [run.in:](https://shuvo-dip.github.io/MD_Simulation/lj_fluid.html) LAMMPS script for a 10-particle LJ fluid
 :class: tip
 ```
 units lj
