@@ -12,7 +12,6 @@ In addition to simulation execution, emphasis will be placed on mastering post-p
 
 
 **Exploration Opportunities:**
-
 We explore topics ranging from simple fluid systems and single polymer chains to advanced simulation methodologies. We explore codes from online repositories, which have been previously benchmarked, to evaluate our capability to reproduce results.
 
 
