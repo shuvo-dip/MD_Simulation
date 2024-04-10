@@ -2,10 +2,10 @@
 
 ## Books
 
-- [Understanding Molecular Simulation: From Algorithms to Applications](https://www.amazon.com/Understanding-Molecular-Simulation-Algorithms-Applications/dp/0122673514) by Daan Frenkel and Berend Smit
-- [Molecular Modeling and Simulation: An Interdisciplinary Guide](https://www.amazon.com/Molecular-Modeling-Simulation-Interdisciplinary-Guide/dp/0387291245) by Tamar Schlick
-- [Computer Simulation of Liquids](https://www.amazon.com/Computer-Simulation-Liquids-Oxford-Science/dp/0198556454) by Michael P. Allen and Dominic J. Tildesley
-- [Statistical Mechanics: Theory and Molecular Simulation](https://www.amazon.com/Statistical-Mechanics-Theory-Molecular-Simulation/dp/0199235346) by Mark Tuckerman
+- [Understanding Molecular Simulation: From Algorithms to Applications](https://www.sciencedirect.com/book/9780122673511/understanding-molecular-simulation) by Daan Frenkel and Berend Smit
+- [Molecular Modeling and Simulation: An Interdisciplinary Guide](https://link.springer.com/book/10.1007/978-1-4419-6351-2) by Tamar Schlick
+- [Computer Simulation of Liquids](https://academic.oup.com/book/27866) by Michael P. Allen and Dominic J. Tildesley
+- [Statistical Mechanics: Theory and Molecular Simulation](https://global.oup.com/academic/product/statistical-mechanics-theory-and-molecular-simulation-9780198825562?cc=fr&lang=en&) by Mark Tuckerman
 - [Molecular Dynamics Simulation: Elementary Methods by J. M. Haile](https://www.wiley.com/en-us/Molecular+Dynamics+Simulation%3A+Elementary+Methods-p-9780471184393)
 - [Soft Matter: Concepts, Phenomena, and Applications](https://softmatterbook.online/soft-matter-community/)
 
