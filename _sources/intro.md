@@ -1,19 +1,20 @@
 # Welcome to Molecular Simulation Basics!
 
-Welcome to this interactive session where we'll delve into the fundamentals of computer simulations, focusing on the utilization of LAMMPS packages. Our goal is to empower you with the ability to craft your own post-processing codes, thereby enhancing your understanding of the underlying principles behind these powerful packages.
+Welcome to this tutorial focused on the fundamentals of molecular simulation. We will discuss background theories, force-fields, simulation setup, specific techniques, how to write post-processing codes, statistics and errors, common pitfalls, etc. In this particular workflow, we specifically take the commonly used MD package LAMMPS. Our aim is to provide you with a comprehensive understanding of computational techniques essential for molecular dynamics research.
 
-**What to Expect:**
+**Objectives:**
 
-- **Introduction to LAMMPS:** We'll start by introducing you to LAMMPS, a widely used molecular dynamics simulation software package. You'll learn how to navigate its interface and execute basic simulations.
+- **Introduction to LAMMPS:** This tutorial will commence with an introductory overview of [LAMMPS](https://www.lammps.org/), a prominent molecular dynamics simulation software. You will familiarize yourself with its interface and learn the essential commands and syntaxes required for conducting simulations.
 
-- **Hands-On Practice:** Get ready to dive in! Through interactive exercises, you'll gain practical experience in setting up simulations, defining parameters, and analyzing results.
+- **Practical Application:** Through hands-on exercises, we will engage in the practical implementation of simulation setups, parameter definition, and result analysis. This interactive approach ensures a thorough comprehension of the simulation process.
+In addition to simulation execution, emphasis will be placed on mastering post-processing techniques. Throughout the chapters, we will be equipped with the skills to develop custom post-processing codes, facilitating in-depth analysis and interpretation of simulation data.
 
-- **Post-Processing Mastery:** Beyond running simulations, we'll equip you with the skills to write custom post-processing codes. Understanding how to extract and interpret data is crucial for gaining deeper insights from your simulations.
 
-**Explore Further:**
 
-Make sure to check out the content pages bundled with this sample book. They offer a glimpse into the diverse topics we'll cover, including advanced simulation techniques, visualization tools, and more.
+**Exploration Opportunities:**
 
-Get ready to embark on an exciting journey into the world of molecular simulation. Let's unlock the secrets of atoms and molecules together!
+We explore topics ranging from simple fluid systems and single polymer chains to advanced simulation methodologies. We explore codes from online repositories, which have been previously benchmarked, to evaluate our capability to reproduce results.
 
-Ready to get started? Dive into the first chapter and let's begin our exploration!
+
+**Visualization:**
+For visualization tools, we primarily utilize [OVITO](https://www.ovito.org/), which offers excellent visualization capabilities. These capabilities include generating high-quality movies and simulation snapshots suitable for use in academic papers. OVITO Pro also provides convenient post-processing properties such as surface generation, histograms, correlation analysis, radial distribution functions, and particle selection.
