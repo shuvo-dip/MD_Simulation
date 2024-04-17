@@ -158,7 +158,7 @@ No space between different segements might leads to syntax error
 
 Lets pick an example of LJ fluid. 
 
-`````{admonition} [run.in:](https://shuvo-dip.github.io/MD_Simulation/lj_fluid.html) LAMMPS script for a 10-particle LJ fluid
+`````{admonition}What are the parameters we need to specify 
 :class: tip
 ```
 - a) Numer of particles
@@ -174,7 +174,7 @@ Lets pick an example of LJ fluid.
 `````
 
 
-`````{admonition} What are the parameters we need to specify
+`````{admonition} [run.in:](https://shuvo-dip.github.io/MD_Simulation/lj_fluid.html) LAMMPS script for a 10-particle LJ fluid
 :class: tip
 ```
 
