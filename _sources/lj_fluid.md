@@ -156,10 +156,27 @@ No space between different segements might leads to syntax error
 `````
 
 
+Lets pick an example of LJ fluid. 
 
 `````{admonition} [run.in:](https://shuvo-dip.github.io/MD_Simulation/lj_fluid.html) LAMMPS script for a 10-particle LJ fluid
 :class: tip
 ```
+
+
+`````{admonition} What are the parameters we need to specify
+:class: tip
+```
+- a) Numer of particles
+- b) Non-bonded interactions
+- c) Mass
+- d) Bonds, angle, dihedrals etc.
+- e) What type of bonds, angles, dihedrals etc. and their corresponding parameters
+- f) Boundaries
+- g) How long simulation would run 
+- h) timesteps, otherwise defult
+- i) How frequently dump the configurations
+
+`````
 units lj
 dimension 3
 atom_style full
