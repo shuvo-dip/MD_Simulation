@@ -161,11 +161,6 @@ Lets pick an example of LJ fluid.
 `````{admonition} [run.in:](https://shuvo-dip.github.io/MD_Simulation/lj_fluid.html) LAMMPS script for a 10-particle LJ fluid
 :class: tip
 ```
-
-
-`````{admonition} What are the parameters we need to specify
-:class: tip
-```
 - a) Numer of particles
 - b) Non-bonded interactions
 - c) Mass
@@ -177,6 +172,12 @@ Lets pick an example of LJ fluid.
 - i) How frequently dump the configurations
 
 `````
+
+
+`````{admonition} What are the parameters we need to specify
+:class: tip
+```
+
 units lj
 dimension 3
 atom_style full
