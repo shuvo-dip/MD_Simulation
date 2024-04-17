@@ -250,3 +250,70 @@ Neighbor list builds = 78413
 Dangerous builds = 0
 Total wall time: 0:00:20
 `````
+
+
+
+
+
+`````{admonition} Method 2: [run.in:](https://shuvo-dip.github.io/MD_Simulation/lj_fluid.html) LAMMPS script read_data from *system_specific.data* file
+:class: tip
+```
+units lj
+dimension 3
+atom_style full
+pair_style lj/cut 1.112
+boundary p p p
+
+read_data        system_box.data
+
+pair_coeff      * * 1.0 1.0
+
+
+thermo          100
+thermo_style    custom step temp pe ke etotal press
+timestep        0.005
+fix             mynve all nve
+fix             mylgv all langevin 1.0 1.0 0.1 1530917
+run             10000
+reset_timestep 0
+thermo          1000
+dump            mydmp all atom 1000 dump.lammpstrj
+run             1000000
+
+`````
+
+
+`````{admonition} Method 2: [system_box.data:](https://shuvo-dip.github.io/MD_Simulation/lj_fluid.html) LAMMPS script *system_box.data* file
+:class: tip
+```
+LAMMPS data file via write_data, version 3 Mar 2020, timestep = 20000000
+
+10 atoms
+1 atom types
+
+0 10 xlo xhi
+0 10 ylo yhi
+0 10 zlo zhi
+
+Masses
+
+1 1
+
+Atoms # full
+
+1 1 1 0 1 1 1
+2 1 1 0 2 2 2
+3 1 1 0 3 1 1
+4 1 1 0 4 2 2
+5 1 1 0 5 1 1
+6 1 1 0 6 2 2
+7 1 1 0 7 1 1
+8 1 1 0 8 2 2
+9 1 1 0 9 1 1
+10 1 1 0 1 5 2
+
+
+`````
+
+
+![movie](abc.gif)
