@@ -550,22 +550,24 @@ No space between different segements might leads to syntax error</p>
 </div>
 </div>
 <p>Lets pick an example of LJ fluid.</p>
-<div class="highlight-{admonition}What notranslate"><div class="highlight"><pre><span></span>:class: tip
-```
-- a) Numer of particles
-- b) Non-bonded interactions
-- c) Mass
-- d) Bonds, angle, dihedrals etc.
-- e) What type of bonds, angles, dihedrals etc. and their corresponding parameters
-- f) Boundaries
-- g) How long simulation would run 
-- h) timesteps, otherwise defult
-- i) How frequently dump the configurations
-
-</pre></div>
+<div class="admonition-what-are-the-parameters-we-need-to-specify admonition">
+<p class="admonition-title">What are the parameters we need to specify</p>
+<ul class="simple">
+<li><p>a) Numer of particles</p></li>
+<li><p>b) Non-bonded interactions</p></li>
+<li><p>c) Mass</p></li>
+<li><p>d) Bonds, angle, dihedrals etc.</p></li>
+<li><p>e) What type of bonds, angles, dihedrals etc. and their corresponding parameters</p></li>
+<li><p>f) Boundaries</p></li>
+<li><p>g) How long simulation would run</p></li>
+<li><p>h) timesteps, otherwise defult</p></li>
+<li><p>i) How frequently dump the configurations</p></li>
+</ul>
+<div class="docutils">
+</div>
 </div>
 <div class="tip admonition">
-<p class="admonition-title"><a class="reference external" href="https://shuvo-dip.github.io/MD_Simulation/lj_fluid.html">run.in:</a> LAMMPS script for a 10-particle LJ fluid</p>
+<p class="admonition-title">Method 1: <a class="reference external" href="https://shuvo-dip.github.io/MD_Simulation/lj_fluid.html">run.in:</a> LAMMPS script for a 10-particle LJ fluid</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
 <span class="n">units</span> <span class="n">lj</span>
 <span class="n">dimension</span> <span class="mi">3</span>
