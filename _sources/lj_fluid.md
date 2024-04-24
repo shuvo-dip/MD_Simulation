@@ -376,3 +376,63 @@ Atoms # full
 
 
 ![movie](LJ_fluid/method_03/lj_fluid_method_03.gif)
+
+
+
+
+Lets pick an example of Binary mixture of LJ fluid. 
+
+`````{admonition} Binary immiscible fluid 
+:class: tip
+:::{important}
+- a) Intermolecular interaction between Phase A and Phase A attract each other
+- b) Intermolecular interaction between Phase B and Phase B attract each other
+- c) Phase A and Phase B dislike each other
+- d) Box is filled with Phase A and Phase B around 50%:50%
+:::
+`````
+
+
+`````{admonition} [run.in:](https://shuvo-dip.github.io/MD_Simulation/lj_fluid.html) LAMMPS script for a binary mixture of LJ fluid
+:class: tip
+```
+
+units           lj
+dimension       3
+atom_style      full
+pair_style      lj/smooth/linear 3.5
+boundary        p p p
+
+region          simulation_box block 0 30 0 30 0 30
+region          simulation_box_sidea block 0 30 0 30 0 14.5
+region          simulation_box_sideb block 0 30 0 30 15 30
+create_box      2 simulation_box
+
+lattice         fcc 1.0
+create_atoms    1 region simulation_box_sidea ratio 0.63 5478952
+create_atoms    2 region simulation_box_sideb ratio 0.63 5478952
+
+mass            * 1
+pair_coeff      1 1 1.0 1.0  #AA
+pair_coeff      1 2 1.0 0.5  #AB
+pair_coeff      2 2 1.0 1.0  #BB
+write_data 		  system_formation.data
+
+thermo          500
+thermo_style    custom step temp pe ke etotal density press
+timestep        0.005
+fix             mynve all nve
+fix             mylgv all langevin 1.0 1.0 0.1 1530917
+run             10000
+write_data 		  system_after_equilibrium.data
+reset_timestep  0
+thermo          5000
+dump            mydmp all atom 1000 dump.lammpstrj
+run             1000000
+
+write_data      system_after_longtime.data
+
+`````
+
+
+![movie](LJ_fluid/method_04/lj_binary_fluid_method_04.gif)

@@ -747,6 +747,59 @@ No space between different segements might leads to syntax error</p>
 </div>
 </div>
 <p><img alt="movie" src="_images/lj_fluid_method_03.gif" /></p>
+<p>Lets pick an example of Binary mixture of LJ fluid.</p>
+<div class="admonition-binary-immiscible-fluid admonition">
+<p class="admonition-title">Binary immiscible fluid</p>
+<ul class="simple">
+<li><p>a) Intermolecular interaction between Phase A and Phase A attract each other</p></li>
+<li><p>b) Intermolecular interaction between Phase B and Phase B attract each other</p></li>
+<li><p>c) Phase A and Phase B dislike each other</p></li>
+<li><p>d) Box is filled with Phase A and Phase B around 50%:50%</p></li>
+</ul>
+<div class="docutils">
+</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title"><a class="reference external" href="https://shuvo-dip.github.io/MD_Simulation/lj_fluid.html">run.in:</a> LAMMPS script for a binary mixture of LJ fluid</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">units</span>           <span class="n">lj</span>
+<span class="n">dimension</span>       <span class="mi">3</span>
+<span class="n">atom_style</span>      <span class="n">full</span>
+<span class="n">pair_style</span>      <span class="n">lj</span><span class="o">/</span><span class="n">smooth</span><span class="o">/</span><span class="n">linear</span> <span class="mf">3.5</span>
+<span class="n">boundary</span>        <span class="n">p</span> <span class="n">p</span> <span class="n">p</span>
+
+<span class="n">region</span>          <span class="n">simulation_box</span> <span class="n">block</span> <span class="mi">0</span> <span class="mi">30</span> <span class="mi">0</span> <span class="mi">30</span> <span class="mi">0</span> <span class="mi">30</span>
+<span class="n">region</span>          <span class="n">simulation_box_sidea</span> <span class="n">block</span> <span class="mi">0</span> <span class="mi">30</span> <span class="mi">0</span> <span class="mi">30</span> <span class="mi">0</span> <span class="mf">14.5</span>
+<span class="n">region</span>          <span class="n">simulation_box_sideb</span> <span class="n">block</span> <span class="mi">0</span> <span class="mi">30</span> <span class="mi">0</span> <span class="mi">30</span> <span class="mi">15</span> <span class="mi">30</span>
+<span class="n">create_box</span>      <span class="mi">2</span> <span class="n">simulation_box</span>
+
+<span class="n">lattice</span>         <span class="n">fcc</span> <span class="mf">1.0</span>
+<span class="n">create_atoms</span>    <span class="mi">1</span> <span class="n">region</span> <span class="n">simulation_box_sidea</span> <span class="n">ratio</span> <span class="mf">0.63</span> <span class="mi">5478952</span>
+<span class="n">create_atoms</span>    <span class="mi">2</span> <span class="n">region</span> <span class="n">simulation_box_sideb</span> <span class="n">ratio</span> <span class="mf">0.63</span> <span class="mi">5478952</span>
+
+<span class="n">mass</span>            <span class="o">*</span> <span class="mi">1</span>
+<span class="n">pair_coeff</span>      <span class="mi">1</span> <span class="mi">1</span> <span class="mf">1.0</span> <span class="mf">1.0</span>  <span class="c1">#AA</span>
+<span class="n">pair_coeff</span>      <span class="mi">1</span> <span class="mi">2</span> <span class="mf">1.0</span> <span class="mf">0.5</span>  <span class="c1">#AB</span>
+<span class="n">pair_coeff</span>      <span class="mi">2</span> <span class="mi">2</span> <span class="mf">1.0</span> <span class="mf">1.0</span>  <span class="c1">#BB</span>
+<span class="n">write_data</span> 		  <span class="n">system_formation</span><span class="o">.</span><span class="n">data</span>
+
+<span class="n">thermo</span>          <span class="mi">500</span>
+<span class="n">thermo_style</span>    <span class="n">custom</span> <span class="n">step</span> <span class="n">temp</span> <span class="n">pe</span> <span class="n">ke</span> <span class="n">etotal</span> <span class="n">density</span> <span class="n">press</span>
+<span class="n">timestep</span>        <span class="mf">0.005</span>
+<span class="n">fix</span>             <span class="n">mynve</span> <span class="nb">all</span> <span class="n">nve</span>
+<span class="n">fix</span>             <span class="n">mylgv</span> <span class="nb">all</span> <span class="n">langevin</span> <span class="mf">1.0</span> <span class="mf">1.0</span> <span class="mf">0.1</span> <span class="mi">1530917</span>
+<span class="n">run</span>             <span class="mi">10000</span>
+<span class="n">write_data</span> 		  <span class="n">system_after_equilibrium</span><span class="o">.</span><span class="n">data</span>
+<span class="n">reset_timestep</span>  <span class="mi">0</span>
+<span class="n">thermo</span>          <span class="mi">5000</span>
+<span class="n">dump</span>            <span class="n">mydmp</span> <span class="nb">all</span> <span class="n">atom</span> <span class="mi">1000</span> <span class="n">dump</span><span class="o">.</span><span class="n">lammpstrj</span>
+<span class="n">run</span>             <span class="mi">1000000</span>
+
+<span class="n">write_data</span>      <span class="n">system_after_longtime</span><span class="o">.</span><span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<p><img alt="movie" src="_images/lj_binary_fluid_method_04.gif" /></p>
 </section>
 </section>
 </section>
