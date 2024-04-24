@@ -6,3 +6,5 @@ This chapter explores the simulation of LJ chains, which are linear polymers con
 
 LJ chains are modeled as a series of interconnected LJ particles, representing polymer chains.
 
+
+## Coming soon...
