@@ -1,0 +1,810 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Gel Formation &#8212; Basics of Molecular Dynamics Simulations</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tetramer_gel';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Molecular Dynamics Simulation Resources" href="useful_links.html" />
+    <link rel="prev" title="LJ Chains" href="lj_chains.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Basics of Molecular Dynamics Simulations - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Basics of Molecular Dynamics Simulations - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to Molecular Simulation Basics!
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="primary_ideas.html">A Brief Overview of Molecular Dynamics Simulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lammps_install.html">LAMMPS Packages and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lj_fluid.html">LJ Fluid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lj_chains.html">LJ Chains</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Gel Formation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_links.html">Molecular Dynamics Simulation Resources</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Ftetramer_gel.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/tetramer_gel.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Gel Formation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tetramer-chain">Tetramer Chain</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chemically-crosslinking-process">Chemically crosslinking process</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="gel-formation">
+<h1>Gel Formation<a class="headerlink" href="#gel-formation" title="Link to this heading">#</a></h1>
+<p>Microgels are soft micron sized, crosslinked polymeric networks, that encapsulate a solvent and swell by several orders of magnitudes <span class="math notranslate nohighlight">\(\sim 10^3\)</span> from their dry weight. The extent of swelling depends on solvent quality, the softness of the gel whilst maintaining its integrity. Thus, a gel has tunable physical properties. Also, the swelling-deswelling transition is reversible with strong hysteresis effects. The softness of these microgels is often qualitatively described by the ratio, <span class="math notranslate nohighlight">\(\varepsilon\)</span>, between elastic free energy and thermal energy <span class="math notranslate nohighlight">\(\varepsilon = \Delta F/k_B T\)</span>, and the softness can range between that of star polymers and emulsions. An estimation of the dimensionless quantity, <span class="math notranslate nohighlight">\(\varepsilon\)</span>, for a nonionic microgel of radius <span class="math notranslate nohighlight">\(R \sim 100\)</span>nm can be evaluate by the relation, <span class="math notranslate nohighlight">\(\varepsilon \equiv \Delta F/k_B T \equiv E R^3/k_B T\)</span>. Elastic modulus <span class="math notranslate nohighlight">\(E \sim k_B T/V\)</span>, where <span class="math notranslate nohighlight">\(V\)</span> is the volume of connection units between any two crosslinks, <span class="math notranslate nohighlight">\(V= V_0 N_x\)</span>. A typical volume of one statistical unit is <span class="math notranslate nohighlight">\(V_0 \sim 1 \text{nm}^3\)</span> and <span class="math notranslate nohighlight">\(N_x\sim 100\)</span> statistical units present in between two crosslinking points. Thus, an estimation of <span class="math notranslate nohighlight">\(\varepsilon \sim 10^4\)</span>, which makes the microgel highly compressible. The modulus of these microgel particles depends on parameters such as crosslink density, backbone chain length, solvent quality, electrostatic interactions, the architecture (which are essentially crosslinked loops (<span class="math notranslate nohighlight">\(1^\circ, 2^\circ ~etc.\)</span>), and entanglements) of the network structure. Unlike hard-sphere fluids, which exhibits a jamming transition at packing fraction between 0.64 to 0.74, the microgel particles can achieve a much higher packing fraction owing to its softness.
+Thus, one obtains an ultra-dense state with rheological and mechanical properties different from a hard sphere system. Owing their tunable physical properties and easy synthesis protocols, microgels have been used in many applications including biotechnology, pharmaceutical, drug delivery, industrial purposes such as oil recovery, surface coating, cosmetics, food manufacturing, agricultural industry, mechanobiology, and filtration.</p>
+<p>In this chapter, we develop a robust computational model with {in silico} gel synthesis for reproducible structural characteristics. Microgels are typically formed due to the self-assembly in a solution of low molecular weight building blocks crosslinked to each other by reversible or non-covalent, and irreversible bonds. A typical process of gelation is shown in Fig below.</p>
+<p><img alt="gelation" src="_images/gelation.png" />
+Fig. 1. Simulation snapshot of a typical gelation process. Four sticky terminal (reactive group) beads of star polymers are implemented in the simulation, indicated by magenta colour respectively, whereas the backbone of the teramer is denoted by green. At timestep <span class="math notranslate nohighlight">\(t=0\)</span>, polymers are dispersed randomly in the spherical cavity. At <span class="math notranslate nohighlight">\(t=100\)</span>, as the crosslinking reaction takes place, sticky beads get connected via a chemical bond. At <span class="math notranslate nohighlight">\(t=10^4\)</span>, spherical microgel forms, where few reactive groups are present and inter-molecular connections have been established.</p>
+<p>In order to go through step by step lets consider the simulation framework. Simulation might contains several files. But here we mainly focus on:</p>
+<ul class="simple">
+<li><p>a) <code class="docutils literal notranslate"><span class="pre">run.in</span></code> – it cpntains mostly all the informations</p></li>
+<li><p>b) <code class="docutils literal notranslate"><span class="pre">system.data</span></code> – particles, positions, bonds, angles, information</p></li>
+</ul>
+<section id="tetramer-chain">
+<h2>Tetramer Chain<a class="headerlink" href="#tetramer-chain" title="Link to this heading">#</a></h2>
+<p><img alt="tetramer_chain" src="_images/tetramer_chain.png" /></p>
+<p>Fig. 2. Tetramer chain.</p>
+<div class="tip admonition">
+<p class="admonition-title"><a class="reference external" href="https://shuvo-dip.github.io/MD_Simulation/tetramer_gel.html">system_terta_chain.data:</a> an Single tetramer system file</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LAMMPS</span> <span class="n">data</span> <span class="n">file</span> <span class="n">via</span> <span class="n">write_data</span><span class="p">,</span> <span class="n">version</span> <span class="mi">2</span> <span class="n">Aug</span> <span class="mi">2023</span><span class="p">,</span> <span class="n">timestep</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="n">lj</span>
+
+<span class="mi">21</span> <span class="n">atoms</span>
+<span class="mi">20</span> <span class="n">bonds</span>
+<span class="mi">16</span> <span class="n">angles</span>
+<span class="mi">2</span> <span class="n">atom</span> <span class="n">types</span>
+<span class="mi">1</span> <span class="n">bond</span> <span class="n">types</span>
+<span class="mi">1</span> <span class="n">angle</span> <span class="n">types</span>
+
+<span class="o">-</span><span class="mi">6</span> <span class="mi">6</span> <span class="n">xlo</span> <span class="n">xhi</span>
+<span class="o">-</span><span class="mi">6</span> <span class="mi">6</span> <span class="n">ylo</span> <span class="n">yhi</span>
+<span class="mi">0</span> <span class="mi">2</span> <span class="n">zlo</span> <span class="n">zhi</span>
+
+<span class="n">Masses</span>
+
+<span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">2</span> <span class="mi">1</span>
+
+<span class="n">Atoms</span> <span class="c1"># full</span>
+
+<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">2</span>	<span class="mi">0</span>	<span class="o">-</span><span class="mi">5</span>	<span class="mi">0</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">0</span>
+<span class="mi">2</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="o">-</span><span class="mi">4</span>	<span class="mi">0</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">0</span>
+<span class="mi">3</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="o">-</span><span class="mi">3</span>	<span class="mi">0</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">0</span>
+<span class="mi">4</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="o">-</span><span class="mi">2</span>	<span class="mi">0</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">0</span>
+<span class="mi">5</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="o">-</span><span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">0</span>
+<span class="mi">6</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">0</span>
+<span class="mi">7</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">0</span>
+<span class="mi">8</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">2</span>	<span class="mi">0</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">0</span>
+<span class="mi">9</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">3</span>	<span class="mi">0</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">0</span>
+<span class="mi">10</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">4</span>	<span class="mi">0</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">0</span>
+<span class="mi">11</span>	<span class="mi">1</span>	<span class="mi">2</span>	<span class="mi">0</span>	<span class="mi">5</span>	<span class="mi">0</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">0</span>
+<span class="mi">12</span>	<span class="mi">1</span>	<span class="mi">2</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="o">-</span><span class="mi">5</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">0</span>
+<span class="mi">13</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="o">-</span><span class="mi">4</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">0</span>
+<span class="mi">14</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="o">-</span><span class="mi">3</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">0</span>
+<span class="mi">15</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="o">-</span><span class="mi">2</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">0</span>
+<span class="mi">16</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="o">-</span><span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">0</span>
+<span class="mi">17</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">0</span>
+<span class="mi">18</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">2</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">0</span>
+<span class="mi">19</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">3</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">0</span>
+<span class="mi">20</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">4</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">0</span>
+<span class="mi">21</span>	<span class="mi">1</span>	<span class="mi">2</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">5</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">0</span>	<span class="mi">0</span>
+
+<span class="n">Bonds</span> 
+
+<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">2</span>
+<span class="mi">2</span>	<span class="mi">1</span>	<span class="mi">2</span>	<span class="mi">3</span>
+<span class="mi">3</span>	<span class="mi">1</span>	<span class="mi">3</span>	<span class="mi">4</span>
+<span class="mi">4</span>	<span class="mi">1</span>	<span class="mi">4</span>	<span class="mi">5</span>
+<span class="mi">5</span>	<span class="mi">1</span>	<span class="mi">5</span>	<span class="mi">6</span>
+<span class="mi">6</span>	<span class="mi">1</span>	<span class="mi">6</span>	<span class="mi">7</span>
+<span class="mi">7</span>	<span class="mi">1</span>	<span class="mi">7</span>	<span class="mi">8</span>
+<span class="mi">8</span>	<span class="mi">1</span>	<span class="mi">8</span>	<span class="mi">9</span>
+<span class="mi">9</span>	<span class="mi">1</span>	<span class="mi">9</span>	<span class="mi">10</span>
+<span class="mi">10</span>	<span class="mi">1</span>	<span class="mi">10</span>	<span class="mi">11</span>
+<span class="mi">11</span>	<span class="mi">1</span>	<span class="mi">12</span>	<span class="mi">13</span>
+<span class="mi">12</span>	<span class="mi">1</span>	<span class="mi">13</span>	<span class="mi">14</span>
+<span class="mi">13</span>	<span class="mi">1</span>	<span class="mi">14</span>	<span class="mi">15</span>
+<span class="mi">14</span>	<span class="mi">1</span>	<span class="mi">15</span>	<span class="mi">16</span>
+<span class="mi">15</span>	<span class="mi">1</span>	<span class="mi">16</span>	<span class="mi">6</span>
+<span class="mi">16</span>	<span class="mi">1</span>	<span class="mi">6</span>	<span class="mi">17</span>
+<span class="mi">17</span>	<span class="mi">1</span>	<span class="mi">17</span>	<span class="mi">18</span>
+<span class="mi">18</span>	<span class="mi">1</span>	<span class="mi">18</span>	<span class="mi">19</span>
+<span class="mi">19</span>	<span class="mi">1</span>	<span class="mi">19</span>	<span class="mi">20</span>
+<span class="mi">20</span>	<span class="mi">1</span>	<span class="mi">20</span>	<span class="mi">21</span>
+
+<span class="n">Angles</span> 
+
+<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">2</span>	<span class="mi">3</span>
+<span class="mi">2</span>	<span class="mi">1</span>	<span class="mi">2</span>	<span class="mi">3</span>	<span class="mi">4</span>
+<span class="mi">3</span>	<span class="mi">1</span>	<span class="mi">3</span>	<span class="mi">4</span>	<span class="mi">5</span>
+<span class="mi">4</span>	<span class="mi">1</span>	<span class="mi">4</span>	<span class="mi">5</span>	<span class="mi">6</span>
+<span class="mi">5</span>	<span class="mi">1</span>	<span class="mi">6</span>	<span class="mi">7</span>	<span class="mi">8</span>
+<span class="mi">6</span>	<span class="mi">1</span>	<span class="mi">7</span>	<span class="mi">8</span>	<span class="mi">9</span>
+<span class="mi">7</span>	<span class="mi">1</span>	<span class="mi">8</span>	<span class="mi">9</span>	<span class="mi">10</span>
+<span class="mi">8</span>	<span class="mi">1</span>	<span class="mi">9</span>	<span class="mi">10</span>	<span class="mi">11</span>
+<span class="mi">9</span>	<span class="mi">1</span>	<span class="mi">12</span>	<span class="mi">13</span>	<span class="mi">14</span>
+<span class="mi">10</span>	<span class="mi">1</span>	<span class="mi">13</span>	<span class="mi">14</span>	<span class="mi">15</span>
+<span class="mi">11</span>	<span class="mi">1</span>	<span class="mi">14</span>	<span class="mi">15</span>	<span class="mi">16</span>
+<span class="mi">12</span>	<span class="mi">1</span>	<span class="mi">15</span>	<span class="mi">16</span>	<span class="mi">6</span>
+<span class="mi">13</span>	<span class="mi">1</span>	<span class="mi">6</span>	<span class="mi">17</span>	<span class="mi">18</span>
+<span class="mi">14</span>	<span class="mi">1</span>	<span class="mi">17</span>	<span class="mi">18</span>	<span class="mi">19</span>
+<span class="mi">15</span>	<span class="mi">1</span>	<span class="mi">18</span>	<span class="mi">19</span>	<span class="mi">20</span>
+<span class="mi">16</span>	<span class="mi">1</span>	<span class="mi">19</span>	<span class="mi">20</span>	<span class="mi">21</span>
+</pre></div>
+</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Reactive polymer blend preparation: <a class="reference external" href="https://shuvo-dip.github.io/MD_Simulation/tetramer_gel.html">run.in:</a> LAMMPS script for a 10-particle LJ fluid</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># LAMMPS Simulation Initialization
+
+units           lj
+atom_style      full
+
+# Bond and Angle Styles
+bond_style      hybrid fene
+angle_style     hybrid harmonic
+
+# Pair Styles
+pair_style      hybrid lj/cut 1.122
+pair_modify     shift yes
+special_bonds   lj 0.0 1.0 1.0
+
+# Neighbor Settings
+neighbor        0.3 bin
+neigh_modify    every 1 delay 0 one 10000
+
+# Boundary Conditions
+boundary        p p p
+
+# Log File
+log             log.nvt.txt
+
+# Read Initial Configuration Data
+read_data       system_terta_chain.data
+
+# Pair Coefficients
+pair_coeff      * * lj/cut 1.0 1.0
+
+# Bond Coefficients
+bond_coeff      1 fene 20.0 1.5 1.0 1.0
+
+# Angle Coefficients
+angle_coeff     1 harmonic 10.0 150
+
+# Group Definitions
+comm_modify     cutoff 5.0
+group           poly type 1
+group           terminal type 2
+
+# Variables
+variable        temperature equal 2.0
+variable        T equal 1.0
+variable        F equal 1
+
+# Replication of the System
+replicate       5 5 40
+write_data      larger_system.data nocoeff
+
+# Velocity Initialization
+variable        Tdamp equal 100*dt
+variable        time equal step*dt
+velocity        all create ${temperature} 12945
+
+# Fixes
+fix             flan all langevin ${temperature} ${temperature} ${Tdamp} 5428254
+fix             fnvt all nvt temp ${temperature} ${temperature} ${Tdamp}
+
+
+# Trajectory Output
+dump            11 all custom 10000 traj_nvt_langevin.lammpstrj id mol type x y z vx vy vz
+dump_modify     11 sort id
+
+# Thermodynamic Output
+thermo          10000
+thermo_style    custom step temp pe ke ebond epair press pxx pyy pzz pxy pxz pyz spcpu
+
+# Timestep
+timestep        0.005
+
+# Deformation Fix
+fix             fixdef all deform 1 x final 0.0 35.0 y final 0.0 35.0 z final 0.0 35.0 units box
+
+# Simulation Run
+run             1000000
+write_data      system_after_eq.data nocoeff
+</pre></div>
+</div>
+</div>
+<p><img alt="tetramer_chain_blend" src="_images/tetramer_chain_blend.gif" /></p>
+<p>Movie 1. Initially single star polymer replicates 1000 times initially and shrink the box to change the density of the system.</p>
+</section>
+<section id="chemically-crosslinking-process">
+<h2>Chemically crosslinking process<a class="headerlink" href="#chemically-crosslinking-process" title="Link to this heading">#</a></h2>
+<p><img alt="tetramer_chain_bond" src="_images/tetramer_chain_bond.png" />
+Fig. 3. Gelation process of tetramer chain.</p>
+<div class="tip admonition">
+<p class="admonition-title">Gelation: <a class="reference external" href="https://shuvo-dip.github.io/MD_Simulation/tetramer_gel.html">run_gelation.in:</a> LAMMPS script read_data from  previously generated <em>system_after_eq.data</em> file</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># LAMMPS Simulation Initialization
+
+units           lj
+atom_style      full
+
+# Bond and Angle Styles
+bond_style      hybrid fene
+angle_style     hybrid harmonic
+
+# Pair Styles
+pair_style      hybrid lj/cut 1.122
+pair_modify     shift yes
+special_bonds   lj 0.0 1.0 1.0
+
+# Neighbor Settings
+neighbor        0.3 bin
+neigh_modify    every 1 delay 0 one 10000
+
+# Boundary Conditions
+boundary        p p p
+
+# Log File
+log             log.nvt.txt
+
+# Read Initial Configuration Data
+read_data       system_after_eq.data extra/bond/per/atom 2 extra/angle/per/atom 2
+
+# Pair Coefficients
+pair_coeff      * * lj/cut 1.0 1.0
+
+# Bond Coefficients
+bond_coeff      1 fene 20.0 1.5 1.0 1.0
+
+# Angle Coefficients
+angle_coeff     1 harmonic 10.0 150
+
+# Group Definitions
+comm_modify     cutoff 5.0
+group           poly type 1
+group           terminal type 2
+
+# Variables
+variable        temperature equal 1.0
+variable        T equal 1.0
+variable        F equal 1
+
+# Velocity Initialization
+variable        Tdamp equal 100*dt
+variable        time equal step*dt
+velocity        all create ${temperature} 12945
+
+# Fixes
+fix             flan all langevin ${temperature} ${temperature} ${Tdamp} 5428254
+fix             fnvt all nvt temp ${temperature} ${temperature} ${Tdamp}
+
+# Thermodynamic Output
+thermo          1000
+thermo_style    custom step temp pe ke ebond epair press pxx pyy pzz pxy pxz pyz spcpu
+
+# Timestep
+timestep        0.005
+
+# Trajectory Output
+dump            111 all custom 10000 traj_nvt_langevin_geling.lammpstrj id mol type x y z vx vy vz
+dump_modify     111 sort id
+
+# New Temperature Initialization
+variable        temperature equal 1.0
+velocity        all create ${temperature} 12945
+
+# Additional Fixes
+#fix            Gxy all ave/correlate/long 1 100000 v_pxy v_pxz v_pyz v_Nxy v_Nxz v_Nyz type auto file Gt_T.gt overwrite ncorr 40
+fix             5 terminal bond/create 10 2 2 1.1 1 prob 0.5 85784 iparam 2 1 jparam 2 1 atype 1
+
+# Long Simulation Run
+run             10000000
+write_data      system_longtime_gel.data nocoeff
+</pre></div>
+</div>
+</div>
+<p><img alt="movie" src="_images/tetramer_chain_gelation.gif" /></p>
+<p>Movie 2. Simulation snapshots of chemically crosslinked gelation process.</p>
+<div class="tip admonition">
+<p class="admonition-title">Gelation process as function of time:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+<p><img alt="gelation_process" src="_images/gelation_process.png" /></p>
+<div class="tip admonition">
+<p class="admonition-title">Mean squared displacement (MSD) during gelation process as function of time</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+<p><img alt="gelation_MSD" src="_images/gelation_MSD.png" /></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="lj_chains.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">LJ Chains</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="useful_links.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Molecular Dynamics Simulation Resources</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tetramer-chain">Tetramer Chain</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chemically-crosslinking-process">Chemically crosslinking process</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Subhadip Biswas
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
