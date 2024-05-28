@@ -287,8 +287,7 @@ dump_modify     111 sort id
 variable        temperature equal 1.0
 velocity        all create ${temperature} 12945
 
-# Additional Fixes
-#fix            Gxy all ave/correlate/long 1 100000 v_pxy v_pxz v_pyz v_Nxy v_Nxz v_Nyz type auto file Gt_T.gt overwrite ncorr 40
+# reaction
 fix             5 terminal bond/create 10 2 2 1.1 1 prob 0.5 85784 iparam 2 1 jparam 2 1 atype 1
 
 # Long Simulation Run
