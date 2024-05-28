@@ -307,16 +307,13 @@ Movie 2. Simulation snapshots of chemically crosslinked gelation process.
 
 
 
-`````{admonition} Gelation process as function of time:
-:class: tip
-```
-
-`````
+```{admonition} Gelation process as function of time:
+:class: note
 ![gelation_process](LJ_fluid/method_05/gelation_process.png)
-
-`````{admonition} Mean squared displacement (MSD) during gelation process as function of time 
-:class: tip
 ```
 
-`````
+```{admonition} Mean squared displacement (MSD) during gelation process as function of time 
+:class: note
+
 ![gelation_MSD](LJ_fluid/method_05/gelation_MSD.png)
+```
