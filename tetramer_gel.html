@@ -62,7 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'tetramer_gel';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Molecular Dynamics Simulation Resources" href="useful_links.html" />
+    <link rel="next" title="Viscoelastic properties of gels" href="gel_viscoelasticity.html" />
     <link rel="prev" title="LJ Chains" href="lj_chains.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -184,6 +184,7 @@
 <li class="toctree-l1"><a class="reference internal" href="lj_fluid.html">LJ Fluid</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lj_chains.html">LJ Chains</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Gel Formation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gel_viscoelasticity.html">Viscoelastic properties of gels</a></li>
 <li class="toctree-l1"><a class="reference internal" href="useful_links.html">Molecular Dynamics Simulation Resources</a></li>
 </ul>
 
@@ -397,7 +398,7 @@ document.write(`
 <h1>Gel Formation<a class="headerlink" href="#gel-formation" title="Link to this heading">#</a></h1>
 <p>Microgels are soft micron sized, crosslinked polymeric networks, that encapsulate a solvent and swell by several orders of magnitudes <span class="math notranslate nohighlight">\(\sim 10^3\)</span> from their dry weight. The extent of swelling depends on solvent quality, the softness of the gel whilst maintaining its integrity. Thus, a gel has tunable physical properties. Also, the swelling-deswelling transition is reversible with strong hysteresis effects. The softness of these microgels is often qualitatively described by the ratio, <span class="math notranslate nohighlight">\(\varepsilon\)</span>, between elastic free energy and thermal energy <span class="math notranslate nohighlight">\(\varepsilon = \Delta F/k_B T\)</span>, and the softness can range between that of star polymers and emulsions. An estimation of the dimensionless quantity, <span class="math notranslate nohighlight">\(\varepsilon\)</span>, for a nonionic microgel of radius <span class="math notranslate nohighlight">\(R \sim 100\)</span>nm can be evaluate by the relation, <span class="math notranslate nohighlight">\(\varepsilon \equiv \Delta F/k_B T \equiv E R^3/k_B T\)</span>. Elastic modulus <span class="math notranslate nohighlight">\(E \sim k_B T/V\)</span>, where <span class="math notranslate nohighlight">\(V\)</span> is the volume of connection units between any two crosslinks, <span class="math notranslate nohighlight">\(V= V_0 N_x\)</span>. A typical volume of one statistical unit is <span class="math notranslate nohighlight">\(V_0 \sim 1 \text{nm}^3\)</span> and <span class="math notranslate nohighlight">\(N_x\sim 100\)</span> statistical units present in between two crosslinking points. Thus, an estimation of <span class="math notranslate nohighlight">\(\varepsilon \sim 10^4\)</span>, which makes the microgel highly compressible. The modulus of these microgel particles depends on parameters such as crosslink density, backbone chain length, solvent quality, electrostatic interactions, the architecture (which are essentially crosslinked loops (<span class="math notranslate nohighlight">\(1^\circ, 2^\circ ~etc.\)</span>), and entanglements) of the network structure. Unlike hard-sphere fluids, which exhibits a jamming transition at packing fraction between 0.64 to 0.74, the microgel particles can achieve a much higher packing fraction owing to its softness.
 Thus, one obtains an ultra-dense state with rheological and mechanical properties different from a hard sphere system. Owing their tunable physical properties and easy synthesis protocols, microgels have been used in many applications including biotechnology, pharmaceutical, drug delivery, industrial purposes such as oil recovery, surface coating, cosmetics, food manufacturing, agricultural industry, mechanobiology, and filtration.</p>
-<p>In this chapter, we develop a robust computational model with {in silico} gel synthesis for reproducible structural characteristics. Microgels are typically formed due to the self-assembly in a solution of low molecular weight building blocks crosslinked to each other by reversible or non-covalent, and irreversible bonds. A typical process of gelation is shown in Fig below.</p>
+<p>In this section, we develop a robust computational model with <em>in silico</em> gel synthesis for reproducible structural characteristics. Microgels are typically formed due to the self-assembly in a solution of low molecular weight building blocks crosslinked to each other by reversible or non-covalent, and irreversible bonds. A typical process of gelation is shown in Fig below.</p>
 <p><img alt="gelation" src="_images/gelation.png" />
 Fig. 1. Simulation snapshot of a typical gelation process. Four sticky terminal (reactive group) beads of star polymers are implemented in the simulation, indicated by magenta colour respectively, whereas the backbone of the teramer is denoted by green. At timestep <span class="math notranslate nohighlight">\(t=0\)</span>, polymers are dispersed randomly in the spherical cavity. At <span class="math notranslate nohighlight">\(t=100\)</span>, as the crosslinking reaction takes place, sticky beads get connected via a chemical bond. At <span class="math notranslate nohighlight">\(t=10^4\)</span>, spherical microgel forms, where few reactive groups are present and inter-molecular connections have been established.</p>
 <p>In order to go through step by step lets consider the simulation framework. Simulation might contains several files. But here we mainly focus on:</p>
@@ -410,7 +411,7 @@ Fig. 1. Simulation snapshot of a typical gelation process. Four sticky terminal 
 <p><img alt="tetramer_chain" src="_images/tetramer_chain.png" /></p>
 <p>Fig. 2. Tetramer chain.</p>
 <div class="tip admonition">
-<p class="admonition-title"><a class="reference external" href="https://shuvo-dip.github.io/MD_Simulation/tetramer_gel.html">system_terta_chain.data:</a> an Single tetramer system file</p>
+<p class="admonition-title"><a class="reference external" href="https://shuvo-dip.github.io/MD_Simulation/tetramer_gel.html">system_terta_chain.data:</a> Single tetramer system file</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LAMMPS</span> <span class="n">data</span> <span class="n">file</span> <span class="n">via</span> <span class="n">write_data</span><span class="p">,</span> <span class="n">version</span> <span class="mi">2</span> <span class="n">Aug</span> <span class="mi">2023</span><span class="p">,</span> <span class="n">timestep</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="n">lj</span>
 
 <span class="mi">21</span> <span class="n">atoms</span>
@@ -674,7 +675,7 @@ write_data      system_longtime_gel.data nocoeff
 <p><img alt="gelation_process" src="_images/gelation_process.png" /></p>
 </div>
 <div class="note admonition">
-<p class="admonition-title">Mean squared displacement (MSD) during gelation process as function of time</p>
+<p class="admonition-title">Mean squared displacement (MSD) during gelation process as function of time inside spherical confinement</p>
 <p><img alt="gelation_MSD" src="_images/gelation_MSD.png" /></p>
 </div>
 </section>
@@ -720,11 +721,11 @@ write_data      system_longtime_gel.data nocoeff
       </div>
     </a>
     <a class="right-next"
-       href="useful_links.html"
+       href="gel_viscoelasticity.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Molecular Dynamics Simulation Resources</p>
+        <p class="prev-next-title">Viscoelastic properties of gels</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

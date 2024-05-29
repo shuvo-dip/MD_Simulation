@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>LJ Chains &#8212; Basics of Molecular Dynamics Simulations</title>
+    <title>Polymer &#8212; Basics of Molecular Dynamics Simulations</title>
   
   
   
@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
   
@@ -180,8 +180,9 @@
 <li class="toctree-l1"><a class="reference internal" href="primary_ideas.html">A Brief Overview of Molecular Dynamics Simulations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lammps_install.html">LAMMPS Packages and Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lj_fluid.html">LJ Fluid</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">LJ Chains</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Polymer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tetramer_gel.html">Gel Formation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gel_viscoelasticity.html">Measuring viscoelastic properties</a></li>
 <li class="toctree-l1"><a class="reference internal" href="useful_links.html">Molecular Dynamics Simulation Resources</a></li>
 </ul>
 
@@ -368,7 +369,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>LJ Chains</h1>
+    <h1>Polymer</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -378,8 +379,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modeling-lj-chains">Modeling LJ Chains</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coming-soon">Coming soon…</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-polymer-mixture">Binary polymer mixture</a></li>
 </ul>
             </nav>
         </div>
@@ -391,15 +391,371 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="lj-chains">
-<h1>LJ Chains<a class="headerlink" href="#lj-chains" title="Link to this heading">#</a></h1>
-<p>This chapter explores the simulation of LJ chains, which are linear polymers consisting of LJ particles.</p>
-<section id="modeling-lj-chains">
-<h2>Modeling LJ Chains<a class="headerlink" href="#modeling-lj-chains" title="Link to this heading">#</a></h2>
-<p>LJ chains are modeled as a series of interconnected LJ particles, representing polymer chains.</p>
-</section>
-<section id="coming-soon">
-<h2>Coming soon…<a class="headerlink" href="#coming-soon" title="Link to this heading">#</a></h2>
+  <section class="tex2jax_ignore mathjax_ignore" id="polymer">
+<h1>Polymer<a class="headerlink" href="#polymer" title="Link to this heading">#</a></h1>
+<p>System preparation: Single polymer chain</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_images/polymer_single_chain.gif"><img alt="" src="_images/polymer_single_chain.gif" style="width: 500px;" /></a>
+</figure>
+<p>System preparation: Polymer blend</p>
+<p><img alt="gelation" src="_images/polymer_blend.gif" /></p>
+<p>In order to go through step by step lets consider the simulation framework. Simulation might contains several files. But here we mainly focus on:</p>
+<ul class="simple">
+<li><p>a) <code class="docutils literal notranslate"><span class="pre">run.in</span></code> – it cpntains mostly all the informations</p></li>
+<li><p>b) <code class="docutils literal notranslate"><span class="pre">system.data</span></code> – particles, positions, bonds, angles, information</p></li>
+</ul>
+<div class="tip admonition">
+<p class="admonition-title"><a class="reference external" href="https://shuvo-dip.github.io/MD_Simulation/tetramer_gel.html">system_terta_chain.data:</a> Single tetramer system file</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LAMMPS</span> <span class="n">data</span> <span class="n">file</span> <span class="n">via</span> <span class="n">write_data</span><span class="p">,</span> <span class="n">version</span> <span class="mi">2</span> <span class="n">Aug</span> <span class="mi">2023</span><span class="p">,</span> <span class="n">timestep</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="n">lj</span>
+
+<span class="mi">20</span> <span class="n">atoms</span>
+<span class="mi">19</span> <span class="n">bonds</span>
+<span class="mi">18</span> <span class="n">angles</span>
+<span class="mi">1</span> <span class="n">atom</span> <span class="n">types</span>
+<span class="mi">1</span> <span class="n">bond</span> <span class="n">types</span>
+<span class="mi">1</span> <span class="n">angle</span> <span class="n">types</span>
+
+<span class="mi">0</span> <span class="mi">21</span> <span class="n">xlo</span> <span class="n">xhi</span>
+<span class="mi">0</span> <span class="mi">2</span> <span class="n">ylo</span> <span class="n">yhi</span>
+<span class="mi">0</span> <span class="mi">2</span> <span class="n">zlo</span> <span class="n">zhi</span>
+
+<span class="n">Masses</span>
+
+<span class="mi">1</span> <span class="mi">1</span>
+
+<span class="n">Atoms</span> <span class="c1"># full</span>
+
+<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">2</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">2</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">3</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">3</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">4</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">4</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">5</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">5</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">6</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">6</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">7</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">7</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">8</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">8</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">9</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">9</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">10</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">10</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">11</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">11</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">12</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">12</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">13</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">13</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">14</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">14</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">15</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">15</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">16</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">16</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">17</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">17</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">18</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">18</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">19</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">19</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">20</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">20</span>	<span class="mi">1</span>	<span class="mi">1</span>
+
+<span class="n">Bonds</span> 
+
+<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">2</span>
+<span class="mi">2</span>	<span class="mi">1</span>	<span class="mi">2</span>	<span class="mi">3</span>
+<span class="mi">3</span>	<span class="mi">1</span>	<span class="mi">3</span>	<span class="mi">4</span>
+<span class="mi">4</span>	<span class="mi">1</span>	<span class="mi">4</span>	<span class="mi">5</span>
+<span class="mi">5</span>	<span class="mi">1</span>	<span class="mi">5</span>	<span class="mi">6</span>
+<span class="mi">6</span>	<span class="mi">1</span>	<span class="mi">6</span>	<span class="mi">7</span>
+<span class="mi">7</span>	<span class="mi">1</span>	<span class="mi">7</span>	<span class="mi">8</span>
+<span class="mi">8</span>	<span class="mi">1</span>	<span class="mi">8</span>	<span class="mi">9</span>
+<span class="mi">9</span>	<span class="mi">1</span>	<span class="mi">9</span>	<span class="mi">10</span>
+<span class="mi">10</span>	<span class="mi">1</span>	<span class="mi">10</span>	<span class="mi">11</span>
+<span class="mi">11</span>	<span class="mi">1</span>	<span class="mi">12</span>	<span class="mi">13</span>
+<span class="mi">12</span>	<span class="mi">1</span>	<span class="mi">13</span>	<span class="mi">14</span>
+<span class="mi">13</span>	<span class="mi">1</span>	<span class="mi">14</span>	<span class="mi">15</span>
+<span class="mi">14</span>	<span class="mi">1</span>	<span class="mi">15</span>	<span class="mi">16</span>
+<span class="mi">15</span>	<span class="mi">1</span>	<span class="mi">16</span>	<span class="mi">17</span>
+<span class="mi">16</span>	<span class="mi">1</span>	<span class="mi">17</span>	<span class="mi">18</span>
+<span class="mi">17</span>	<span class="mi">1</span>	<span class="mi">18</span>	<span class="mi">19</span>
+<span class="mi">18</span>	<span class="mi">1</span>	<span class="mi">19</span>	<span class="mi">20</span>
+<span class="mi">19</span>	<span class="mi">1</span>	<span class="mi">11</span>  <span class="mi">12</span>
+
+<span class="n">Angles</span> 
+
+<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">2</span>	<span class="mi">3</span>
+<span class="mi">2</span>	<span class="mi">1</span>	<span class="mi">2</span>	<span class="mi">3</span>	<span class="mi">4</span>
+<span class="mi">3</span>	<span class="mi">1</span>	<span class="mi">3</span>	<span class="mi">4</span>	<span class="mi">5</span>
+<span class="mi">4</span>	<span class="mi">1</span>	<span class="mi">4</span>	<span class="mi">5</span>	<span class="mi">6</span>
+<span class="mi">5</span>	<span class="mi">1</span>	<span class="mi">5</span>	<span class="mi">6</span>	<span class="mi">7</span>
+<span class="mi">6</span>	<span class="mi">1</span>	<span class="mi">6</span>	<span class="mi">7</span>	<span class="mi">8</span>
+<span class="mi">7</span>	<span class="mi">1</span>	<span class="mi">7</span>   <span class="mi">8</span>	<span class="mi">9</span>
+<span class="mi">8</span>	<span class="mi">1</span>	<span class="mi">8</span>	<span class="mi">9</span>	<span class="mi">10</span>
+<span class="mi">9</span>	<span class="mi">1</span>	<span class="mi">9</span>	<span class="mi">10</span>	<span class="mi">11</span>
+<span class="mi">10</span>	<span class="mi">1</span>	<span class="mi">10</span>	<span class="mi">11</span>	<span class="mi">12</span>
+<span class="mi">11</span>	<span class="mi">1</span>	<span class="mi">11</span>	<span class="mi">12</span>	<span class="mi">13</span>
+<span class="mi">12</span>	<span class="mi">1</span>	<span class="mi">12</span>	<span class="mi">13</span>	<span class="mi">14</span>
+<span class="mi">13</span>	<span class="mi">1</span>	<span class="mi">13</span>	<span class="mi">14</span>	<span class="mi">15</span>
+<span class="mi">14</span>	<span class="mi">1</span>	<span class="mi">14</span>	<span class="mi">15</span>	<span class="mi">16</span>
+<span class="mi">15</span>	<span class="mi">1</span>	<span class="mi">15</span>	<span class="mi">16</span>	<span class="mi">17</span>
+<span class="mi">16</span>	<span class="mi">1</span>	<span class="mi">16</span>	<span class="mi">17</span>	<span class="mi">18</span>
+<span class="mi">17</span>	<span class="mi">1</span>	<span class="mi">17</span>	<span class="mi">18</span>	<span class="mi">19</span>
+<span class="mi">18</span>	<span class="mi">1</span>	<span class="mi">18</span>	<span class="mi">19</span>	<span class="mi">20</span>
+</pre></div>
+</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Reactive polymer blend preparation: <a class="reference external" href="https://shuvo-dip.github.io/MD_Simulation/tetramer_gel.html">run.in:</a> LAMMPS script for a 10-particle LJ fluid</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># LAMMPS Simulation Initialization
+
+units           lj
+atom_style      full
+
+# Bond and Angle Styles
+bond_style      hybrid fene
+angle_style     hybrid harmonic
+
+# Pair Styles
+pair_style      hybrid lj/cut 1.122
+pair_modify     shift yes
+special_bonds   lj 0.0 1.0 1.0
+
+# Neighbor Settings
+neighbor        0.3 bin
+neigh_modify    every 1 delay 0 one 10000
+
+# Boundary Conditions
+boundary        p p p
+
+# Log File
+log             log.nvt.txt
+
+# Read Initial Configuration Data
+read_data       system_polymer_chain.data
+
+# Pair Coefficients
+pair_coeff      * * lj/cut 1.0 1.0
+
+# Bond Coefficients
+bond_coeff      1 fene 20.0 1.5 1.0 1.0
+
+# Angle Coefficients
+angle_coeff     1 harmonic 10.0 150
+
+# Group Definitions
+comm_modify     cutoff 5.0
+group           poly type 1
+group           terminal type 2
+
+# Variables
+variable        temperature equal 2.0
+variable        T equal 1.0
+variable        F equal 1
+
+# Replication of the System
+replicate       5 5 40
+write_data      larger_system.data nocoeff
+
+# Velocity Initialization
+variable        Tdamp equal 100*dt
+variable        time equal step*dt
+velocity        all create ${temperature} 12945
+
+# Fixes
+fix             flan all langevin ${temperature} ${temperature} ${Tdamp} 5428254
+fix             fnvt all nvt temp ${temperature} ${temperature} ${Tdamp}
+
+
+# Trajectory Output
+dump            11 all custom 10000 traj_nvt_langevin.lammpstrj id mol type x y z vx vy vz
+dump_modify     11 sort id
+
+# Thermodynamic Output
+thermo          10000
+thermo_style    custom step temp pe ke ebond epair press pxx pyy pzz pxy pxz pyz spcpu
+
+# Timestep
+timestep        0.005
+
+# Deformation Fix
+fix             fixdef all deform 1 x final 0.0 35.0 y final 0.0 35.0 z final 0.0 35.0 units box
+
+# Simulation Run
+run             1000000
+write_data      system_after_eq.data nocoeff
+</pre></div>
+</div>
+</div>
+<section id="binary-polymer-mixture">
+<h2>Binary polymer mixture<a class="headerlink" href="#binary-polymer-mixture" title="Link to this heading">#</a></h2>
+<p><img alt="tetramer_chain_bond" src="_images/binary_mixture.gif" /></p>
+<p>Fig. 3. Binary polymer mixture.</p>
+<div class="tip admonition">
+<p class="admonition-title"><a class="reference external" href="https://shuvo-dip.github.io/MD_Simulation/tetramer_gel.html">system_terta_chain.data:</a> Single tetramer system file</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LAMMPS</span> <span class="n">data</span> <span class="n">file</span> <span class="n">via</span> <span class="n">write_data</span><span class="p">,</span> <span class="n">version</span> <span class="mi">2</span> <span class="n">Aug</span> <span class="mi">2023</span><span class="p">,</span> <span class="n">timestep</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="n">lj</span>
+
+<span class="mi">25</span> <span class="n">atoms</span>
+<span class="mi">23</span> <span class="n">bonds</span>
+<span class="mi">21</span> <span class="n">angles</span>
+<span class="mi">2</span> <span class="n">atom</span> <span class="n">types</span>
+<span class="mi">1</span> <span class="n">bond</span> <span class="n">types</span>
+<span class="mi">1</span> <span class="n">angle</span> <span class="n">types</span>
+
+<span class="mi">0</span> <span class="mi">21</span> <span class="n">xlo</span> <span class="n">xhi</span>
+<span class="mi">0</span> <span class="mi">3</span> <span class="n">ylo</span> <span class="n">yhi</span>
+<span class="mi">0</span> <span class="mi">2</span> <span class="n">zlo</span> <span class="n">zhi</span>
+
+<span class="n">Masses</span>
+
+<span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">2</span> <span class="mi">1</span>
+
+<span class="n">Atoms</span> <span class="c1"># full</span>
+
+<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">2</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">2</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">3</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">3</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">4</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">4</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">5</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">5</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">6</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">6</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">7</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">7</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">8</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">8</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">9</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">9</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">10</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">10</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">11</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">11</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">12</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">12</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">13</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">13</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">14</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">14</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">15</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">15</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">16</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">16</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">17</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">17</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">18</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">18</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">19</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">19</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">20</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">0</span>	<span class="mi">20</span>	<span class="mi">1</span>	<span class="mi">1</span>
+<span class="mi">21</span>	<span class="mi">2</span>	<span class="mi">2</span>	<span class="mi">0</span>	<span class="mi">11</span>	<span class="mi">2</span>	<span class="mi">1</span>
+<span class="mi">22</span>	<span class="mi">2</span>	<span class="mi">2</span>	<span class="mi">0</span>	<span class="mi">12</span>	<span class="mi">2</span>	<span class="mi">1</span>
+<span class="mi">23</span>	<span class="mi">2</span>	<span class="mi">2</span>	<span class="mi">0</span>	<span class="mi">13</span>	<span class="mi">2</span>	<span class="mi">1</span>
+<span class="mi">24</span>	<span class="mi">2</span>	<span class="mi">2</span>	<span class="mi">0</span>	<span class="mi">14</span>	<span class="mi">2</span>	<span class="mi">1</span>
+<span class="mi">25</span>	<span class="mi">2</span>	<span class="mi">2</span>	<span class="mi">0</span>	<span class="mi">15</span>	<span class="mi">2</span>	<span class="mi">1</span>
+
+<span class="n">Bonds</span> 
+
+<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">2</span>
+<span class="mi">2</span>	<span class="mi">1</span>	<span class="mi">2</span>	<span class="mi">3</span>
+<span class="mi">3</span>	<span class="mi">1</span>	<span class="mi">3</span>	<span class="mi">4</span>
+<span class="mi">4</span>	<span class="mi">1</span>	<span class="mi">4</span>	<span class="mi">5</span>
+<span class="mi">5</span>	<span class="mi">1</span>	<span class="mi">5</span>	<span class="mi">6</span>
+<span class="mi">6</span>	<span class="mi">1</span>	<span class="mi">6</span>	<span class="mi">7</span>
+<span class="mi">7</span>	<span class="mi">1</span>	<span class="mi">7</span>	<span class="mi">8</span>
+<span class="mi">8</span>	<span class="mi">1</span>	<span class="mi">8</span>	<span class="mi">9</span>
+<span class="mi">9</span>	<span class="mi">1</span>	<span class="mi">9</span>	<span class="mi">10</span>
+<span class="mi">10</span>	<span class="mi">1</span>	<span class="mi">10</span>	<span class="mi">11</span>
+<span class="mi">11</span>	<span class="mi">1</span>	<span class="mi">12</span>	<span class="mi">13</span>
+<span class="mi">12</span>	<span class="mi">1</span>	<span class="mi">13</span>	<span class="mi">14</span>
+<span class="mi">13</span>	<span class="mi">1</span>	<span class="mi">14</span>	<span class="mi">15</span>
+<span class="mi">14</span>	<span class="mi">1</span>	<span class="mi">15</span>	<span class="mi">16</span>
+<span class="mi">15</span>	<span class="mi">1</span>	<span class="mi">16</span>	<span class="mi">17</span>
+<span class="mi">16</span>	<span class="mi">1</span>	<span class="mi">17</span>	<span class="mi">18</span>
+<span class="mi">17</span>	<span class="mi">1</span>	<span class="mi">18</span>	<span class="mi">19</span>
+<span class="mi">18</span>	<span class="mi">1</span>	<span class="mi">19</span>	<span class="mi">20</span>
+<span class="mi">19</span>	<span class="mi">1</span>	<span class="mi">11</span>  <span class="mi">12</span>
+<span class="mi">20</span>  <span class="mi">1</span>   <span class="mi">21</span>  <span class="mi">22</span>
+<span class="mi">21</span>	<span class="mi">1</span>	<span class="mi">22</span>	<span class="mi">23</span>
+<span class="mi">22</span>	<span class="mi">1</span>	<span class="mi">23</span>	<span class="mi">24</span>
+<span class="mi">23</span>	<span class="mi">1</span>	<span class="mi">24</span>	<span class="mi">25</span>
+
+<span class="n">Angles</span> 
+
+<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">1</span>	<span class="mi">2</span>	<span class="mi">3</span>
+<span class="mi">2</span>	<span class="mi">1</span>	<span class="mi">2</span>	<span class="mi">3</span>	<span class="mi">4</span>
+<span class="mi">3</span>	<span class="mi">1</span>	<span class="mi">3</span>	<span class="mi">4</span>	<span class="mi">5</span>
+<span class="mi">4</span>	<span class="mi">1</span>	<span class="mi">4</span>	<span class="mi">5</span>	<span class="mi">6</span>
+<span class="mi">5</span>	<span class="mi">1</span>	<span class="mi">5</span>	<span class="mi">6</span>	<span class="mi">7</span>
+<span class="mi">6</span>	<span class="mi">1</span>	<span class="mi">6</span>	<span class="mi">7</span>	<span class="mi">8</span>
+<span class="mi">7</span>	<span class="mi">1</span>	<span class="mi">7</span>   <span class="mi">8</span>	<span class="mi">9</span>
+<span class="mi">8</span>	<span class="mi">1</span>	<span class="mi">8</span>	<span class="mi">9</span>	<span class="mi">10</span>
+<span class="mi">9</span>	<span class="mi">1</span>	<span class="mi">9</span>	<span class="mi">10</span>	<span class="mi">11</span>
+<span class="mi">10</span>	<span class="mi">1</span>	<span class="mi">10</span>	<span class="mi">11</span>	<span class="mi">12</span>
+<span class="mi">11</span>	<span class="mi">1</span>	<span class="mi">11</span>	<span class="mi">12</span>	<span class="mi">13</span>
+<span class="mi">12</span>	<span class="mi">1</span>	<span class="mi">12</span>	<span class="mi">13</span>	<span class="mi">14</span>
+<span class="mi">13</span>	<span class="mi">1</span>	<span class="mi">13</span>	<span class="mi">14</span>	<span class="mi">15</span>
+<span class="mi">14</span>	<span class="mi">1</span>	<span class="mi">14</span>	<span class="mi">15</span>	<span class="mi">16</span>
+<span class="mi">15</span>	<span class="mi">1</span>	<span class="mi">15</span>	<span class="mi">16</span>	<span class="mi">17</span>
+<span class="mi">16</span>	<span class="mi">1</span>	<span class="mi">16</span>	<span class="mi">17</span>	<span class="mi">18</span>
+<span class="mi">17</span>	<span class="mi">1</span>	<span class="mi">17</span>	<span class="mi">18</span>	<span class="mi">19</span>
+<span class="mi">18</span>	<span class="mi">1</span>	<span class="mi">18</span>	<span class="mi">19</span>	<span class="mi">20</span>
+<span class="mi">19</span>	<span class="mi">1</span>	<span class="mi">21</span>  <span class="mi">22</span>  <span class="mi">23</span>
+<span class="mi">20</span>	<span class="mi">1</span>	<span class="mi">22</span>	<span class="mi">23</span>	<span class="mi">24</span>
+<span class="mi">21</span>	<span class="mi">1</span>	<span class="mi">23</span>	<span class="mi">24</span>	<span class="mi">25</span>
+</pre></div>
+</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Gelation: <a class="reference external" href="https://shuvo-dip.github.io/MD_Simulation/tetramer_gel.html">run_gelation.in:</a> LAMMPS script read_data from  previously generated <em>system_after_eq.data</em> file</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># LAMMPS Simulation Initialization
+
+units           lj
+atom_style      full
+
+# Bond and Angle Styles
+bond_style      hybrid fene
+angle_style     hybrid harmonic
+
+# Pair Styles
+pair_style      hybrid lj/cut 4.0
+pair_modify     shift yes
+special_bonds   lj 0.0 1.0 1.0
+
+# Neighbor Settings
+neighbor        0.3 bin
+neigh_modify    every 1 delay 0 one 10000
+
+# Boundary Conditions
+boundary        p p p
+
+# Log File
+log             log.nvt.txt
+
+# Read Initial Configuration Data
+read_data       system_after_eq.data
+
+# Pair Coefficients
+pair_coeff      1 1 lj/cut 1.0 1.0
+pair_coeff      1 2 lj/cut 1.0 1.0 1.122
+pair_coeff      2 2 lj/cut 1.0 1.0
+# Bond Coefficients
+bond_coeff      1 fene 20.0 1.5 1.0 1.0
+
+# Angle Coefficients
+angle_coeff     1 harmonic 10.0 150
+
+# Group Definitions
+comm_modify     cutoff 5.0
+group           poly type 1
+group           terminal type 2
+
+# Variables
+variable        temperature equal 1.0
+variable        T equal 1.0
+variable        F equal 1
+
+
+# Velocity Initialization
+variable        Tdamp equal 100*dt
+variable        time equal step*dt
+velocity        all create ${temperature} 12945
+
+# Fixes
+fix             flan all langevin ${temperature} ${temperature} ${Tdamp} 5428254
+fix             fnvt all nvt temp ${temperature} ${temperature} ${Tdamp}
+
+
+# Trajectory Output
+dump            11 all custom 10000 traj_nvt_langevin.lammpstrj id mol type x y z vx vy vz
+dump_modify     11 sort id
+
+# Thermodynamic Output
+thermo          10000
+thermo_style    custom step temp pe ke ebond epair press pxx pyy pzz pxy pxz pyz spcpu
+
+# Timestep
+timestep        0.005
+
+
+# Simulation Run
+run             1000000
+write_data      system_phase_separation_eq.data nocoeff
+
+</pre></div>
+</div>
+</div>
 </section>
 </section>
 
@@ -467,8 +823,7 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modeling-lj-chains">Modeling LJ Chains</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coming-soon">Coming soon…</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-polymer-mixture">Binary polymer mixture</a></li>
 </ul>
   </nav></div>
 

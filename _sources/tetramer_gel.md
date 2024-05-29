@@ -5,7 +5,7 @@ Thus, one obtains an ultra-dense state with rheological and mechanical propertie
 
 
 
- In this chapter, we develop a robust computational model with {in silico} gel synthesis for reproducible structural characteristics. Microgels are typically formed due to the self-assembly in a solution of low molecular weight building blocks crosslinked to each other by reversible or non-covalent, and irreversible bonds. A typical process of gelation is shown in Fig below.
+ In this section, we develop a robust computational model with _in silico_ gel synthesis for reproducible structural characteristics. Microgels are typically formed due to the self-assembly in a solution of low molecular weight building blocks crosslinked to each other by reversible or non-covalent, and irreversible bonds. A typical process of gelation is shown in Fig below.
 
  ![gelation](LJ_fluid/method_05/gelation.png)
 Fig. 1. Simulation snapshot of a typical gelation process. Four sticky terminal (reactive group) beads of star polymers are implemented in the simulation, indicated by magenta colour respectively, whereas the backbone of the teramer is denoted by green. At timestep $t=0$, polymers are dispersed randomly in the spherical cavity. At $t=100$, as the crosslinking reaction takes place, sticky beads get connected via a chemical bond. At $t=10^4$, spherical microgel forms, where few reactive groups are present and inter-molecular connections have been established.
@@ -21,7 +21,7 @@ In order to go through step by step lets consider the simulation framework. Simu
  Fig. 2. Tetramer chain.  
 
 
-`````{admonition} [system_terta_chain.data:](https://shuvo-dip.github.io/MD_Simulation/tetramer_gel.html) an Single tetramer system file
+`````{admonition} [system_terta_chain.data:](https://shuvo-dip.github.io/MD_Simulation/tetramer_gel.html) Single tetramer system file
 :class: tip
 ```
 LAMMPS data file via write_data, version 2 Aug 2023, timestep = 0, units = lj
@@ -311,7 +311,7 @@ Movie 2. Simulation snapshots of chemically crosslinked gelation process.
 ![gelation_process](LJ_fluid/method_05/gelation_process.png)
 ```
 
-```{admonition} Mean squared displacement (MSD) during gelation process as function of time 
+```{admonition} Mean squared displacement (MSD) during gelation process as function of time inside spherical confinement
 :class: note
 
 ![gelation_MSD](LJ_fluid/method_05/gelation_MSD.png)

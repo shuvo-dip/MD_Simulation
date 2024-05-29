@@ -1,0 +1,991 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Measuring viscoelastic properties &#8212; Basics of Molecular Dynamics Simulations</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'gel_viscoelasticity';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Molecular Dynamics Simulation Resources" href="useful_links.html" />
+    <link rel="prev" title="Gel Formation" href="tetramer_gel.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Basics of Molecular Dynamics Simulations - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Basics of Molecular Dynamics Simulations - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to Molecular Simulation Basics!
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="primary_ideas.html">A Brief Overview of Molecular Dynamics Simulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lammps_install.html">LAMMPS Packages and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lj_fluid.html">LJ Fluid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lj_chains.html">LJ Chains</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tetramer_gel.html">Gel Formation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Measuring viscoelastic properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_links.html">Molecular Dynamics Simulation Resources</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fgel_viscoelasticity.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/gel_viscoelasticity.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Measuring viscoelastic properties</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-concepts">Key Concepts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shear-thinning-and-shear-thickening">Shear Thinning and Shear Thickening</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#complex-fluid-climb-and-siphon-experiment">Complex Fluid Climb and Siphon Experiment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#liquid-liquid-phase-separation-in-biomolecular-condensates">Liquid-Liquid phase separation in biomolecular condensates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#viscoelastic-properties-of-the-condensed-phase">Viscoelastic properties of the condensed phase</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rheological-properties">Rheological Properties</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#viscoelastic-models">Viscoelastic Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#molecular-dynamics-study-of-mechanical-and-viscoelastic-properties">Molecular Dynamics study of Mechanical and Viscoelastic properties:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shear">Shear</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#post-processing-visualization">Post processing visualization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uniaxial-deformation">Uniaxial deformation</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="measuring-viscoelastic-properties">
+<h1>Measuring viscoelastic properties<a class="headerlink" href="#measuring-viscoelastic-properties" title="Link to this heading">#</a></h1>
+<p>Viscoelastic fluids and gels are materials that exhibit both viscous and elastic properties. These materials do not fit neatly into the categories of solid or liquid but display behaviors characteristic of both, depending on the conditions.</p>
+<section id="key-concepts">
+<h2>Key Concepts<a class="headerlink" href="#key-concepts" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Viscosity and Elasticity:</strong></p>
+<ul class="simple">
+<li><p><strong>Viscosity:</strong> A measure of a fluid’s resistance to flow. Higher viscosity means a fluid flows less easily.</p></li>
+<li><p><strong>Elasticity:</strong> The ability of a material to return to its original shape after deformation.</p></li>
+</ul>
+</li>
+<li><p><strong>Viscoelasticity:</strong> The property of materials that exhibit both viscous and elastic characteristics when undergoing deformation.</p></li>
+</ol>
+</section>
+<section id="shear-thinning-and-shear-thickening">
+<h2>Shear Thinning and Shear Thickening<a class="headerlink" href="#shear-thinning-and-shear-thickening" title="Link to this heading">#</a></h2>
+<p>Viscoelastic fluids can exhibit varying flow behaviors under shear stress:</p>
+<ol class="arabic simple">
+<li><p><strong>Shear Thinning (Pseudoplastic):</strong></p>
+<ul class="simple">
+<li><p>In shear thinning fluids, the viscosity decreases with increasing shear rate.</p></li>
+<li><p>Examples: Ketchup, paint, and blood.</p></li>
+<li><p>These fluids become less viscous (thinner) when agitated or stirred.
+<strong>Ketchup (Shear Thinning):</strong></p></li>
+<li><p>At rest, ketchup is relatively thick and does not flow easily.</p></li>
+<li><p>When shaken or squeezed, it becomes thinner and flows more easily, making it easier to pour.</p></li>
+</ul>
+</li>
+</ol>
+<p><img alt="ketchup" src="_images/ketchup.png" /></p>
+<ol class="arabic simple" start="2">
+<li><p><strong>Shear Thickening (Dilatant):</strong></p>
+<ul class="simple">
+<li><p>In shear thickening fluids, the viscosity increases with increasing shear rate.</p></li>
+<li><p>Examples: Cornstarch in water (oobleck) and some types of sand in water mixtures.</p></li>
+<li><p>These fluids become more viscous (thicker) when subjected to higher shear rates.
+<strong>Oobleck (Shear Thickening):</strong></p></li>
+<li><p>A mixture of cornstarch and water that behaves as a solid under sudden impact or shear but flows like a liquid under gentle movement.</p></li>
+<li><p>When quickly agitated or compressed, oobleck becomes very hard and resists deformation.</p></li>
+</ul>
+</li>
+</ol>
+<p><img alt="Oobleck" src="_images/Oobleck.gif" /></p>
+</section>
+<section id="complex-fluid-climb-and-siphon-experiment">
+<h2>Complex Fluid Climb and Siphon Experiment<a class="headerlink" href="#complex-fluid-climb-and-siphon-experiment" title="Link to this heading">#</a></h2>
+<p>The complex fluid climb experiment, also known as the Weissenberg effect, involves observing the behavior of a viscoelastic fluid when subjected to rotational shear. In this experiment, a rod or a cylinder is inserted into the fluid and rotated. Unlike Newtonian fluids, which typically move outward and downward due to centrifugal forces, viscoelastic fluids exhibit an unusual behavior: they climb up the rotating rod. This phenomenon occurs because the elastic stresses in the fluid cause it to move in the direction of the applied shear, demonstrating the unique viscoelastic properties of the material. This experiment helps illustrate the combination of viscous and elastic behaviors in complex fluids.</p>
+<p><img alt="climbing" src="_images/climbing_fluid.gif" /></p>
+<p><img alt="siphon" src="_images/siphon.gif" /></p>
+</section>
+<section id="liquid-liquid-phase-separation-in-biomolecular-condensates">
+<h2>Liquid-Liquid phase separation in biomolecular condensates<a class="headerlink" href="#liquid-liquid-phase-separation-in-biomolecular-condensates" title="Link to this heading">#</a></h2>
+<p><img alt="llps" src="_images/llps.mov" /></p>
+<p>Ref: Brangwine, C.P. <em>et al.</em>, Science, (2009)</p>
+</section>
+<section id="viscoelastic-properties-of-the-condensed-phase">
+<h2>Viscoelastic properties of the condensed phase<a class="headerlink" href="#viscoelastic-properties-of-the-condensed-phase" title="Link to this heading">#</a></h2>
+<p><img alt="aging" src="_images/aging.mov" /></p>
+<p>Ref: Jawerth, L. <em>et al.</em>, Science (2020)</p>
+<p><img alt="aging_microrheology" src="_images/aging_microrheology.png" /></p>
+<p>Ref: Jawerth, L. <em>et al.</em>, Science (2020)</p>
+</section>
+<section id="rheological-properties">
+<h2>Rheological Properties<a class="headerlink" href="#rheological-properties" title="Link to this heading">#</a></h2>
+<p>Understanding viscoelastic materials involves several rheological properties:</p>
+<ol class="arabic simple">
+<li><p><strong>Uniaxial Deformation Shear:</strong></p>
+<ul class="simple">
+<li><p>Involves stretching or compressing the material along one axis.</p></li>
+<li><p>Important in understanding how materials respond to tensile (pulling apart) and compressive (pushing together) forces.</p></li>
+</ul>
+</li>
+<li><p><strong>Bulk Modulus (K):</strong></p>
+<ul class="simple">
+<li><p>A measure of a material’s resistance to uniform compression.</p></li>
+<li><p>Defined as the ratio of pressure increase to the resulting relative decrease in volume.</p></li>
+<li><p>High bulk modulus indicates incompressibility.</p></li>
+</ul>
+</li>
+<li><p><strong>Shear Modulus (G):</strong></p>
+<ul class="simple">
+<li><p>A measure of a material’s ability to resist shear deformation.</p></li>
+<li><p>Defined as the ratio of shear stress to shear strain.</p></li>
+<li><p>Important for understanding how a material deforms under shear stress.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="viscoelastic-models">
+<h2>Viscoelastic Models<a class="headerlink" href="#viscoelastic-models" title="Link to this heading">#</a></h2>
+<p>Several models help describe the behavior of viscoelastic materials:</p>
+<ol class="arabic simple">
+<li><p><strong>Maxwell Model:</strong></p>
+<ul class="simple">
+<li><p>Represents the material as a combination of a purely viscous damper and a purely elastic spring in series.</p></li>
+<li><p>Useful for describing materials that exhibit fluid-like behavior over long timescales and solid-like behavior over short timescales.</p></li>
+</ul>
+</li>
+<li><p><strong>Kelvin-Voigt Model:</strong></p>
+<ul class="simple">
+<li><p>Represents the material as a purely viscous damper and a purely elastic spring in parallel.</p></li>
+<li><p>Useful for materials that exhibit both instantaneous elastic deformation and time-dependent viscous flow.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="molecular-dynamics-study-of-mechanical-and-viscoelastic-properties">
+<h2>Molecular Dynamics study of Mechanical and Viscoelastic properties:<a class="headerlink" href="#molecular-dynamics-study-of-mechanical-and-viscoelastic-properties" title="Link to this heading">#</a></h2>
+<p>In order to go through step by step lets consider the simulation framework. Simulation might contains several files. But here we mainly focus on:</p>
+<ul class="simple">
+<li><p>a) <code class="docutils literal notranslate"><span class="pre">run.in</span></code> – it cpntains mostly all the informations</p></li>
+<li><p>b) <code class="docutils literal notranslate"><span class="pre">system.data</span></code> – particles, positions, bonds, angles, information</p></li>
+</ul>
+</section>
+<section id="shear">
+<h2>Shear<a class="headerlink" href="#shear" title="Link to this heading">#</a></h2>
+<p><img alt="shear" src="_images/shear.gif" /></p>
+<p>Fig. 2. Simple oscillatory shear along <em>xy</em> direction is applied.</p>
+<div class="tip admonition">
+<p class="admonition-title"><a class="reference external" href="https://shuvo-dip.github.io/MD_Simulation/tetramer_gel.html">system_gel.data:</a> A tetramer gel system</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LAMMPS</span> <span class="n">data</span> <span class="n">file</span> <span class="n">via</span> <span class="n">write_data</span><span class="p">,</span> <span class="n">version</span> <span class="mi">2</span> <span class="n">Aug</span> <span class="mi">2023</span><span class="p">,</span> <span class="n">timestep</span> <span class="o">=</span> <span class="mi">1000000</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="n">lj</span>
+
+<span class="mi">21000</span> <span class="n">atoms</span>
+<span class="mi">2</span> <span class="n">atom</span> <span class="n">types</span>
+<span class="mi">21993</span> <span class="n">bonds</span>
+<span class="mi">1</span> <span class="n">bond</span> <span class="n">types</span>
+<span class="mi">19986</span> <span class="n">angles</span>
+<span class="mi">1</span> <span class="n">angle</span> <span class="n">types</span>
+
+<span class="mi">0</span> <span class="mi">35</span> <span class="n">xlo</span> <span class="n">xhi</span>
+<span class="mi">0</span> <span class="mi">35</span> <span class="n">ylo</span> <span class="n">yhi</span>
+<span class="mi">0</span> <span class="mi">35</span> <span class="n">zlo</span> <span class="n">zhi</span>
+
+<span class="n">Masses</span>
+
+<span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">2</span> <span class="mi">1</span>
+
+<span class="n">Atoms</span> <span class="c1"># full</span>
+
+<span class="mi">2771</span> <span class="mi">132</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mf">15.325304101690698</span> <span class="mf">13.569602890031291</span> <span class="mf">0.22724463073395346</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span>
+<span class="mi">16644</span> <span class="mi">793</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mf">8.706808125786711</span> <span class="mf">2.5899575178796197</span> <span class="mf">0.6472686771441266</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="mi">10555</span> <span class="mi">503</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mf">13.369029049350576</span> <span class="mf">12.681530432159494</span> <span class="mf">0.27238197806798187</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="mi">20166</span> <span class="mi">961</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mf">0.07835850114160828</span> <span class="mf">3.28781233901114</span> <span class="mf">0.9412351578898016</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="mi">18902</span> <span class="mi">901</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mf">4.3618649478722284</span> <span class="mf">0.8196846585265288</span> <span class="mf">0.2734712869132502</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="o">.</span>
+<span class="o">.</span>
+<span class="o">.</span>
+
+
+<span class="n">Bonds</span>
+
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">2771</span> <span class="mi">2772</span>
+<span class="mi">2</span> <span class="mi">1</span> <span class="mi">16644</span> <span class="mi">16645</span>
+<span class="mi">3</span> <span class="mi">1</span> <span class="mi">10555</span> <span class="mi">10556</span>
+<span class="mi">4</span> <span class="mi">1</span> <span class="mi">20166</span> <span class="mi">20167</span>
+<span class="mi">5</span> <span class="mi">1</span> <span class="mi">20166</span> <span class="mi">20177</span>
+<span class="mi">6</span> <span class="mi">1</span> <span class="mi">18902</span> <span class="mi">18903</span>
+<span class="mi">7</span> <span class="mi">1</span> <span class="mi">18913</span> <span class="mi">18914</span>
+<span class="mi">8</span> <span class="mi">1</span> <span class="mi">16645</span> <span class="mi">16646</span>
+<span class="mi">9</span> <span class="mi">1</span> <span class="mi">2963</span> <span class="mi">2964</span>
+<span class="mi">10</span> <span class="mi">1</span> <span class="mi">16643</span> <span class="mi">16644</span>
+<span class="mi">11</span> <span class="mi">1</span> <span class="mi">8045</span> <span class="mi">8046</span>
+<span class="mi">12</span> <span class="mi">1</span> <span class="mi">4377</span> <span class="mi">4378</span>
+<span class="mi">13</span> <span class="mi">1</span> <span class="mi">5388</span> <span class="mi">5389</span>
+<span class="o">.</span>
+<span class="o">.</span>
+<span class="o">.</span>
+
+<span class="n">Angles</span>
+
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">2770</span> <span class="mi">2771</span> <span class="mi">2772</span>
+<span class="mi">2</span> <span class="mi">1</span> <span class="mi">16645</span> <span class="mi">16644</span> <span class="mi">16643</span>
+<span class="mi">3</span> <span class="mi">1</span> <span class="mi">10554</span> <span class="mi">10555</span> <span class="mi">10556</span>
+<span class="mi">4</span> <span class="mi">1</span> <span class="mi">18901</span> <span class="mi">18902</span> <span class="mi">18903</span>
+<span class="mi">5</span> <span class="mi">1</span> <span class="mi">18912</span> <span class="mi">18913</span> <span class="mi">18914</span>
+<span class="mi">6</span> <span class="mi">1</span> <span class="mi">16644</span> <span class="mi">16645</span> <span class="mi">16646</span>
+<span class="mi">7</span> <span class="mi">1</span> <span class="mi">2962</span> <span class="mi">2963</span> <span class="mi">2964</span>
+<span class="mi">8</span> <span class="mi">1</span> <span class="mi">16642</span> <span class="mi">16643</span> <span class="mi">16644</span>
+<span class="mi">9</span> <span class="mi">1</span> <span class="mi">8044</span> <span class="mi">8045</span> <span class="mi">8046</span>
+<span class="mi">10</span> <span class="mi">1</span> <span class="mi">4376</span> <span class="mi">4377</span> <span class="mi">4378</span>
+<span class="mi">11</span> <span class="mi">1</span> <span class="mi">5389</span> <span class="mi">5388</span> <span class="mi">13535</span>
+<span class="mi">12</span> <span class="mi">1</span> <span class="mi">11690</span> <span class="mi">11691</span> <span class="mi">11692</span>
+<span class="mi">13</span> <span class="mi">1</span> <span class="mi">8955</span> <span class="mi">8956</span> <span class="mi">8957</span>
+<span class="mi">14</span> <span class="mi">1</span> <span class="mi">16319</span> <span class="mi">16320</span> <span class="mi">16321</span>
+<span class="mi">15</span> <span class="mi">1</span> <span class="mi">20613</span> <span class="mi">20614</span> <span class="mi">20615</span>
+<span class="o">.</span>
+<span class="o">.</span>
+<span class="o">.</span>
+
+</pre></div>
+</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Shear simulation: <a class="reference external" href="https://shuvo-dip.github.io/MD_Simulation/tetramer_gel.html">run_shear.in:</a> LAMMPS scrip for shear simulation</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># LAMMPS Simulation Initialization
+
+units           lj
+atom_style      full
+
+# Bond and Angle Styles
+bond_style      hybrid fene
+angle_style     hybrid harmonic
+
+# Pair Styles
+pair_style      hybrid lj/cut 1.122
+pair_modify     shift yes
+special_bonds   lj 0.0 1.0 1.0
+
+# Neighbor Settings
+neighbor        0.3 bin
+neigh_modify    every 1 delay 0 one 10000
+
+# Boundary Conditions
+boundary        p p p
+
+# Log File
+log             log.nvt.txt
+
+# Read Initial Configuration Data
+read_data       system_longtime_gel.data
+
+# Pair Coefficients
+pair_coeff      * * lj/cut 1.0 1.0
+
+# Bond Coefficients
+bond_coeff      1 fene 20.0 1.5 1.0 1.0
+
+# Angle Coefficients
+angle_coeff     1 harmonic 10.0 150
+
+# Group Definitions
+comm_modify     cutoff 5.0
+group           poly type 1
+group           water type 2
+
+# Variables
+variable        temperature equal 1.0
+
+# Change Box to Triclinic
+change_box      all triclinic remap units box
+
+# Stress Computations
+compute         peratom all stress/atom NULL
+compute         p all reduce sum c_peratom[*]
+variable        paxx equal c_p[1]/vol
+variable        payy equal c_p[2]/vol
+variable        pazz equal c_p[3]/vol
+variable        paxy equal c_p[4]/vol
+variable        paxz equal c_p[5]/vol
+variable        payz equal c_p[6]/vol
+variable        p1 equal &quot;xy&quot;
+
+# Time and Damping Variables
+variable        Tdamp equal 100*dt
+variable        time equal step*dt
+variable        freq equal 10^4
+variable        osci equal 20
+variable        runtime equal round(v_freq*v_osci/dt)
+variable        writestress equal 10
+variable        writedump equal round(v_runtime/100)
+variable        gamma0 equal 0.25*xhi
+
+# Reset Timestep and Timestep Setting
+reset_timestep  0
+timestep        0.005
+
+# Trajectory Output
+dump            11 all custom ${writedump} traj_nvt_langevin.lammpstrj id mol type x y z vx vy vz
+
+thermo_style  	custom step temp pe etotal vol epair ebond eangle pxx pyy pzz
+thermo        	100
+
+
+fix          flan all langevin ${temperature} ${temperature} ${Tdamp} 5428  254
+fix          fnvt all nvt/sllod temp ${temperature} ${temperature} ${Tdamp} 
+fix          fdef all deform 1 xy wiggle ${gamma0} ${freq} remap v
+fix          fshear all print ${writestress} &quot;${time} ${p1} ${paxx} ${payy} ${pazz} ${paxy} ${paxz} ${payz}&quot; file data_shear_sos.txt screen no
+
+run          ${runtime}
+
+write_data     system_after_shear.data nocoeff
+
+unfix          fnvt
+unfix          flan
+unfix          fdef
+unfix          fshear
+print          &quot;All done&quot;
+</pre></div>
+</div>
+</div>
+</section>
+<section id="post-processing-visualization">
+<h2>Post processing visualization<a class="headerlink" href="#post-processing-visualization" title="Link to this heading">#</a></h2>
+<figure class="align-center">
+<a class="bg-primary mb-1 reference internal image-reference" href="_images/shear_sos.gif"><img alt="" class="bg-primary mb-1" src="_images/shear_sos.gif" style="width: 500px;" /></a>
+</figure>
+<p>A typical elastic modulus <span class="math notranslate nohighlight">\(G^{\prime}\)</span> and viscous <span class="math notranslate nohighlight">\(G^{\prime\prime}\)</span> for crosslinked gel systems look like:</p>
+<p><span class="math notranslate nohighlight">\(G^{\prime}(\omega) = \frac{\sigma}{\gamma} \cos \delta\)</span></p>
+<p><span class="math notranslate nohighlight">\(G^{\prime\prime}(\omega) = \frac{\sigma}{\gamma} \sin \delta\)</span></p>
+<figure class="align-center">
+<a class="bg-primary mb-1 reference internal image-reference" href="_images/shear_data.png"><img alt="" class="bg-primary mb-1" src="_images/shear_data.png" style="width: 800px;" /></a>
+</figure>
+<div class="note admonition">
+<p class="admonition-title">Output: <a class="reference external" href="https://shuvo-dip.github.io/MD_Simulation/tetramer_gel.html">data_shear_sos.txt:</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fix print output for fix fshear</span>
+<span class="n">time</span> <span class="n">xy</span> <span class="n">Sxx</span> <span class="n">Syy</span> <span class="n">Szz</span> <span class="n">Sxy</span> <span class="n">Sxz</span> <span class="n">Syz</span> 
+<span class="mi">0</span>     <span class="mi">0</span>                    <span class="o">-</span><span class="mf">0.6408251793482</span> <span class="o">-</span><span class="mf">0.607475157552665</span> <span class="o">-</span><span class="mf">0.637844317279868</span> <span class="o">-</span><span class="mf">0.0551625587474236</span> <span class="o">-</span><span class="mf">0.0148356574731238</span> <span class="o">-</span><span class="mf">0.00367877475844413</span>
+<span class="mf">0.05</span> <span class="mf">0.000274889357143593</span> <span class="o">-</span><span class="mf">0.615106955723178</span> <span class="o">-</span><span class="mf">0.611208510528889</span> <span class="o">-</span><span class="mf">0.650953011271714</span> <span class="mf">0.0143268753678577</span> <span class="o">-</span><span class="mf">0.0387073791594812</span> <span class="mf">0.00698677778765323</span>
+<span class="mf">0.1</span> <span class="mf">0.000549778714017179</span> <span class="o">-</span><span class="mf">0.687896815090172</span> <span class="o">-</span><span class="mf">0.641169537335123</span> <span class="o">-</span><span class="mf">0.628352125834441</span> <span class="o">-</span><span class="mf">0.014268038643641</span> <span class="o">-</span><span class="mf">0.0300823514720603</span> <span class="o">-</span><span class="mf">0.0257547071878896</span>
+<span class="mf">0.15</span> <span class="mf">0.000824668070343648</span> <span class="o">-</span><span class="mf">0.642382349122376</span> <span class="o">-</span><span class="mf">0.662937032687242</span> <span class="o">-</span><span class="mf">0.649062962274571</span> <span class="o">-</span><span class="mf">0.0499979878122786</span> <span class="o">-</span><span class="mf">0.0277635217190935</span> <span class="o">-</span><span class="mf">0.0112216607704475</span>
+<span class="mf">0.2</span> <span class="mf">0.0010995574258601</span> <span class="o">-</span><span class="mf">0.606464651850268</span> <span class="o">-</span><span class="mf">0.660333145451155</span> <span class="o">-</span><span class="mf">0.643922533629109</span> <span class="o">-</span><span class="mf">0.0196481208597465</span> <span class="o">-</span><span class="mf">0.0236831059711317</span> <span class="mf">0.0159426962266691</span>
+<span class="mf">0.25</span> <span class="mf">0.00137444678029652</span> <span class="o">-</span><span class="mf">0.601935278607674</span> <span class="o">-</span><span class="mf">0.652086713103282</span> <span class="o">-</span><span class="mf">0.695032710297119</span> <span class="mf">0.00217110690920496</span> <span class="mf">0.0131498814919214</span> <span class="mf">0.00250625545337565</span>
+<span class="mf">0.3</span> <span class="mf">0.00164933613336871</span> <span class="o">-</span><span class="mf">0.587592056792644</span> <span class="o">-</span><span class="mf">0.691936806704364</span> <span class="o">-</span><span class="mf">0.71990119145136</span> <span class="o">-</span><span class="mf">0.00351691661496423</span> <span class="mf">0.00691573660547977</span> <span class="mf">0.0307890895602134</span>
+<span class="mf">0.35</span> <span class="mf">0.00192422548481375</span> <span class="o">-</span><span class="mf">0.676750766875859</span> <span class="o">-</span><span class="mf">0.680164000413218</span> <span class="o">-</span><span class="mf">0.731708811360654</span> <span class="o">-</span><span class="mf">0.0105928805913106</span> <span class="mf">0.0271211725850081</span> <span class="o">-</span><span class="mf">0.03023002325341</span>
+<span class="mf">0.4</span> <span class="mf">0.00219911483436164</span> <span class="o">-</span><span class="mf">0.716128523423737</span> <span class="o">-</span><span class="mf">0.683679881261586</span> <span class="o">-</span><span class="mf">0.689633872332161</span> <span class="mf">0.0100254217520802</span> <span class="o">-</span><span class="mf">0.00526854934079007</span> <span class="o">-</span><span class="mf">0.00823774296881215</span>
+<span class="mf">0.45</span> <span class="mf">0.00247400418173527</span> <span class="o">-</span><span class="mf">0.690373655991445</span> <span class="o">-</span><span class="mf">0.735870676871987</span> <span class="o">-</span><span class="mf">0.707372061824627</span> <span class="mf">0.0573003713231892</span> <span class="mf">0.0168333030961232</span> <span class="o">-</span><span class="mf">0.0058566064156478</span>
+<span class="mf">0.5</span> <span class="mf">0.00274889352667174</span> <span class="o">-</span><span class="mf">0.680321334487891</span> <span class="o">-</span><span class="mf">0.643040866721938</span> <span class="o">-</span><span class="mf">0.751000955371141</span> <span class="mf">0.0104948438986918</span> <span class="o">-</span><span class="mf">0.010057235725695</span> <span class="o">-</span><span class="mf">0.0136595351542859</span>
+<span class="mf">0.55</span> <span class="mf">0.00302378286889393</span> <span class="o">-</span><span class="mf">0.734130452060427</span> <span class="o">-</span><span class="mf">0.639911182702289</span> <span class="o">-</span><span class="mf">0.756034140582532</span> <span class="o">-</span><span class="mf">0.00964698905129099</span> <span class="mf">0.0113066273890128</span> <span class="o">-</span><span class="mf">0.0157453184241778</span>
+
+</pre></div>
+</div>
+</div>
+</section>
+<section id="uniaxial-deformation">
+<h2>Uniaxial deformation<a class="headerlink" href="#uniaxial-deformation" title="Link to this heading">#</a></h2>
+<p><img alt="uniaxial" src="_images/uniaxial.gif" /></p>
+<p>Fig. 2. Uniaxial deformtion along <em>x</em> direction is applied.</p>
+<div class="tip admonition">
+<p class="admonition-title">Uniaxial deformation: <a class="reference external" href="https://shuvo-dip.github.io/MD_Simulation/tetramer_gel.html">run_uniaxial.in:</a> LAMMPS script read_data from  previously generated <em>system_gel.data</em> file</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># LAMMPS Simulation Initialization
+
+units           lj
+atom_style      full
+
+# Bond and Angle Styles
+bond_style      hybrid fene
+angle_style     hybrid harmonic
+
+# Pair Styles
+pair_style      hybrid lj/cut 1.122
+pair_modify     shift yes
+special_bonds   lj 0.0 1.0 1.0
+
+# Neighbor Settings
+neighbor        0.3 bin
+neigh_modify    every 1 delay 0 one 10000
+
+# Boundary Conditions
+boundary        p p p
+
+# Log File
+log             log.nvt.txt
+
+# Read Initial Configuration Data
+read_data       system_longtime_gel.data
+
+# Pair Coefficients
+pair_coeff      * * lj/cut 1.0 1.0
+
+# Bond Coefficients
+bond_coeff      1 fene 20.0 1.5 1.0 1.0
+
+# Angle Coefficients
+angle_coeff     1 harmonic 10.0 150
+
+# Group Definitions
+comm_modify     cutoff 5.0
+group           poly type 1
+group           water type 2
+
+# Variables
+variable        temperature equal 1.0
+
+# Change Box to Triclinic
+change_box      all triclinic remap units box
+
+# Stress Computations
+compute         peratom all stress/atom NULL
+compute         p all reduce sum c_peratom[*]
+variable        paxx equal c_p[1]/vol
+variable        payy equal c_p[2]/vol
+variable        pazz equal c_p[3]/vol
+variable        paxy equal c_p[4]/vol
+variable        paxz equal c_p[5]/vol
+variable        payz equal c_p[6]/vol
+
+variable        Tdamp equal 100*dt
+variable        time equal step*dt
+variable        Lt equal 50
+variable        L0 equal &quot;v_Lt/35&quot;  # Box length Lx =  35
+variable        defrate equal 0.0025
+variable 	      p1 equal &quot;35*(1+v_defrate*dt*step)&quot;
+variable        runtime equal round((v_L0-1)/dt/v_defrate) #dt
+variable        writestress equal 10
+variable        writedump equal round(v_runtime/100)
+
+reset_timestep 	0
+timestep        0.001
+dump          	11 all custom ${writedump} traj_nvt_langevin.lammpstrj id mol type x y z vx vy vz
+
+
+#velocity 		all create ${temperature} 12945
+thermo_style  	custom step temp pe etotal vol epair ebond eangle pxx pyy pzz
+thermo        	100
+
+
+fix         flan all langevin ${temperature} ${temperature} ${Tdamp} 5428254
+fix         fnvt all nvt temp ${temperature} ${temperature} ${Tdamp}
+fix         fdef all deform 1 x erate ${defrate} y volume z volume
+fix         fshear all print ${writestress} &quot;${time} ${p1} ${paxx} ${payy} ${pazz} ${paxy} ${paxz} ${payz}&quot; file data_uniaxial.txt screen no
+
+run          ${runtime}
+
+write_data     system_after_shear.data nocoeff
+
+unfix          fnvt
+unfix          flan
+unfix          fdef
+unfix          fshear
+print          &quot;All done&quot;
+</pre></div>
+</div>
+</div>
+<div class="note admonition">
+<p class="admonition-title">Output: <a class="reference external" href="https://shuvo-dip.github.io/MD_Simulation/tetramer_gel.html">data_uniaxial_deformation.txt:</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fix print output for fix fshear</span>
+<span class="n">time</span> <span class="n">x</span> <span class="n">Sxx</span> <span class="n">Syy</span> <span class="n">Szz</span> <span class="n">Sxy</span> <span class="n">Sxz</span> <span class="n">Syz</span> 
+<span class="mi">0</span>    <span class="mf">35.000000</span> <span class="o">-</span><span class="mf">0.6408251793482</span> <span class="o">-</span><span class="mf">0.607475157552665</span> <span class="o">-</span><span class="mf">0.637844317279868</span> <span class="o">-</span><span class="mf">0.0551625587474236</span> <span class="o">-</span><span class="mf">0.0148356574731238</span> <span class="o">-</span><span class="mf">0.00367877475844413</span>
+<span class="mf">0.01</span> <span class="mf">35.000875</span> <span class="o">-</span><span class="mf">0.621312788720489</span> <span class="o">-</span><span class="mf">0.606881357141303</span> <span class="o">-</span><span class="mf">0.644678770521952</span> <span class="o">-</span><span class="mf">0.0511411481982791</span> <span class="o">-</span><span class="mf">0.0237776345325326</span> <span class="mf">0.00714145696277534</span>
+<span class="mf">0.02</span> <span class="mf">35.00175</span> <span class="o">-</span><span class="mf">0.61122838496561</span> <span class="o">-</span><span class="mf">0.611275316156698</span> <span class="o">-</span><span class="mf">0.650824558154617</span> <span class="o">-</span><span class="mf">0.0366431283526107</span> <span class="o">-</span><span class="mf">0.0355118632273659</span> <span class="mf">0.00703895797680559</span>
+<span class="mf">0.03</span> <span class="mf">35.002625</span> <span class="o">-</span><span class="mf">0.599968040506122</span> <span class="o">-</span><span class="mf">0.608847916562781</span> <span class="o">-</span><span class="mf">0.654761075001343</span> <span class="o">-</span><span class="mf">0.0213849191404241</span> <span class="o">-</span><span class="mf">0.0417029648613652</span> <span class="mf">0.0105939378683937</span>
+<span class="mf">0.04</span> <span class="mf">35.0035</span> <span class="o">-</span><span class="mf">0.575343889729728</span> <span class="o">-</span><span class="mf">0.613636308286129</span> <span class="o">-</span><span class="mf">0.651717843113109</span> <span class="o">-</span><span class="mf">0.00566485527031936</span> <span class="o">-</span><span class="mf">0.0379837960380336</span> <span class="mf">0.0175866178829605</span>
+<span class="mf">0.05</span> <span class="mf">35.004375</span> <span class="o">-</span><span class="mf">0.565293160635508</span> <span class="o">-</span><span class="mf">0.622578894609871</span> <span class="o">-</span><span class="mf">0.649949365488638</span> <span class="o">-</span><span class="mf">0.00190860694200052</span> <span class="o">-</span><span class="mf">0.0338705032502464</span> <span class="mf">0.0137738188457549</span>
+<span class="mf">0.06</span> <span class="mf">35.00525</span> <span class="o">-</span><span class="mf">0.575783870366787</span> <span class="o">-</span><span class="mf">0.629736559151776</span> <span class="o">-</span><span class="mf">0.651112944769633</span> <span class="o">-</span><span class="mf">0.00826323175064375</span> <span class="o">-</span><span class="mf">0.0255275782117685</span> <span class="o">-</span><span class="mf">0.0020386583115917</span>
+<span class="mf">0.07</span> <span class="mf">35.006125</span> <span class="o">-</span><span class="mf">0.60334203862936</span> <span class="o">-</span><span class="mf">0.638228196672484</span> <span class="o">-</span><span class="mf">0.651825791267814</span> <span class="o">-</span><span class="mf">0.0194175272794261</span> <span class="o">-</span><span class="mf">0.024149993283969</span> <span class="o">-</span><span class="mf">0.0217344303778077</span>
+<span class="mf">0.08</span> <span class="mf">35.007</span> <span class="o">-</span><span class="mf">0.634617923121244</span> <span class="o">-</span><span class="mf">0.647223980917707</span> <span class="o">-</span><span class="mf">0.644114782760748</span> <span class="o">-</span><span class="mf">0.0267848171618558</span> <span class="o">-</span><span class="mf">0.0222449367843963</span> <span class="o">-</span><span class="mf">0.0352731376543048</span>
+<span class="mf">0.09</span> <span class="mf">35.007875</span> <span class="o">-</span><span class="mf">0.653034481856895</span> <span class="o">-</span><span class="mf">0.654508168490345</span> <span class="o">-</span><span class="mf">0.627874003940878</span> <span class="o">-</span><span class="mf">0.0348812114580562</span> <span class="o">-</span><span class="mf">0.0167936777793838</span> <span class="o">-</span><span class="mf">0.0330136655734571</span>
+<span class="mf">0.1</span> <span class="mf">35.00875</span> <span class="o">-</span><span class="mf">0.649637190867702</span> <span class="o">-</span><span class="mf">0.666341061593695</span> <span class="o">-</span><span class="mf">0.616582457473135</span> <span class="o">-</span><span class="mf">0.0405969040856942</span> <span class="o">-</span><span class="mf">0.00712274323393126</span> <span class="o">-</span><span class="mf">0.0269036967689667</span>
+<span class="mf">0.11</span> <span class="mf">35.009625</span> <span class="o">-</span><span class="mf">0.655148270433206</span> <span class="o">-</span><span class="mf">0.678748781228686</span> <span class="o">-</span><span class="mf">0.624170732703299</span> <span class="o">-</span><span class="mf">0.0415506283040549</span> <span class="mf">0.01185879624761</span> <span class="o">-</span><span class="mf">0.0319454062623837</span>
+<span class="mf">0.12</span> <span class="mf">35.0105</span> <span class="o">-</span><span class="mf">0.66422694580121</span> <span class="o">-</span><span class="mf">0.679853079381409</span> <span class="o">-</span><span class="mf">0.648568399478468</span> <span class="o">-</span><span class="mf">0.0479967862337217</span> <span class="mf">0.014859749949221</span> <span class="o">-</span><span class="mf">0.0327446867853413</span>
+<span class="mf">0.13</span> <span class="mf">35.011375</span> <span class="o">-</span><span class="mf">0.670191716172108</span> <span class="o">-</span><span class="mf">0.673573167432807</span> <span class="o">-</span><span class="mf">0.668581391003215</span> <span class="o">-</span><span class="mf">0.0454629051153325</span> <span class="mf">0.00789340455515124</span> <span class="o">-</span><span class="mf">0.0279055294051499</span>
+<span class="mf">0.14</span> <span class="mf">35.01225</span> <span class="o">-</span><span class="mf">0.67145342710497</span> <span class="o">-</span><span class="mf">0.675027076572877</span> <span class="o">-</span><span class="mf">0.671682192443349</span> <span class="o">-</span><span class="mf">0.0416989782040736</span> <span class="o">-</span><span class="mf">0.00943592261317204</span> <span class="o">-</span><span class="mf">0.0227235192925155</span>
+<span class="mf">0.15</span> <span class="mf">35.013125</span> <span class="o">-</span><span class="mf">0.665585128537323</span> <span class="o">-</span><span class="mf">0.673768453695297</span> <span class="o">-</span><span class="mf">0.662263533246906</span> <span class="o">-</span><span class="mf">0.0375245169669749</span> <span class="o">-</span><span class="mf">0.0227822953083807</span> <span class="o">-</span><span class="mf">0.0193783461326698</span>
+<span class="mf">0.16</span> <span class="mf">35.014</span> <span class="o">-</span><span class="mf">0.63835438707388</span> <span class="o">-</span><span class="mf">0.674578847389607</span> <span class="o">-</span><span class="mf">0.646827237300927</span> <span class="o">-</span><span class="mf">0.0356003187391781</span> <span class="o">-</span><span class="mf">0.0313156278382848</span> <span class="o">-</span><span class="mf">0.0172613362158874</span>
+
+</pre></div>
+</div>
+</div>
+<figure class="align-center">
+<a class="bg-primary mb-1 reference internal image-reference" href="_images/uniaxial_data.png"><img alt="" class="bg-primary mb-1" src="_images/uniaxial_data.png" style="width: 800px;" /></a>
+</figure>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="tetramer_gel.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Gel Formation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="useful_links.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Molecular Dynamics Simulation Resources</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-concepts">Key Concepts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shear-thinning-and-shear-thickening">Shear Thinning and Shear Thickening</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#complex-fluid-climb-and-siphon-experiment">Complex Fluid Climb and Siphon Experiment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#liquid-liquid-phase-separation-in-biomolecular-condensates">Liquid-Liquid phase separation in biomolecular condensates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#viscoelastic-properties-of-the-condensed-phase">Viscoelastic properties of the condensed phase</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rheological-properties">Rheological Properties</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#viscoelastic-models">Viscoelastic Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#molecular-dynamics-study-of-mechanical-and-viscoelastic-properties">Molecular Dynamics study of Mechanical and Viscoelastic properties:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shear">Shear</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#post-processing-visualization">Post processing visualization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uniaxial-deformation">Uniaxial deformation</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Subhadip Biswas
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
