@@ -20,7 +20,21 @@ In order to go through step by step lets consider the simulation framework. Simu
 - **7) Final Run:**
 `````
 
+`````{admonition} With the help of ChatGPT you can built your first simulation
+:class: note
+```
+*Promt:* I am a beginner looking to learn the LAMMPS package from scratch. Could you provide me with step-by-step instructions on how to set up and run basic simulations? Specifically, I'd like:
 
+1. Detailed instructions on installing LAMMPS on my operating system.
+2. An overview of the structure of a LAMMPS input script.
+3. A couple of simple example simulations, including the full input script for each.
+4. Instructions on how to run these simulations.
+5. Tips on how to analyze the output and visualize the results.
+6. Recommendations for further learning resources or tutorials.
+
+Please provide the input scripts and any necessary commands to run the simulations.
+```
+`````
 
 `````{admonition} [system.data:](https://shuvo-dip.github.io/MD_Simulation/lj_fluid.html) an example of lammps generated system file
 :class: tip
