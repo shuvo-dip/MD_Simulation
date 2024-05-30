@@ -204,7 +204,7 @@ write_data      system_after_eq.data nocoeff
 
 ## Binary polymer mixture
 
-![tetramer_chain_bond](LJ_fluid/method_07/binary_mixture.gif)
+![tetramer_chain_bond](LJ_fluid/method_07/binary_mixture_sol.gif)
 
 Fig. 3. Binary polymer mixture. 
 
