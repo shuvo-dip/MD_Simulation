@@ -1,6 +1,19 @@
 # Polymer 
 
+Now we will be discussing coarse grain model of polymer chain. 
 
+### Coarse-Grain Model of Polymer Chain
+1. Introduction:
+
+- In polymer science, detailed atomistic simulations can be computationally expensive and impractical for large systems or long simulation times.
+- Coarse-grain models reduce the complexity by grouping atoms into larger units called "beads" or "superatoms".
+
+2. Basics of Coarse-Graining:
+
+Bead Representation: Each bead represents a group of monomers or a segment of the polymer chain.
+Interaction Potentials: The interactions between beads are described using effective potentials, derived from averaging out the finer details of the atomic interactions.
+
+![singlechian](LJ_fluid/method_07/single_chain_initial.png)
 System preparation: Single polymer chain
 
  ```{figure} LJ_fluid/method_07/polymer_single_chain.gif
@@ -23,7 +36,7 @@ In order to go through step by step lets consider the simulation framework. Simu
   - b) `system.data` -- particles, positions, bonds, angles, information
 
 
-`````{admonition} [system_terta_chain.data:](https://shuvo-dip.github.io/MD_Simulation/tetramer_gel.html) Single tetramer system file
+`````{admonition} [system_single_chain.data:](https://shuvo-dip.github.io/MD_Simulation/polymer.html) Single polymer system file
 :class: tip
 ```
 LAMMPS data file via write_data, version 2 Aug 2023, timestep = 0, units = lj

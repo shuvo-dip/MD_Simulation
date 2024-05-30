@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
   
@@ -379,6 +379,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coarse-grain-model-of-polymer-chain">Coarse-Grain Model of Polymer Chain</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-polymer-mixture">Binary polymer mixture</a></li>
 </ul>
             </nav>
@@ -393,7 +394,23 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="polymer">
 <h1>Polymer<a class="headerlink" href="#polymer" title="Link to this heading">#</a></h1>
-<p>System preparation: Single polymer chain</p>
+<p>Now we will be discussing coarse grain model of polymer chain.</p>
+<section id="coarse-grain-model-of-polymer-chain">
+<h2>Coarse-Grain Model of Polymer Chain<a class="headerlink" href="#coarse-grain-model-of-polymer-chain" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Introduction:</p></li>
+</ol>
+<ul class="simple">
+<li><p>In polymer science, detailed atomistic simulations can be computationally expensive and impractical for large systems or long simulation times.</p></li>
+<li><p>Coarse-grain models reduce the complexity by grouping atoms into larger units called “beads” or “superatoms”.</p></li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p>Basics of Coarse-Graining:</p></li>
+</ol>
+<p>Bead Representation: Each bead represents a group of monomers or a segment of the polymer chain.
+Interaction Potentials: The interactions between beads are described using effective potentials, derived from averaging out the finer details of the atomic interactions.</p>
+<p><img alt="singlechian" src="_images/single_chain_initial.png" />
+System preparation: Single polymer chain</p>
 <figure class="align-center">
 <a class="reference internal image-reference" href="_images/polymer_single_chain.gif"><img alt="" src="_images/polymer_single_chain.gif" style="width: 500px;" /></a>
 </figure>
@@ -405,7 +422,7 @@ document.write(`
 <li><p>b) <code class="docutils literal notranslate"><span class="pre">system.data</span></code> – particles, positions, bonds, angles, information</p></li>
 </ul>
 <div class="tip admonition">
-<p class="admonition-title"><a class="reference external" href="https://shuvo-dip.github.io/MD_Simulation/tetramer_gel.html">system_terta_chain.data:</a> Single tetramer system file</p>
+<p class="admonition-title"><a class="reference external" href="https://shuvo-dip.github.io/MD_Simulation/polymer.html">system_single_chain.data:</a> Single polymer system file</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LAMMPS</span> <span class="n">data</span> <span class="n">file</span> <span class="n">via</span> <span class="n">write_data</span><span class="p">,</span> <span class="n">version</span> <span class="mi">2</span> <span class="n">Aug</span> <span class="mi">2023</span><span class="p">,</span> <span class="n">timestep</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="n">lj</span>
 
 <span class="mi">20</span> <span class="n">atoms</span>
@@ -573,6 +590,7 @@ write_data      system_after_eq.data nocoeff
 </pre></div>
 </div>
 </div>
+</section>
 <section id="binary-polymer-mixture">
 <h2>Binary polymer mixture<a class="headerlink" href="#binary-polymer-mixture" title="Link to this heading">#</a></h2>
 <p><img alt="tetramer_chain_bond" src="_images/binary_mixture_sol.gif" /></p>
@@ -823,6 +841,7 @@ write_data      system_phase_separation_eq.data nocoeff
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coarse-grain-model-of-polymer-chain">Coarse-Grain Model of Polymer Chain</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-polymer-mixture">Binary polymer mixture</a></li>
 </ul>
   </nav></div>
