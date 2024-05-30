@@ -28,7 +28,7 @@ System preparation: Single polymer chain
 
 System preparation: Polymer blend
 
-![gelation](LJ_fluid/method_07/polymer_blend.gif)
+![polymerblendn](LJ_fluid/method_07/polymer_blend.gif)
 
 
 
@@ -129,7 +129,7 @@ Angles
 
 
 
-`````{admonition} Reactive polymer blend preparation: [run.in:](https://shuvo-dip.github.io/MD_Simulation/tetramer_gel.html) LAMMPS script for a 10-particle LJ fluid
+`````{admonition} Polymer blend preparation: [run.in:](https://shuvo-dip.github.io/MD_Simulation/binaryblend.html) LAMMPS script for a single chain to multiple LJ chain creatation at certain density preparation
 :class: tip
 ```
 # LAMMPS Simulation Initialization
@@ -224,7 +224,7 @@ write_data      system_after_eq.data nocoeff
 Fig. 3. Binary polymer mixture. 
 
 
-`````{admonition} [system_terta_chain.data:](https://shuvo-dip.github.io/MD_Simulation/tetramer_gel.html) Single tetramer system file
+`````{admonition} [system_terta_chain.data:](https://shuvo-dip.github.io/MD_Simulation/lj_chain.html) Two different polymer system file
 :class: tip
 ```
 LAMMPS data file via write_data, version 2 Aug 2023, timestep = 0, units = lj
@@ -327,7 +327,7 @@ Angles
 
 
 
-`````{admonition} Gelation: [run_gelation.in:](https://shuvo-dip.github.io/MD_Simulation/tetramer_gel.html) LAMMPS script read_data from  previously generated *system_after_eq.data* file
+`````{admonition} Phase separation: [run_binary_ps.in:](https://shuvo-dip.github.io/MD_Simulation/lj_chain.html) LAMMPS script read_data from  previously generated *system_after_eq.data* file
 :class: tip
 ```
 # LAMMPS Simulation Initialization

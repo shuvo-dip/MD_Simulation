@@ -417,7 +417,7 @@ document.write(`
 <a class="reference internal image-reference" href="_images/polymer_single_chain.gif"><img alt="" src="_images/polymer_single_chain.gif" style="width: 500px;" /></a>
 </figure>
 <p>System preparation: Polymer blend</p>
-<p><img alt="gelation" src="_images/polymer_blend.gif" /></p>
+<p><img alt="polymerblendn" src="_images/polymer_blend.gif" /></p>
 <p>In order to go through step by step lets consider the simulation framework. Simulation might contains several files. But here we mainly focus on:</p>
 <ul class="simple">
 <li><p>a) <code class="docutils literal notranslate"><span class="pre">run.in</span></code> – it cpntains mostly all the informations</p></li>
@@ -511,7 +511,7 @@ document.write(`
 </div>
 </div>
 <div class="tip admonition">
-<p class="admonition-title">Reactive polymer blend preparation: <a class="reference external" href="https://shuvo-dip.github.io/MD_Simulation/tetramer_gel.html">run.in:</a> LAMMPS script for a 10-particle LJ fluid</p>
+<p class="admonition-title">Polymer blend preparation: <a class="reference external" href="https://shuvo-dip.github.io/MD_Simulation/binaryblend.html">run.in:</a> LAMMPS script for a single chain to multiple LJ chain creatation at certain density preparation</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span># LAMMPS Simulation Initialization
 
 units           lj
@@ -598,7 +598,7 @@ write_data      system_after_eq.data nocoeff
 <p><img alt="tetramer_chain_bond" src="_images/binary_mixture_sol.gif" /></p>
 <p>Fig. 3. Binary polymer mixture.</p>
 <div class="tip admonition">
-<p class="admonition-title"><a class="reference external" href="https://shuvo-dip.github.io/MD_Simulation/tetramer_gel.html">system_terta_chain.data:</a> Single tetramer system file</p>
+<p class="admonition-title"><a class="reference external" href="https://shuvo-dip.github.io/MD_Simulation/lj_chain.html">system_terta_chain.data:</a> Two different polymer system file</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LAMMPS</span> <span class="n">data</span> <span class="n">file</span> <span class="n">via</span> <span class="n">write_data</span><span class="p">,</span> <span class="n">version</span> <span class="mi">2</span> <span class="n">Aug</span> <span class="mi">2023</span><span class="p">,</span> <span class="n">timestep</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="n">lj</span>
 
 <span class="mi">25</span> <span class="n">atoms</span>
@@ -698,7 +698,7 @@ write_data      system_after_eq.data nocoeff
 </div>
 </div>
 <div class="tip admonition">
-<p class="admonition-title">Gelation: <a class="reference external" href="https://shuvo-dip.github.io/MD_Simulation/tetramer_gel.html">run_gelation.in:</a> LAMMPS script read_data from  previously generated <em>system_after_eq.data</em> file</p>
+<p class="admonition-title">Phase separation: <a class="reference external" href="https://shuvo-dip.github.io/MD_Simulation/lj_chain.html">run_binary_ps.in:</a> LAMMPS script read_data from  previously generated <em>system_after_eq.data</em> file</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span># LAMMPS Simulation Initialization
 
 units           lj
