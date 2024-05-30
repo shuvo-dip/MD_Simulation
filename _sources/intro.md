@@ -17,3 +17,10 @@ We explore topics ranging from simple fluid systems and single polymer chains to
 
 **Visualization:**
 For visualization tools, we primarily utilize [OVITO](https://www.ovito.org/), which offers excellent visualization capabilities. These capabilities include generating high-quality movies and simulation snapshots suitable for use in academic papers. OVITO Pro also provides convenient post-processing properties such as surface generation, histograms, correlation analysis, radial distribution functions, and particle selection.
+
+
+## Contact Details
+
+- **Email:** [subhadip@iastate.edu](mailto:subhadip@iastate.edu)
+- **LinkedIn:** [linkedin.com/in/biswas-subhadip](https://www.linkedin.com/in/biswas-subhadip/)
+- **Twitter:** [@subhadip_shuvo](https://x.com/subhadip_shuvo)
