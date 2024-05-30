@@ -116,7 +116,7 @@ Angles
 `````
 
 
-### What are these numbers mean?
+### What do these numbers mean?
 `````{admonition} [system.data:](https://shuvo-dip.github.io/MD_Simulation/lj_fluid.html) an example of lammps generated system file
 :class: tip
 ```
@@ -225,6 +225,10 @@ run             1000000
 `````{admonition} log file
 :class: tip
 ```
+.
+.
+.
+.
     999100   1.3074207      0              1.765018       1.765018       0.0014708483
     999200   1.4026846      0              1.8936242      1.8936242      0.0015780201
     999300   0.72046866     0              0.9726327      0.9726327      0.00081052725

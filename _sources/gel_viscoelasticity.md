@@ -14,7 +14,7 @@ Viscoelastic fluids and gels are materials that exhibit both viscous and elastic
 
 Viscoelastic fluids can exhibit varying flow behaviors under shear stress:
 
-1. **Shear Thinning (Pseudoplastic):**
+1. **Shear Thinning:**
    - In shear thinning fluids, the viscosity decreases with increasing shear rate.
    - Examples: Ketchup, paint, and blood.
    - These fluids become less viscous (thinner) when agitated or stirred.
@@ -24,7 +24,7 @@ Viscoelastic fluids can exhibit varying flow behaviors under shear stress:
  
  ![ketchup](LJ_fluid/method_06/ketchup.png)
 
-2. **Shear Thickening (Dilatant):**
+2. **Shear Thickening:**
    - In shear thickening fluids, the viscosity increases with increasing shear rate.
    - Examples: Cornstarch in water (oobleck) and some types of sand in water mixtures.
    - These fluids become more viscous (thicker) when subjected to higher shear rates.
