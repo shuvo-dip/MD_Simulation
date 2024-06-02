@@ -24,3 +24,8 @@ For visualization tools, we primarily utilize [OVITO](https://www.ovito.org/), w
 - **Email:** [subhadip@iastate.edu](mailto:subhadip@iastate.edu)
 - **LinkedIn:** [linkedin.com/in/biswas-subhadip](https://www.linkedin.com/in/biswas-subhadip/)
 - **Twitter:** [@subhadip_shuvo](https://x.com/subhadip_shuvo)
+
+
+### Visitors
+<!-- Include this in your relevant HTML file or a custom HTML block in Jupyter Book -->
+<div id="visitorCount">Loading...</div>
