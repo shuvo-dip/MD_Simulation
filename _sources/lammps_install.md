@@ -40,4 +40,3 @@ make yes-molecule
 ```
 make mpi
 ```
-
